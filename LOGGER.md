@@ -4,35 +4,34 @@ Daily summary of NomBot and GrantRadar work, written each night from Claude Code
 
 ## 2026-10-07 (Wednesday)
 
-*Hours worked: 2h · 8 commits · 38 messages*
+*Hours worked: 8.75h (8:20am–4:58pm) · 43 commits · 95 messages*
 
-**Summary:** NomBot search hit the 90% relevance goal (91%), Research Buddy dropped to 1 unsupported claim in 401, and several UI changes shipped.
+**Summary:** Search hit 91% relevant and Research Buddy cut to 1 unsupported claim in 401. GrantRadar was built from scratch, and NomBot got the landscape analysis panel and a results-page redesign.
 
 **Done**
-- **Search eval** reached 91% relevant (was 81%, 50% and 35% at first baseline). 38 of 50 questions meet the goal, up from 32.
-- **Embeddings** finished: 50,971 filings embedded. 47,595 orgs now have filing text, about 4× before.
-- **City filter, cause boost and 4× filing text** raised relevance from 50% to 81% before the Appalachia work.
-- **Appalachia filter** built on a new `zip_regions` table (ZIP → county, ARC flag; 420 ARC counties matched) in `generosity-data`. Louisville and Richmond VA come out 0% Appalachian, and Knoxville and Pikeville 100%.
-- **Weaker matches** scoring under 50 now fold behind "Show N weaker matches". One combined notice replaces two, and no-strong-match questions list the closest orgs.
-- **Research Buddy eval** built (30 questions, claims checked against cited filings). The first run had 12 problems in 406 claims (97% supported). After the prompt fix, 1 problem in 401 claims, and 29 of 30 answers were clean.
-- **Filter changes** now show new results in about 0.4s instead of about 6s. Scores re-sort when they arrive.
-- **Loading card** is centered over a frosted veil. Sources now open beside the org inside its popover as a split view.
-- **Research Buddy history** is saved per search in the browser, with a History button and New chat.
-- **Popover close** now works with one × (source half first, then the popover). A bug that left closed popovers and panels on screen is fixed.
-- **Smaller fixes:** tooltip overlapping the next row's score, the duplicate React key error, and the NomBot logo as the tab icon.
-- **Docs** updated: both READMEs, with the progress checklist, web app map and both evals (`82273f7`).
-- **Work log:** private `work-log` repo with a nightly launchd job. The dry run worked, and backfill of 10/06 and 10/07 was in progress.
+- [NomBot] **Search relevance** rose from 81% to 91% (goal 90%), with 38 of 50 questions at goal. The Appalachia county filter (ZIP→county table, 420 ARC counties) and folded weaker matches drove it.
+- [NomBot] **Research Buddy eval** went from 12 problems in 406 claims to 1 in 401. 29 of 30 answers are fully supported after a prompt tightening.
+- [NomBot] **Results page** redesigned: full-width fixed search and filters, results on the left (~60%) and a tabbed analysis panel on the right (~40%). Each side scrolls on its own, and macOS scrollbar clipping is fixed.
+- [NomBot] **Analysis panel** combines AI overview, breakdown, county map, themes and funders into one hover-only tabbed card. Citations show an instant hover card.
+- [NomBot] **Staff and volunteer counts** from Form 990 Part I are on org pages for 50,971 filings. 33,331 orgs report staff and 7,057 are all-volunteer.
+- [NomBot] **Compare** page (2–4 orgs side by side) has a back link and an "Add one more" placeholder. **Starred folders** and a "← Back to Starred" link were added.
+- [NomBot] **UI**: centered loading card over a frosted veil, sources opening beside the org in its popover, and Research Buddy history. Filter changes now show results in ~0.4s instead of ~6s, and a stuck-overlay bug is fixed.
+- [GrantRadar] **Built end to end** on `/grants`: mission → ranked foundations → funder sheet with a streamed, cited "Why this funder?". Data is 8,030 foundations and 102,725 grants (5 states, 2025 990-PFs), with 51% of in-state grants linked to recipients.
+- [GrantRadar] **"Groups like yours" matching**: Claude scores each candidate grantee ≥70 on similarity of work, so unrelated funders (e.g. a health foundation for animal rescue) drop out. Closeness dots show match strength.
+- [GrantRadar] **Feedback features built**: grant-type labels (unrestricted / project / policy; 72% labelled, 34 of 36 spot-checked correct) and Research Buddy on `/grants`.
+- [GrantRadar] **UI polish**: shorter copy, SF-style icons, clearer row hierarchy, Starred funders and Recent missions, and a "Gives in" menu listing all states.
+- [Admin] **Work-log and docs**: private work-log repo with a nightly job and a start/end hours clock, covering NomBot and GrantRadar. The NomBot README, architecture diagram and real screenshots were updated, and a CLAUDE.md rule keeps the README in sync with every commit. The IoG demo feedback was added to both READMEs. An invoice including the fellowship sessions was drafted.
 
 **Decisions**
-- **Appalachia** is filtered at county level via the ARC list, since the 13-state expansion was right but too broad.
-- **Typo handling** is left unchanged. The parser already reads misspellings correctly, and the low score was a few-true-matches problem.
-- **Weaker matches** are hidden but counted, and the eval reports questions with no strong match so hiding can't inflate the score.
-- **Work log** goes to a private repo rather than the org repo, to avoid publishing chat summaries.
+- [NomBot] **Strong matches only** are scored in the eval, so folding weaker results can't inflate the 91%.
+- [GrantRadar] **Precision over coverage** for grantee linking, since a wrong link credits the wrong charity.
+- [Admin] **README updated by Claude per commit** rather than by an autonomous git hook, which the safety check blocked.
+- [Admin] **Private repo** for the work log, so chat summaries aren't visible to the org.
 
 **Next**
-- **Research Buddy eval:** the goal is zero unsupported claims, and 1 remains.
-- **Search speed:** median search is about 14s against the under-2s goal.
-- **Cloud launch:** switch to OpenAI embeddings and deploy by Oct 19–25.
+- [NomBot] **Cloud launch** (Oct 19–25): OpenAI embeddings, Supabase + Vercel, all 50 states.
+- [GrantRadar] **Merge NomBot into GrantRadar** and resolve the Buddy component conflicts.
+- [Admin] **Competitor scan and user testing** with the two audiences, per the demo feedback.
 
 ## 2026-10-06 (Tuesday)
 
