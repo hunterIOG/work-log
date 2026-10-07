@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.hunterzhang.worklog</string>
+  <key>ProgramArguments</key>
+  <array><string>/usr/bin/python3</string><string>/Users/hunterzhang/work-log/daily_log.py</string></array>
+  <key>EnvironmentVariables</key>
+  <dict><key>PATH</key><string>/Users/hunterzhang/.local/bin:/opt/homebrew/bin:/usr/bin:/bin</string></dict>
+  <!-- 11:55pm daily; if the Mac is asleep then, it runs on wake -->
+  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>23</integer><key>Minute</key><integer>55</integer></dict>
+  <key>StandardOutPath</key><string>/Users/hunterzhang/Library/Logs/worklog.log</string>
+  <key>StandardErrorPath</key><string>/Users/hunterzhang/Library/Logs/worklog.log</string>
+</dict>
+</plist>
