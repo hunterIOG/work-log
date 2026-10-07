@@ -4,7 +4,7 @@ Daily summary of NomBot work, written each night from Claude Code chats and git 
 
 ## 2026-10-07 (Wednesday)
 
-*Active in Claude Code: ~1h 24m · 8 commits · 38 messages*
+*Hours worked: 2h · 8 commits · 38 messages*
 
 **Summary:** NomBot search hit the 90% relevance goal (91%), Research Buddy dropped to 1 unsupported claim in 401, and several UI changes shipped.
 
@@ -36,7 +36,7 @@ Daily summary of NomBot work, written each night from Claude Code chats and git 
 
 ## 2026-10-06 (Tuesday)
 
-*Active in Claude Code: ~2h 02m · 37 commits · 44 messages*
+*Hours worked: 4h · 37 commits · 44 messages*
 
 **Summary:** Built filters, votes, eval, relevance scores, SOI viewer, side panels and Research Buddy; the eval baseline of 35% rose to 50%.
 

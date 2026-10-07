@@ -14,4 +14,4 @@ tail ~/Library/Logs/worklog.log
 
 Install: `cp com.hunterzhang.worklog.plist ~/Library/LaunchAgents/ && launchctl load ~/Library/LaunchAgents/com.hunterzhang.worklog.plist`
 
-"Active" time counts gaps of 15 min or less between messages: an estimate, not a timesheet.
+Hours: add the day to `hours.json` (e.g. `"2026-10-08": 3`) and the entry shows them. Without it, the entry shows an estimate of active Claude Code time (gaps of 15 min or less between messages).

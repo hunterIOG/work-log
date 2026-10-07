@@ -17,6 +17,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = os.path.join(HERE, "LOGGER.md")
+HOURS = os.path.join(HERE, "hours.json")  # {"2026-10-06": 4}: hours you report; shown instead of the estimate
 SESSIONS = os.path.expanduser("~/.claude/projects/-Users-hunterzhang-Desktop-NomBot*/*.jsonl")
 REPOS = [os.path.expanduser(p) for p in ("~/Desktop/NomBot", "~/Desktop/generosity-data")]
 IDLE = 15 * 60          # gaps longer than this don't count as active time
@@ -134,15 +135,17 @@ def main():
     if not msgs and not cms:
         print(f"{day}: no NomBot activity; nothing logged")
         return
+    reported = (json.load(open(HOURS)) if os.path.exists(HOURS) else {}).get(str(day))
     h, m = divmod(round(active / 60), 60)
-    meta = f"*Active in Claude Code: ~{h}h {m:02d}m · {len(cms)} commits · {sum(1 for _, r, _ in msgs if r == 'user')} messages*"
+    time = f"Hours worked: {reported:g}h" if reported is not None else f"Active in Claude Code: ~{h}h {m:02d}m (estimate)"
+    meta = f"*{time} · {len(cms)} commits · {sum(1 for _, r, _ in msgs if r == 'user')} messages*"
     entry = f"## {day} ({day:%A})\n\n{meta}\n\n{summarize(day, msgs, cms)}\n"
     if dry:
         print(entry)
         return
     write_entry(day, entry)
     git("pull", "--rebase", "-q")
-    git("add", "LOGGER.md")
+    git("add", "LOGGER.md", "hours.json")
     if git("diff", "--cached", "--quiet").returncode == 0:
         print(f"{day}: no change")
         return
