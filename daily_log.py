@@ -4,6 +4,7 @@
   python3 daily_log.py                 # today (local time), commit and push
   python3 daily_log.py 2026-10-06      # a given day
   python3 daily_log.py --dry-run       # print the entry, change nothing
+  python3 daily_log.py --end           # end today: hours = first message today -> now; log and push
 
 Runs nightly via launchd (com.hunterzhang.worklog.plist). Re-running a day replaces its entry.
 """
@@ -18,6 +19,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = os.path.join(HERE, "LOGGER.md")
 HOURS = os.path.join(HERE, "hours.json")  # {"2026-10-06": 4}: hours you report; shown instead of the estimate
+CLOCK = os.path.join(HERE, "clock.json")  # {"2026-10-08": {"start": "09:12", "end": "12:40"}}: written by --end
 SESSIONS = os.path.expanduser("~/.claude/projects/-Users-hunterzhang-Desktop-NomBot*/*.jsonl")
 REPOS = [os.path.expanduser(p) for p in ("~/Desktop/NomBot", "~/Desktop/generosity-data")]
 IDLE = 15 * 60          # gaps longer than this don't count as active time
@@ -126,6 +128,30 @@ def git(*args):
     return subprocess.run(["git", "-C", HERE, *args], capture_output=True, text=True)
 
 
+def load(path) -> dict:
+    return json.load(open(path)) if os.path.exists(path) else {}
+
+
+def save(path, data: dict):
+    with open(path, "w") as f:
+        json.dump(dict(sorted(data.items())), f, indent=2)
+        f.write("\n")
+
+
+# Hours = first message of the day -> the moment you end the day, rounded to the nearest quarter hour.
+def clock_out(day: dt.date, msgs):
+    if day != dt.date.today():
+        raise SystemExit("--end only works for today")
+    starts = [t for t, role, _ in msgs if role == "user"]
+    if not starts:
+        raise SystemExit("No messages today: nothing to clock")
+    start, end = starts[0], dt.datetime.now().astimezone()
+    hours = round((end - start).total_seconds() / 900) / 4
+    save(CLOCK, {**load(CLOCK), str(day): {"start": f"{start:%-I:%M%p}".lower(), "end": f"{end:%-I:%M%p}".lower()}})
+    save(HOURS, {**load(HOURS), str(day): hours})
+    print(f"{day}: {start:%-I:%M%p} -> {end:%-I:%M%p} = {hours:g}h")
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     dry = "--dry-run" in sys.argv
@@ -135,9 +161,13 @@ def main():
     if not msgs and not cms:
         print(f"{day}: no NomBot activity; nothing logged")
         return
-    reported = (json.load(open(HOURS)) if os.path.exists(HOURS) else {}).get(str(day))
+    if "--end" in sys.argv:
+        clock_out(day, msgs)
+    reported = load(HOURS).get(str(day))
+    span = load(CLOCK).get(str(day))
     h, m = divmod(round(active / 60), 60)
-    time = f"Hours worked: {reported:g}h" if reported is not None else f"Active in Claude Code: ~{h}h {m:02d}m (estimate)"
+    time = (f"Hours worked: {reported:g}h" + (f" ({span['start']}–{span['end']})" if span else "")) if reported is not None \
+        else f"Active in Claude Code: ~{h}h {m:02d}m (estimate)"
     meta = f"*{time} · {len(cms)} commits · {sum(1 for _, r, _ in msgs if r == 'user')} messages*"
     entry = f"## {day} ({day:%A})\n\n{meta}\n\n{summarize(day, msgs, cms)}\n"
     if dry:
@@ -145,7 +175,7 @@ def main():
         return
     write_entry(day, entry)
     git("pull", "--rebase", "-q")
-    git("add", "LOGGER.md", "hours.json")
+    git("add", "LOGGER.md", "hours.json", "clock.json")
     if git("diff", "--cached", "--quiet").returncode == 0:
         print(f"{day}: no change")
         return

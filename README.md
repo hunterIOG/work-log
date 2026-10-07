@@ -14,4 +14,9 @@ tail ~/Library/Logs/worklog.log
 
 Install: `cp com.hunterzhang.worklog.plist ~/Library/LaunchAgents/ && launchctl load ~/Library/LaunchAgents/com.hunterzhang.worklog.plist`
 
-Hours: add the day to `hours.json` (e.g. `"2026-10-08": 3`) and the entry shows them. Without it, the entry shows an estimate of active Claude Code time (gaps of 15 min or less between messages).
+## Hours
+
+- **Start:** your first message to Claude in a NomBot chat that day.
+- **End:** when you tell Claude you're done for the day, it runs `python3 daily_log.py --end`.
+- **Hours** = start → end, rounded to the nearest 15 min. Saved in `clock.json` and `hours.json`; the entry shows e.g. `Hours worked: 3.5h (8:20am–11:50am)`.
+- **Manual:** add `"2026-10-08": 3` to `hours.json`. No hours → the entry shows an estimate of active Claude Code time.
