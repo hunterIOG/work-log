@@ -5,6 +5,7 @@
   python3 daily_log.py 2026-10-06      # a given day
   python3 daily_log.py --dry-run       # print the entry, change nothing
   python3 daily_log.py --end           # end today: hours = first message today -> now; log and push
+  python3 daily_log.py --end --break=30   # same, minus a 30-minute break
 
 Runs nightly via launchd (com.hunterzhang.worklog.plist). Re-running a day replaces its entry.
 """
@@ -20,19 +21,21 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = os.path.join(HERE, "LOGGER.md")
 HOURS = os.path.join(HERE, "hours.json")  # {"2026-10-06": 4}: hours you report; shown instead of the estimate
 CLOCK = os.path.join(HERE, "clock.json")  # {"2026-10-08": {"start": "09:12", "end": "12:40"}}: written by --end
-SESSIONS = os.path.expanduser("~/.claude/projects/-Users-hunterzhang-Desktop-NomBot*/*.jsonl")
+# Chats in any NomBot or GrantRadar folder (including the NomBot-grantradar worktree)
+PROJECTS = os.path.expanduser("~/.claude/projects")
+MATCH = re.compile(r"nombot|grantradar", re.I)
 REPOS = [os.path.expanduser(p) for p in ("~/Desktop/NomBot", "~/Desktop/generosity-data")]
 IDLE = 15 * 60          # gaps longer than this don't count as active time
 MSG_CAP, TOTAL_CAP = 1500, 120_000
-HEADER = "# Work log\n\nDaily summary of NomBot work, written each night from Claude Code chats and git commits.\n"
+HEADER = "# Work log\n\nDaily summary of NomBot and GrantRadar work, written each night from Claude Code chats and git commits.\n"
 
-PROMPT = """Below are one day's Claude Code chat messages (user and assistant) and git commits for the NomBot project.
+PROMPT = """Below are one day's Claude Code chat messages (user and assistant) and git commits for the NomBot and GrantRadar projects (Institute on Generosity AI Fellowship).
 Write a work-log entry in Markdown for {day}. Output ONLY these sections, no title, no preamble:
 
 **Summary:** one sentence.
 
 **Done**
-- 3-10 bullets of concrete things built, fixed, measured or decided (lead with the result, include numbers such as eval scores).
+- 3-12 bullets of concrete things built, fixed, measured or decided (lead with the result, include numbers such as eval scores). Start each bullet with its project in brackets: [NomBot], [GrantRadar] or [Admin] (invoices, fellowship sessions, tooling).
 
 **Decisions**
 - 0-4 bullets: choices made and why. Omit the section if none.
@@ -69,7 +72,7 @@ def clean(s: str) -> str:
 
 def collect(day: dt.date):
     msgs, times = [], []
-    for path in glob.glob(SESSIONS):
+    for path in (p for p in glob.glob(f"{PROJECTS}/*/*.jsonl") if MATCH.search(os.path.basename(os.path.dirname(p)))):
         with open(path) as f:
             for line in f:
                 try:
@@ -146,10 +149,11 @@ def clock_out(day: dt.date, msgs):
     if not starts:
         raise SystemExit("No messages today: nothing to clock")
     start, end = starts[0], dt.datetime.now().astimezone()
-    hours = round((end - start).total_seconds() / 900) / 4
+    brk = next((int(a.split("=")[1]) for a in sys.argv if a.startswith("--break=")), 0)  # minutes off the clock
+    hours = round(((end - start).total_seconds() - brk * 60) / 900) / 4
     save(CLOCK, {**load(CLOCK), str(day): {"start": f"{start:%-I:%M%p}".lower(), "end": f"{end:%-I:%M%p}".lower()}})
     save(HOURS, {**load(HOURS), str(day): hours})
-    print(f"{day}: {start:%-I:%M%p} -> {end:%-I:%M%p} = {hours:g}h")
+    print(f"{day}: {start:%-I:%M%p} -> {end:%-I:%M%p}" + (f" minus {brk} min break" if brk else "") + f" = {hours:g}h")
 
 
 def main():
