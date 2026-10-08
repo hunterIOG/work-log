@@ -4,7 +4,7 @@ Daily summary of NomBot and GrantRadar work, written each night from Claude Code
 
 ## 2026-10-07 (Wednesday)
 
-*Hours worked: 4.75h · 43 commits · 95 messages*
+*Hours worked: 8.75h (8:20am–4:58pm) · 43 commits · 95 messages*
 
 **Summary:** Search hit 91% relevant and Research Buddy cut to 1 unsupported claim in 401. GrantRadar was built from scratch, and NomBot got the landscape analysis panel and a results-page redesign.
 
