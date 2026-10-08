@@ -29,7 +29,7 @@ Daily summary of NomBot and GrantRadar work, written each night from Claude Code
 - [Admin] **Private repo** for the work log, so chat summaries aren't visible to the org.
 
 **Next**
-- [NomBot] **Cloud launch** (Oct 19–25): OpenAI embeddings, Supabase + Vercel, all 50 states.
+- [NomBot] **Cloud launch** (Oct 19–25): Supabase + Vercel, all 50 states.
 - [GrantRadar] **Merge NomBot into GrantRadar** and resolve the Buddy component conflicts.
 - [Admin] **Competitor scan and user testing** with the two audiences, per the demo feedback.
 
