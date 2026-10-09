@@ -4,39 +4,32 @@ Daily summary of NomBot and GrantRadar work, written each night from Claude Code
 
 ## 2026-10-08 (Thursday)
 
-*Hours worked: 12h (8:22am–8:16pm) · 24 commits · 112 messages*
+*Hours worked: 5.25h (3:00pm–8:16pm) · 24 commits · 113 messages*
 
-**Summary:** Billed 17.75 hrs to Protocol Z, set up four team workspaces, and added FLAG diligence, a Gaps map and a landscape panel across NomBot and GrantRadar.
+**Summary:** Shipped NomBot's 990-based diligence and Census gap map and GrantRadar's landscape panel and funder-view check, and set up the Figma, Supabase and PostHog workspaces for Keith.
 
 **Done**
-- [Admin] **Invoice** reissued to Protocol Z, Inc.: 17.75 hrs × $60 = $1,065, with the log set to 8.75 h for 10/07.
-- [Admin] **Software instructions doc** rewritten for Vercel, Figma, Supabase and PostHog, with links tested, status lines and a cost summary (about $61–81/month to start).
-- [Admin] **Workspaces** created: Figma team (free), Supabase org and PostHog org, with Keith invited.
-  - Supabase and PostHog invites are as Owner.
-  - Vercel is not created, because it needs a card even for the trial.
-- [NomBot] **Source panel** is now one panel with a tab per source, and Close works in one click.
-- [NomBot] **Result rows** decluttered to name, a grey facts line, one "Mission:" line and finance tags. Funder lists are one line each, with details on hover.
-- [NomBot] **FLAG diligence data:** `filing_flag` loaded from 50,971 filings in 53 s. The org page now has leadership with pay, board and audit checks, year-over-year figures, health signals, government grants split out and a spending split.
-- [NomBot] **Finances tab and tags** (Growing, Shrinking, Deficit, Thin reserves, Donor-reliant) use the 990 XML. Hidden gems and Themes/Not-yet-funded org links were added.
-- [NomBot] **Gaps map** built on Census data for 3,144 counties.
-  - "50 of 65" high-poverty counties in the 5 loaded states have no match.
-  - Poverty popovers, hover-to-highlight, and click-a-county to list its orgs are in.
-  - The high-poverty cutoff is relative to the map (15.4% for Ohio).
-- [GrantRadar] **Landscape panel** added: AI overview, Breakdown, Ask, Calendar and Peers. Test search: 63 foundations, 32 open to applications, $1K–$203K grants with a $10K median.
-- [GrantRadar] **Standalone app:** no NomBot toggle, titled GrantRadar, home is `/grants`, radar tab icon, sidebar header fixed, quieter funder rows.
-- [GrantRadar] **"How funders will see you"** check on your own 990 at `/grants/check`, using the shared `lib/flag.ts` rules. Foundation EINs now get a clear 990-PF explanation.
-- [Admin] **Docs and tracking:** both READMEs updated, GitHub Issue #1 (NomBot) refreshed, Issue #2 (GrantRadar) created, architecture diagram redrawn, and a Claude web handoff prompt written for the slides.
+- [NomBot] **Source panel** now has one panel with a tab per source, so it closes in one click. Before, each source added a history step and needed two closes.
+- [NomBot] **Result rows** were cut to name, one grey facts line, a one-line "Mission:" and finance tags. Source links show only on hover. Funders and "Not yet funded" lists are one line each, with details on hover.
+- [NomBot] **FLAG diligence data:** new `filing_flag` table loaded from 990 XML (50,971 filings in 53 s). It covers prior-year figures, board independence, audit, insider flags, leadership and pay. It found 3,686 boards under half independent and 651 filers reporting insider loans.
+- [NomBot] **Org page** now has year-over-year figures, a leadership and governance section, and colored financial-health signals. Government grants are split out (Manna Meal: 41% government) and the spending split is shown (87% programs, 7% admin, 6% fundraising). Officer titles are cleaned, so "CHIEF EXEC O" reads "Chief Executive Officer".
+- [NomBot] **Finances tab** has Growing, Shrinking, Deficit, Thin reserves and Donor-reliant rows (e.g. Donor-reliant 77 of 150). Click a row to list the organizations behind it. Result tags, the tab and the AI overview share one rule set, now based on the 990 XML.
+- [NomBot] **Gaps map** uses Census county poverty for 3,144 counties (migrations 010 and 011). The map shows orange for high poverty with no match and green for a match. The county list highlights on hover, and the "% poverty" popover shows people count and the U.S. rate. Clicking a county in the Organizations view lists its orgs.
+- [NomBot] **Gap cutoff** is now relative to the map, so Ohio uses 15.4% and shows 8 of 22 counties as gaps. Gaps are limited to the 5 loaded states, which changed the headline from 68 of 83 to 50 of 65.
+- [GrantRadar] **Landscape panel** beside the matches has Overview, Breakdown, Peers, Ask (grant ranges by budget) and Calendar (deadline months). Funder names in the overview are now full names.
+- [GrantRadar] **"How funders will see you"** at `/grants/check` runs the shared `lib/flag.ts` rules on your own 990. It lists concerns with what to prepare. Foundations such as Kroger get an explanation, since they file a 990-PF.
+- [GrantRadar] **Standalone cleanup:** no NomBot toggle, pages titled GrantRadar, `/` redirects to `/grants`, sidebar header fixed on one row, radar tab icon, and a quieter funder-row right column. The architecture diagram was redrawn and the README updated.
+- [Admin] **Invoice and software setup:** invoice re-billed to Protocol Z, Inc. (17.75 hrs × $60 = $1,065, with 10/07 at 8.75 hrs). I created the Figma team, Supabase org and PostHog org and invited Keith. I rewrote the instructions doc for Vercel, Figma, Supabase and PostHog and added a cost summary. Progress trackers were updated (NomBot Issue #1, new GrantRadar Issue #2).
 
 **Decisions**
-- [Admin] **Vercel:** Keith creates the team on paid Pro (not the trial), because a trial allows only one Owner.
-- [Admin] **Figma:** Hunter creates the free team and Keith upgrades it, since admins can manage billing.
-- [NomBot] **Diligence uses fixed, visible rules** with no AI verdict. The "Weak" label and "How this is rated" were removed to cut clutter.
-- [NomBot] **Gaps** are limited to the 5 loaded states and use a relative cutoff, so counties outside our data and low-poverty states don't distort the view.
+- [Admin] **Vercel:** Keith creates the team on paid Pro, not the trial. A trial allows only one Owner, so Hunter could not be made Owner until after the trial.
+- [NomBot] **Diligence statuses** come from fixed, visible rules with no AI verdict, because the slides showed two AI tools rating the same filing differently.
+- [NomBot] **Weak/Medium/Strong label** and the "How this is rated" section were removed to cut clutter. The colored signals stay.
 
 **Next**
-- [Admin] **Keith** accepts the invites (Supabase by Oct 9), then upgrades the paid plans and creates the Vercel team.
-- [NomBot] **Open FLAG items:** "questions to ask", pay benchmark, big-donor concentration (Schedule A/B) and the revocation check.
-- [GrantRadar] **Leftovers:** keep short all-caps names like "HCA" intact, and retake the stale README screenshots.
+- [Admin] **Invites:** Keith accepts the Supabase invite by Oct 9, PostHog by Oct 11, and Figma, then Hunter makes him Admin. Keith creates the Vercel team.
+- [NomBot] **FLAG items not built:** questions to ask, pay benchmark, big-donor concentration (Schedule A), revocation check.
+- [GrantRadar] **Recipient linking** is at 51%, against a 70% goal.
 
 ## 2026-10-07 (Wednesday)
 
