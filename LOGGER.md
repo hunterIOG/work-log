@@ -2,6 +2,37 @@
 
 Daily summary of NomBot and GrantRadar work, written each night from Claude Code chats and git commits.
 
+## 2026-10-11 (Sunday)
+
+*Active in Claude Code: ~0h 35m (estimate) · 0 commits · 11 messages*
+
+**Summary:** Switched NomBot's scoring and overview to Sonnet 5.5 (median 14.0s → 7.2s, relevance still 91%), added clickable funder and peer lists, and ran an optical-alignment audit across both apps.
+
+**Done**
+- [NomBot] **Model switch:** relevance scoring and AI overview now use Sonnet 5.5. Eval median per question fell 14.0s → 7.2s. Relevance held at 91% on the 50-question eval. Overview on fresh searches: ~8–9s (was ~11s).
+- [NomBot] **Source panel push:** panel now pushes the org page left on screens wider than 900px instead of covering it. Panel is 340–440px on mid-size screens. Verified in a 1000px frame.
+- [NomBot] **Narrow-column layout:** financial health signals, Cash/Programs/Liabilities cards and money bars stack into one column while the panel is open.
+- [NomBot] **Gaps map hover:** hovering a county highlights its row in the list.
+- [NomBot] **Clickable Funders tab:** click a foundation to see city, application status, a green "Foundation profile →" link and the grantees in your results. Verified with Kroger Co Foundation (7 grantees).
+- [GrantRadar] **Clickable Peers tab:** click a group to see which funders paid it, largest first, each linking to its funder page. Verified with The First Step Home (12 funders). Funder names are black, green on hover.
+- [NomBot] **Optical alignment audit:** measured every page, then fixed the real offsets.
+  - Segmented-tab pill is now centred.
+  - Page titles share the left edge with the text below.
+  - Pill and button text is raised 0.75px.
+  - Source-panel labels share one edge.
+  - YoY table numbers reach the right edge.
+  - Sources list descriptions share a column.
+- [GrantRadar] **Optical alignment audit:** funder-card star centred (0.00px offset, was 2.75px high). "How to apply" labels sit on their first line. Shared fixes applied.
+- [Admin] **Commits pushed:** NomBot `9a7caef`, `5f395dc`, `8570dff`, `74aee2b`, `bdfb5c8`. GrantRadar `bbf79f5`, `16fd4c4`. Eval report saved at `eval/results/2026-10-11-23-55.md`.
+
+**Decisions**
+- [NomBot] **Sonnet only for scoring and overview:** parsing and Research Buddy stay on Opus. This keeps quality while cutting latency.
+- [NomBot] **Subpixel nudges skipped:** only offsets that were consistently ~0.9px were corrected. Two nudges that overshot were removed.
+
+**Next**
+- [NomBot] **Search speed:** dropping written reasons from scoring and pre-warming common searches are still open options.
+- [Admin] **Unchecked in Chrome:** the black/green link colour changes were not visually verified.
+
 ## 2026-10-08 (Thursday)
 
 *Hours worked: 5.25h (3:00pm–8:16pm) · 24 commits · 113 messages*
