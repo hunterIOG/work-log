@@ -4,32 +4,34 @@ Daily summary of NomBot and GrantRadar work, written each night from Claude Code
 
 ## 2026-10-12 (Monday)
 
-*Hours worked: 2h · 0 commits · 6 messages*
+*Hours worked: 2h · 0 commits · 8 messages*
 
-**Summary:** Fixed bugs, demoed the project at Keith's meeting, and wrote a Claude API wallet setup guide for Keith.
+**Summary:** Set up a Claude API wallet guide for Keith in the fellowship doc, then logged 2h for bug fixes and Keith's meeting demo, plus 3h of presentation prep for Oct 11.
 
 **Done**
-- [NomBot] **Bug fixes.**
-- [Admin] **Keith's meeting:** attended and **demoed the project**.
-- [Admin] **Claude API wallet guide** written for Keith: sign in, buy **$150** in credits ($100 Hunter, $50 Muneeb), optional auto-reload, invite members.
-- [Admin] **Google Doc section** added under the Claude Token lines, with a five-step list, **Status** and **Cost** lines.
-- [Admin] **Section format** reworked to match PostHog: same heading style and size, with Keith @-mentioned.
-- [Admin] **Roles** set in the guide: Hunter as **Admin**, Muneeb as **Developer**.
+- [Admin] **Claude API wallet guide** added to the fellowship software doc. It has 5 steps for Keith: sign in, buy $150 of credits ($100 Hunter, $50 Muneeb), optional auto-reload, invite Hunter as Admin and Muneeb as Developer.
+- [Admin] **Wallet section formatting** now matches the PostHog section: same heading style and size, with purpose line, Status, steps and Cost.
+- [Admin] **Oct 12 hours** corrected to 2h, covering bug fixes and Keith's meeting, where the project was demoed. The earlier 8.25h clock span was removed.
+- [NomBot] **Bug fixes** logged for the day. The tag is unconfirmed and may belong to GrantRadar.
+- [Admin] **Oct 11 hours** raised to 3.5h with a 3h "Presentation preparation" bullet. The change is local only.
 
 **Decisions**
-- [Admin] **Auto-reload** left optional, so credits can be approved manually if preferred.
+- **Hours entry:** the 2h manual entry replaced the clock-based total, since it reflects the actual work.
+- **Auto-reload:** left optional in the guide, so Keith can approve top-ups himself if he prefers.
 
 **Next**
-- [Admin] **Tyler** has no amount in the doc and isn't invited. Confirm whether to add them.
-- [Admin] **TOKEN ESTIMATE** section is still empty. Estimate API costs for NomBot and GrantRadar.
+- **Push Oct 11 log:** the commit was blocked by a permission check and needs a retry.
+- **Tyler's amount:** the doc lists no amount for Tyler, and the guide doesn't invite them.
+- **Token estimate:** the "TOKEN ESTIMATE" section in the doc is still empty.
 
 ## 2026-10-11 (Sunday)
 
-*Active in Claude Code: ~0h 35m (estimate) · 0 commits · 11 messages*
+*Hours worked: 3.5h · 0 commits · 11 messages*
 
 **Summary:** Switched NomBot's scoring and overview to Sonnet 5.5 (median 14.0s → 7.2s, relevance still 91%), added clickable funder and peer lists, and ran an optical-alignment audit across both apps.
 
 **Done**
+- [Admin] **Presentation preparation:** 3h.
 - [NomBot] **Model switch:** relevance scoring and AI overview now use Sonnet 5.5. Eval median per question fell 14.0s → 7.2s. Relevance held at 91% on the 50-question eval. Overview on fresh searches: ~8–9s (was ~11s).
 - [NomBot] **Source panel push:** panel now pushes the org page left on screens wider than 900px instead of covering it. Panel is 340–440px on mid-size screens. Verified in a 1000px frame.
 - [NomBot] **Narrow-column layout:** financial health signals, Cash/Programs/Liabilities cards and money bars stack into one column while the panel is open.
