@@ -145,3 +145,37 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 - **Commit the NomBot favicon**, which is built but not yet pushed.
 - **Cloud deploy** is scheduled for Oct 19–25.
 
+## 2026-09-30 (Wednesday)
+
+*Active in Claude Code: ~0h 48m (estimate) · 3 commits · 13 messages*
+
+**Summary:** Created the imnet repo, pivoted its scope, and scaffolded Phase I (the network) on `dev` with CI passing.
+
+**Done**
+- [imnet] **GitHub repo** `institute-on-generosity/imnet` created (private) after switching `gh` to the `hunterIOG` account. `main` holds the brief, and `dev` is pushed.
+- [imnet] **Workflow scope** added to the `hunterIOG` token, so GitHub Actions CI can be pushed.
+- [imnet] **Architecture proposal** written: one Next.js + Supabase app, Postgres row-level security by org, and Claude for the AI assists.
+- [imnet] **Scope pivot** worked through after the Iteration 1 update. It moved the product from a story engine for nonprofits to a consumer discovery network.
+- [imnet] **Phase I scaffold** pushed to `dev` (commit "Scaffold Phase I: the network"):
+  - Explore and Following feeds with cause filters.
+  - Org profiles, post pages and donor profiles.
+  - Magic-link sign-in.
+  - Org claim flow, post composer and profile editor.
+  - Admin queue and 30-day org stats.
+  - Private "this moved me" signal.
+- [imnet] **AI assists** added: "Draft from website" fills the profile form, and staff must edit and save. It is limited to that org's staff so other users can't spend Claude credits.
+- [imnet] **Security rules** checked in PGlite (Postgres in WebAssembly) with stand-ins for Supabase auth and storage. They held in every case tried: signed-out users can't post, users can't make themselves admin, staff can't post for another org, and images without consent are rejected.
+- [imnet] **CI** passes (lint, typecheck, tests, build). 14 tests on video-link parsing pass.
+- [imnet] **Docs** added: the vision doc (Iteration 1 text) and a rewritten README.
+- [Admin] **Plugin check** requested for Pro Mi. The messages don't show the result.
+
+**Decisions**
+- [imnet] **Phase split:** Phase I builds the network and Phase II builds the media tools, so the place exists before the tools that fill it.
+- [imnet] **Repo name** is `imnet` (impact-network). It was chosen over `impact-ledger` and `gratnet`. GratNet could be misread as gratification, which clashes with the no-dopamine-loops principle.
+- [imnet] **Reactions and comments:** a single private "this moved me" signal, with comments off in Phase I. This follows the no-dopamine rule, and moderation costs a solo builder a lot.
+- [imnet] **Fabrication rule:** Phase I posts are written by people. The principle becomes verified orgs plus impact claims linked to a source.
+
+**Next**
+- [imnet] **Supabase project:** create one so the app can run against a real database. It hasn't been tested on one yet.
+- [imnet] **Phase II questions:** decide Inngest vs. Supabase queues, and whether to delete original files after redaction.
+
