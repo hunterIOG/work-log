@@ -167,7 +167,6 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 - [imnet] **Security rules** checked in PGlite (Postgres in WebAssembly) with stand-ins for Supabase auth and storage. They held in every case tried: signed-out users can't post, users can't make themselves admin, staff can't post for another org, and images without consent are rejected.
 - [imnet] **CI** passes (lint, typecheck, tests, build). 14 tests on video-link parsing pass.
 - [imnet] **Docs** added: the vision doc (Iteration 1 text) and a rewritten README.
-- [Admin] **Plugin check** requested for Pro Mi. The messages don't show the result.
 
 **Decisions**
 - [imnet] **Phase split:** Phase I builds the network and Phase II builds the media tools, so the place exists before the tools that fill it.
