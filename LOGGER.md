@@ -2,6 +2,25 @@
 
 Daily summary of NomBot and GrantRadar work, written each night from Claude Code chats and git commits.
 
+## 2026-10-12 (Monday)
+
+*Hours worked: 8.25h (3:11pm–11:19pm) · 0 commits · 6 messages*
+
+**Summary:** Wrote a Claude API wallet setup guide for Keith and added it to the fellowship instructions doc.
+
+**Done**
+- [Admin] **Claude API wallet guide** written for Keith: sign in, buy **$150** in credits ($100 Hunter, $50 Muneeb), optional auto-reload, invite members.
+- [Admin] **Google Doc section** added under the Claude Token lines, with a five-step list, **Status** and **Cost** lines.
+- [Admin] **Section format** reworked to match PostHog: same heading style and size, with Keith @-mentioned.
+- [Admin] **Roles** set in the guide: Hunter as **Admin**, Muneeb as **Developer**.
+
+**Decisions**
+- [Admin] **Auto-reload** left optional, so credits can be approved manually if preferred.
+
+**Next**
+- [Admin] **Tyler** has no amount in the doc and isn't invited. Confirm whether to add them.
+- [Admin] **TOKEN ESTIMATE** section is still empty. Estimate API costs for NomBot and GrantRadar.
+
 ## 2026-10-11 (Sunday)
 
 *Active in Claude Code: ~0h 35m (estimate) · 0 commits · 11 messages*
