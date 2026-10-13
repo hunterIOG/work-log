@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write one day's entry in LOGGER.md from that day's NomBot Claude Code chats and git commits.
+"""Write one day's entry in LOGGER.md from that day's NomBot, GrantRadar and imnet Claude Code chats and git commits.
 
   python3 daily_log.py                 # today (local time), commit and push
   python3 daily_log.py 2026-10-06      # a given day
@@ -21,21 +21,21 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = os.path.join(HERE, "LOGGER.md")
 HOURS = os.path.join(HERE, "hours.json")  # {"2026-10-06": 4}: hours you report; shown instead of the estimate
 CLOCK = os.path.join(HERE, "clock.json")  # {"2026-10-08": {"start": "09:12", "end": "12:40"}}: written by --end
-# Chats in any NomBot or GrantRadar folder (including the NomBot-grantradar worktree)
+# Chats in any NomBot, GrantRadar or imnet folder (imnet lives under ~/Desktop/IOG)
 PROJECTS = os.path.expanduser("~/.claude/projects")
-MATCH = re.compile(r"nombot|grantradar", re.I)
-REPOS = [os.path.expanduser(p) for p in ("~/Desktop/NomBot", "~/Desktop/generosity-data")]
+MATCH = re.compile(r"nombot|grantradar|imnet|-IOG(-|$)", re.I)
+REPOS = [os.path.expanduser(p) for p in ("~/Desktop/NomBot", "~/Desktop/generosity-data", "~/Desktop/IOG/imnet")]
 IDLE = 15 * 60          # gaps longer than this don't count as active time
 MSG_CAP, TOTAL_CAP = 1500, 120_000
-HEADER = "# Work log\n\nDaily summary of NomBot and GrantRadar work, written each night from Claude Code chats and git commits.\n"
+HEADER = "# Work log\n\nDaily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.\n"
 
-PROMPT = """Below are one day's Claude Code chat messages (user and assistant) and git commits for the NomBot and GrantRadar projects (Institute on Generosity AI Fellowship).
+PROMPT = """Below are one day's Claude Code chat messages (user and assistant) and git commits for the NomBot, GrantRadar and imnet projects (Institute on Generosity AI Fellowship).
 Write a work-log entry in Markdown for {day}. Output ONLY these sections, no title, no preamble:
 
 **Summary:** one sentence.
 
 **Done**
-- 3-12 bullets of concrete things built, fixed, measured or decided (lead with the result, include numbers such as eval scores). Start each bullet with its project in brackets: [NomBot], [GrantRadar] or [Admin] (invoices, fellowship sessions, tooling).
+- 3-12 bullets of concrete things built, fixed, measured or decided (lead with the result, include numbers such as eval scores). Start each bullet with its project in brackets: [NomBot], [GrantRadar], [imnet] (Impact Network, "LinkedIn for generosity") or [Admin] (invoices, fellowship sessions, tooling).
 
 **Decisions**
 - 0-4 bullets: choices made and why. Omit the section if none.
@@ -163,7 +163,7 @@ def main():
     msgs, active = collect(day)
     cms = commits(day)
     if not msgs and not cms:
-        print(f"{day}: no NomBot activity; nothing logged")
+        print(f"{day}: no NomBot, GrantRadar or imnet activity; nothing logged")
         return
     if "--end" in sys.argv:
         clock_out(day, msgs)

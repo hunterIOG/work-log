@@ -1,6 +1,6 @@
 # Work log
 
-Daily summary of NomBot and GrantRadar work, written each night from Claude Code chats and git commits.
+Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
 ## 2026-10-12 (Monday)
 
