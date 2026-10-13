@@ -13,14 +13,12 @@ Daily summary of NomBot and GrantRadar work, written each night from Claude Code
 - [Admin] **Wallet section formatting** now matches the PostHog section: same heading style and size, with purpose line, Status, steps and Cost.
 - [Admin] **Oct 12 hours** corrected to 2h, covering bug fixes and Keith's meeting, where the project was demoed. The earlier 8.25h clock span was removed.
 - [NomBot] **Bug fixes** logged for the day. The tag is unconfirmed and may belong to GrantRadar.
-- [Admin] **Oct 11 hours** raised to 3.5h with a 3h "Presentation preparation" bullet. The change is local only.
 
 **Decisions**
 - **Hours entry:** the 2h manual entry replaced the clock-based total, since it reflects the actual work.
 - **Auto-reload:** left optional in the guide, so Keith can approve top-ups himself if he prefers.
 
 **Next**
-- **Push Oct 11 log:** the commit was blocked by a permission check and needs a retry.
 - **Tyler's amount:** the doc lists no amount for Tyler, and the guide doesn't invite them.
 - **Token estimate:** the "TOKEN ESTIMATE" section in the doc is still empty.
 
