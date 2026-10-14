@@ -4,8 +4,14 @@
   python3 daily_log.py                 # today (local time), commit and push
   python3 daily_log.py 2026-10-06      # a given day
   python3 daily_log.py --dry-run       # print the entry, change nothing
-  python3 daily_log.py --end           # end today: hours = first message today -> now; log and push
-  python3 daily_log.py --end --break=30   # same, minus a 30-minute break
+  python3 daily_log.py --end           # end today: hours = first message -> now, minus inactive time; log and push
+  python3 daily_log.py --end --break=30   # same, minus a 30-minute break as well
+  python3 daily_log.py --end --idle=20    # count gaps over 20 minutes as inactive (default 15)
+  python3 daily_log.py --preview       # show today's hours and inactive gaps so far; changes nothing
+  python3 daily_log.py --end --add=45  # add back 45 minutes of offline work (a meeting, a call) that left no chat activity
+
+Inactive time: any stretch longer than the idle limit with no chat activity at all (no message from you,
+no reply, tool call or task notice from Claude), including the gap from the last activity to clocking out.
 
 Runs nightly via launchd (com.hunterzhang.worklog.plist). Re-running a day replaces its entry.
 """
@@ -25,7 +31,7 @@ CLOCK = os.path.join(HERE, "clock.json")  # {"2026-10-08": {"start": "09:12", "e
 PROJECTS = os.path.expanduser("~/.claude/projects")
 MATCH = re.compile(r"nombot|grantradar|imnet|-IOG(-|$)", re.I)
 REPOS = [os.path.expanduser(p) for p in ("~/Desktop/NomBot", "~/Desktop/generosity-data", "~/Desktop/IOG/imnet")]
-IDLE = 15 * 60          # gaps longer than this don't count as active time
+IDLE = 15 * 60          # gaps longer than this don't count as active time (--idle=N minutes overrides)
 MSG_CAP, TOTAL_CAP = 1500, 120_000
 HEADER = "# Work log\n\nDaily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.\n"
 
@@ -93,7 +99,13 @@ def collect(day: dt.date):
     msgs.sort(key=lambda m: m[0])
     times.sort()
     active = sum(min((b - a).total_seconds(), IDLE) for a, b in zip(times, times[1:]) if (b - a).total_seconds() <= IDLE)
-    return msgs, active
+    return msgs, active, times
+
+
+# Gaps with no chat activity longer than `idle` seconds, between `start` and `end` (both ends count).
+def idle_gaps(times, start, end, idle):
+    marks = [start] + [t for t in times if start <= t <= end] + [end]
+    return [(a, b) for a, b in zip(marks, marks[1:]) if (b - a).total_seconds() > idle]
 
 
 def commits(day: dt.date) -> list[str]:
@@ -141,8 +153,9 @@ def save(path, data: dict):
         f.write("\n")
 
 
-# Hours = first message of the day -> the moment you end the day, rounded to the nearest quarter hour.
-def clock_out(day: dt.date, msgs):
+# Hours = first message of the day -> the moment you end the day, minus inactive gaps and any break,
+# rounded to the nearest quarter hour.
+def clock_out(day: dt.date, msgs, times):
     if day != dt.date.today():
         raise SystemExit("--end only works for today")
     starts = [t for t, role, _ in msgs if role == "user"]
@@ -150,27 +163,39 @@ def clock_out(day: dt.date, msgs):
         raise SystemExit("No messages today: nothing to clock")
     start, end = starts[0], dt.datetime.now().astimezone()
     brk = next((int(a.split("=")[1]) for a in sys.argv if a.startswith("--break=")), 0)  # minutes off the clock
-    hours = round(((end - start).total_seconds() - brk * 60) / 900) / 4
-    save(CLOCK, {**load(CLOCK), str(day): {"start": f"{start:%-I:%M%p}".lower(), "end": f"{end:%-I:%M%p}".lower()}})
-    save(HOURS, {**load(HOURS), str(day): hours})
-    print(f"{day}: {start:%-I:%M%p} -> {end:%-I:%M%p}" + (f" minus {brk} min break" if brk else "") + f" = {hours:g}h")
+    idle = next((int(a.split("=")[1]) * 60 for a in sys.argv if a.startswith("--idle=")), IDLE)
+    gaps = idle_gaps(times, start, end, idle)
+    away = sum((b - a).total_seconds() for a, b in gaps)
+    extra = next((int(a.split("=")[1]) for a in sys.argv if a.startswith("--add=")), 0)  # offline work: meetings, calls
+    hours = round(max(0, (end - start).total_seconds() - away - brk * 60 + extra * 60) / 900) / 4
+    if "--preview" not in sys.argv:  # --preview: show the math, save nothing
+        save(CLOCK, {**load(CLOCK), str(day): {"start": f"{start:%-I:%M%p}".lower(), "end": f"{end:%-I:%M%p}".lower(),
+                                               "inactive_min": round(away / 60), "break_min": brk, "offline_min": extra}})
+        save(HOURS, {**load(HOURS), str(day): hours})
+    print(f"{day}: {start:%-I:%M%p} -> {end:%-I:%M%p} = {(end - start).total_seconds() / 3600:.2f}h on the clock")
+    for a, b in gaps:
+        print(f"  inactive {a:%-I:%M%p} -> {b:%-I:%M%p} ({round((b - a).total_seconds() / 60)} min)")
+    print(f"  minus {round(away / 60)} min inactive" + (f" and {brk} min break" if brk else "") + (f", plus {extra} min offline work" if extra else "") + f" = {hours:g}h worked")
 
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     dry = "--dry-run" in sys.argv
     day = dt.date.fromisoformat(args[0]) if args else dt.date.today()
-    msgs, active = collect(day)
+    msgs, active, times = collect(day)
     cms = commits(day)
     if not msgs and not cms:
         print(f"{day}: no NomBot, GrantRadar or imnet activity; nothing logged")
         return
-    if "--end" in sys.argv:
-        clock_out(day, msgs)
+    if "--end" in sys.argv or "--preview" in sys.argv:
+        clock_out(day, msgs, times)
+        if "--preview" in sys.argv:
+            return
     reported = load(HOURS).get(str(day))
     span = load(CLOCK).get(str(day))
     h, m = divmod(round(active / 60), 60)
-    time = (f"Hours worked: {reported:g}h" + (f" ({span['start']}–{span['end']})" if span else "")) if reported is not None \
+    away = f", {span['inactive_min']} min inactive removed" if span and span.get("inactive_min") else ""
+    time = (f"Hours worked: {reported:g}h" + (f" ({span['start']}–{span['end']}{away})" if span else "")) if reported is not None \
         else f"Active in Claude Code: ~{h}h {m:02d}m (estimate)"
     meta = f"*{time} · {len(cms)} commits · {sum(1 for _, r, _ in msgs if r == 'user')} messages*"
     entry = f"## {day} ({day:%A})\n\n{meta}\n\n{summarize(day, msgs, cms)}\n"
