@@ -2,6 +2,23 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-14 (Wednesday)
+
+*Active in Claude Code: ~0h 03m (estimate) · 0 commits · 3 messages*
+
+**Summary:** Updated the Tyler brief with nationwide GrantRadar coverage and vector-search stats, and confirmed Oct 13 hours were logged.
+
+**Done**
+- [GrantRadar] **Tyler brief** updated at the same artifact link. The header now says "every US nonprofit and foundation", with stats of 1.97M nonprofits and 513,813 990 returns.
+- [GrantRadar] **Vector search** now covers 513,813 embedded filings at full precision.
+- [GrantRadar] **Index** is on the newest filing per org (473,474 orgs).
+- [GrantRadar] **Embedding run** used the Mac's GPU and took about 2 hours.
+- [GrantRadar] **Coverage limits** documented in the brief. Only the 473K of 1.97M nonprofits that e-file their 990 have mission text to search. 57% of grant recipients matched by name nationwide.
+- [Admin] **Oct 13 hours** confirmed logged and pushed as `f014182`: 11:37am to 8:44pm, 9.0 hours. The user or the nightly job logged them, not the assistant.
+
+**Next**
+- [GrantRadar] **Share** the Tyler brief from the artifact's Share menu. It is still private.
+
 ## 2026-10-13 (Tuesday)
 
 *Hours worked: 9h (11:37am–8:44pm) · 0 commits · 113 messages*
