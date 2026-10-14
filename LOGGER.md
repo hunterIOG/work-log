@@ -2,6 +2,42 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-13 (Tuesday)
+
+*Hours worked: 9h (11:37am–8:44pm) · 0 commits · 113 messages*
+
+**Summary:** Loaded every US nonprofit and three years of foundation grants into NomBot and GrantRadar, shipped the NomBot/GrantRadar Oct 12 meeting actionables, and built a LinkedIn-style imnet with about 20 new features.
+
+**Done**
+- [NomBot] **Deficit nuance** implemented: a one-year deficit is amber, red only when it repeats and is over 10%. A new "Questions to ask" box was added on org pages. GrantRadar's "How funders will see you" got the same advice.
+- [NomBot] **Org website link** added from each 990 (28,843 of 50,971 filings had one, before the national load). **Print memo** fits 2 pages. **Plain-language pass** done.
+- [NomBot] **"$1M or more" size filter** added for gift-size fit. Ohio food banks drop from 31 to 26 strong matches. The 50-question search eval was not re-run.
+- [NomBot] **Optical alignment audit** across every page in both apps: health dots, buttons, icons and logos now within 0.5px. Pushed.
+- [GrantRadar] **Giving circles** tab added, IRS-only: 145 circles in 38 states (was 15 in 5). Example: Impact 100 Owensboro, $258K in grants.
+- [NomBot] **National data load:** 1.97M nonprofits, 513,813 filings with new embeddings, and 4.84M grants across 3 years (135,408 foundations), 57% linked to a nonprofit. Both limits (5 states, one year) are gone.
+- [NomBot] **Speed fixes:** fuzzy grant matching cut from about 2 days to 97 minutes. Search table refresh cut from 40+ minutes to 2.5 minutes. A GrantRadar query cut from 15s to 32ms. NomBot search takes about 0.5s with a state and 3–6s nationwide.
+- [Admin] **Tyler briefing page** published with diagrams, source links and a vector-search section. **Work-log** extended to imnet, with the Sept 30 backfill and a stale bullet removed.
+- [imnet] **CONTEXT.md ledger** of dated features and fixes (F-/B- IDs) added. **RLS tests** moved into the repo and run in CI (all pass; each deliberately broken rule failed only its own test). shadcn moved to dev dependencies.
+- [imnet] **Brand layer and LinkedIn-style structure** built, with a 3-column home, boxed posts and org tabs. **Local Supabase** runs on Docker at port 3100. 16/16 end-to-end checks passed.
+- [imnet] **Multimedia feed:** 7 openly licensed Wikimedia photos plus 3 more videos, photo upload in the composer, and original logos for all orgs.
+- [imnet] **Features shipped:**
+  - team invites, notifications, impact-stats editor, edit/delete posts, logo upload, saved posts and share previews
+  - current needs, giving journal, thank-you notes, events with RSVPs and "I'm interested"
+  - LinkedIn-style comments with a comment preview in the feed, and an opt-in self-reported **Donor** badge
+  - analytics, search, profile tabs and avatars
+- [imnet] **Demo network** grown to 45 orgs and 1,000 people with about 2,570 comments. Final state: 116 unit and 56 e2e tests pass.
+- [imnet] **Security review** found one medium open redirect in sign-in. It is fixed with four lower-risk fixes, all tested.
+
+**Decisions**
+- [imnet] **Donor badge is opt-in and "self-reported"** because gifts are typed in by donors and the journal promises privacy.
+- [imnet] **Illustrated avatars instead of photos,** and original logos instead of real orgs' trademarks, to avoid impersonation and consent problems.
+- [imnet] **Copied LinkedIn's structure but not its like counts, comment counts or ranked feed,** to keep the no-public-counts rule.
+
+**Next**
+- [Admin] **Wednesday 3–4pm session:** write down architecture and technical questions.
+- [imnet] **Open product calls:** comment moderation ("Report comment"), a verified Donor badge via Every.org, and a Donate link for demo orgs.
+- [Admin] **Tyler brief** still carries the old 5-state and one-year limits and needs updating.
+
 ## 2026-10-12 (Monday)
 
 *Hours worked: 2h · 0 commits · 8 messages*
