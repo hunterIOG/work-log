@@ -6,32 +6,41 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 *Hours worked: 8h (7:13am–10:10pm, 421 min inactive removed) · 48 commits · 121 messages*
 
-**Summary:** Loaded the IRS 2026 batches and three new news and policy sources, benchmarked search (vectors beat OpenSearch BM25 on quality), raised grant linking to 58%, and shipped a large imnet round of profiles, calls to help, notifications and hierarchy fixes.
+**Summary:** Added the 2026 IRS batches and raised grant linking to 58%, loaded news and policy sources, benchmarked search, and rebuilt imnet's profiles, search, notifications and site hierarchy.
 
 **Done**
-- [NomBot] **Hybrid search reweighted:** keyword weight cut from 1 to 0.1, so relevant results in the top 10 rose from 65% to 69%. Vector scored 68%, Postgres keyword 57% and OpenSearch BM25 54%.
-- [NomBot] **OpenSearch BM25 benchmark:** indexed 1.97M orgs in 96 s (0.51 GB). BM25 answers in 25 ms, 40–70x faster than the other methods, but ranks lower on quality.
-- [NomBot] **Product features:** philanthropic leaders (person search and pages), a flipping home page, clickable Breakdown bars and clickable grantees. README counts updated after the IRS 2026 batches: 138,734 foundations, 5.35M grants, 785,772 filings.
-- [Admin] **IRS 2026 load:** added the 2026 batches (271,959 nonprofit filings), embedded them on the GPU and reloaded grants across 4 IRS years. Added a board-interlocks graph (migration 018).
-- [Admin] **News and policy sources (migration 019):** Federal Register (24,945 documents) and Congress.gov (19,611 bills, the full 119th Congress) are loaded, with a freshness log. The GDELT loader is built but the API is blocking this connection, so it has no data yet.
-- [Admin] **Grant matching:** linked rate rose from 55.9% to 58% (+88,266 grants, +$3.8B) using the IRS alternate-name rule (99% correct) and the same-ZIP rule (95%). Loaded alternate names for 414,641 orgs. Name containment was rejected at 78–83%.
-- [Admin] **Tyler brief:** added the database size and ETL explanation, "what we keep" and "what we leave out" tables, popovers, and tabs for Data sources, Cloud plan and Insights. Added the diagrams and the 12-category source breakdown. Copied the brief into generosity-data (`docs/shared-database-brief.html`).
-- [imnet] **Profiles and giving:** cover photos (61), org and donor About and Edit profile, donor posts and photos, volunteer hours confirmed by orgs, event pages and a Following page.
-- [imnet] **Calls and notifications:** calls for volunteers and donations with a Volunteer / Donate toggle on Home, search as you type, LinkedIn-style notifications and left column, and Comment and Moved counts on the action bar.
-- [imnet] **Speed and tests:** clicks now show the next page in 25–39 ms in the production build. Tests run on their own Supabase stack (78 e2e in about 1 min instead of 3).
-- [imnet] **Audit and hierarchy:** a 30-minute audit fixed one medium security issue (B-038) and bugs B-036, B-037 and B-039. Four hierarchy passes, an optical-alignment audit (every button within 1px) and a mid-width sideways-scroll fix. `dev` was merged to `main` through PRs #3, #5, #6 and #7.
-- [Admin] **Hours:** clocked out at 8h (07:13 to 22:10, minus inactive gaps). Asked to add 60 min for the AI Fellows meeting.
+- [GrantRadar] **2026 IRS load** finished: 271,959 nonprofit filings added and all grants reloaded across 4 IRS years (2023–2026).
+  - README counts: 785,772 filings, 138,734 foundations, 5.35M grants.
+- [NomBot] **Grant linking** rose from 55.9% to 58% (3.08M grants linked); the IRS alternate-name and ZIP rules added 88,266 grants (+$3.8B).
+  - Claude graded the rules on samples: alias 99%, ZIP 95%.
+  - The containment rule (78–83% on a fresh sample), nationally unique names and looser variants were rejected.
+- [NomBot] **Search benchmark**: hybrid reweighted (keyword weight 1 → 0.1), lifting top-10 relevance from 65% to 69%.
+  - Vector 68%, Postgres keyword 57%, OpenSearch BM25 54%.
+  - BM25 answers in 25 ms (40–70x faster) but is less relevant. OpenSearch indexed 1.97M orgs in 96 s (0.51 GB).
+- [NomBot] **New features**: person pages for philanthropic leaders, a flipping home page, clickable Breakdown bars, and every grantee clickable.
+- [Admin] **Data loads**: Federal Register (24,945 docs, 78 funding notices) and Congress.gov (19,611 bills, the full 119th Congress) loaded, with a freshness log and board-interlocks graph.
+  - The GDELT loader is built but the data isn't loaded; GDELT is blocking the connection.
+- [Admin] **Tyler brief** grew from one page to five tabs: Database, Data sources (12 categories), Cloud plan, Insights, and a "Keeping it fresh" plan.
+  - It now includes a Now/Next/Ultimate comparison, a staged diagram with popovers, and a copy in GitHub.
+- [imnet] **Profiles and demo content**: cover photos, org details, donor About and Edit profile, donor posts with photos, giving totals and volunteer hours.
+  - Orgs can confirm volunteer hours, and 24 donor photo posts were added.
+- [imnet] **Speed and navigation**: clicks now take 25–39 ms in a production build, via prefetch on intent, a router cache and streamed header and rails.
+  - Search runs as you type and covers events and needs.
+- [imnet] **Feed and notifications**: Calls to help (Volunteer/Donate toggle), a Following page, LinkedIn-style notifications and left column, person follows, and counts on the action bar (comments public, Moved private to the author).
+- [imnet] **Fixes and audits**: a 30-minute audit fixed one medium security issue (B-038) and B-036, B-037 and B-039.
+  - The optical-alignment audit brought 31 button styles within 1px, and the sideways scroll on mid-width screens is fixed.
+- [imnet] **Hierarchy passes**: four site-wide passes (type system, three text tones, fewer boxes, page leads) were pushed to `dev` and merged to `main`.
+- [imnet] **Tests** now run on their own Supabase stack and build, so they no longer touch the local database; the suite takes about 1 min instead of 3 (144 unit, 78 e2e).
 
 **Decisions**
-- [NomBot] **Keep vectors for search:** they lead BM25 on quality (74% vs 63% excluding questions BM25 can't handle). OpenSearch stays a benchmark baseline only.
-- [Admin] **95% bar for match rules:** a rule is applied only if it scores at least 95% on a sample it wasn't tuned on. Containment scored 98% on the tuning sample and 83% on a fresh one.
-- [Admin] **Cloud plan:** one Supabase Postgres with pgvector for all apps, and an embedding API in production instead of the Mac.
-- [imnet] **Moved count is private:** only the post's author, the org team and admins see it. The Comment count is public.
+- [NomBot] **Keep vector search** as the main method: it beats BM25 on quality even excluding the 9 questions BM25 can't handle (74% vs 63%). OpenSearch stays as a benchmark baseline.
+- [NomBot] **Apply a matching rule only if it scores ≥95%** on a sample it wasn't tuned on, because the containment rule scored 98% on its tuning sample and 83% on a fresh one.
+- [Admin] **Production plan**: use an embedding API plus Supabase pgvector, with no separate vector database, and keep the heavy ETL off the cloud.
+- [imnet] **Moved count** is visible only to the post's author, the org team and admins; comment counts are public.
 
 **Next**
-- [Admin] **Grade the Splink matches** (still training in the background) and link only if they clear 95%.
-- [Admin] **Retry GDELT** once the block clears.
-- [Admin] **Share the Tyler brief** with Tyler and confirm the 60 min meeting was added to today's hours.
+- [NomBot] **Splink** matching is still training in the background. Grade a fresh sample against the 95% bar before linking anything.
+- [Admin] **Pending items**: add 60 min for the AI Fellows meeting to today's hours (the clock-out logged 8h), share the Tyler brief with Tyler, and retry GDELT.
 
 ## 2026-10-13 (Tuesday)
 
