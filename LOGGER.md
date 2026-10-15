@@ -6,6 +6,8 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 *Hours worked: 9h (7:13am–10:16pm, 421 min inactive removed) · 48 commits · 121 messages*
 
+**Meeting:** 60 min with Josh McGrath (OpenAI), added to the hours above.
+
 **Summary:** Pushed the Tyler database brief to cover size, cloud plan, data sources and insights, loaded three new news and policy sources, raised grant linking to 58%, benchmarked search (vectors beat OpenSearch BM25 on quality), and ran four visual-hierarchy passes on imnet.
 
 **Done**
