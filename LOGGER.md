@@ -4,53 +4,33 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-14 (Wednesday)
 
-*Hours worked: 9h (7:13am–10:16pm, 421 min inactive removed) · 48 commits · 121 messages*
+*Hours worked: 9h (7:13am–10:16pm, 421 min inactive removed) · 0 commits · 122 messages*
 
-**Meeting:** 60 min with Josh McGrath (OpenAI), added to the hours above.
-
-**Summary:** Pushed the Tyler database brief to cover size, cloud plan, data sources and insights, loaded three new news and policy sources, raised grant linking to 58%, benchmarked search (vectors beat OpenSearch BM25 on quality), and ran four visual-hierarchy passes on imnet.
+**Summary:** Loaded the 2026 IRS filings, added Federal Register and Congress.gov data, rebuilt the Tyler brief with cloud and insights plans, and shipped a donor and nonprofit profile, hierarchy and speed overhaul in imnet.
 
 **Done**
-- [NomBot] **Hybrid search retuned:** keyword weight cut from 1 to 0.1, lifting top-10 relevance from 65% to 69%, the best of all methods.
-- [NomBot] **Search benchmark:** vector 68%, Postgres keyword 57%, OpenSearch BM25 54% relevant in the top 10. BM25 is 40–70x faster (25 ms) and a third the size. Vectors still win on quality when the 9 "required activity" questions are excluded (74% vs 63%).
-- [NomBot] **Philanthropic leaders and person pages:** person search and pages, a flipping home page, clickable grantees, and Breakdown bars that list their organizations.
-- [NomBot] **README counts updated** after the IRS 2026 batches: 138,734 foundations, 785,772 filings, 5.35M grants, 56% linked.
-- [Admin] **IRS 2026 load:** 271,959 nonprofit filings loaded and embedded, and the grant reload (now 4 IRS years) was started.
-- [Admin] **Grant matching:** the ZIP rule (95% correct) and IRS alternate names (99%) were applied. That added 88,266 grants and $3.8B, and the linked rate went from 55.9% to 57.6% (about 58% after refreshes).
-- [Admin] **Rules rejected after grading:** containment (78–83% on a fresh sample), nationally unique names, and the looser ZIP and alias versions (63–72%).
-- [Admin] **New data sources:** Federal Register (24,945 documents, 78 funding notices) and Congress.gov (19,611 bills) are loaded. A GDELT loader is built, but GDELT is blocking the connection, so no news is loaded yet.
-- [Admin] **Board interlocks and database brief:** board interlocks (migration 018), the freshness log (migration 019), grant overrides (migration 020), an OpenSearch loader, a health report, and the shared brief added to the repo.
-- [Admin] **Tyler brief:** size explanation, 990 fields kept vs left out, and tabs for Data sources, Cloud plan (now / next / ultimate) and Insights, plus popovers and a rewrite to about 650 words.
-- [imnet] **Volunteering and calls to help:**
-  - Orgs can confirm volunteer hours.
-  - Donor profiles show volunteer hours.
-  - There are new Call for volunteers and Call for donations post types with photos and video.
-  - Home has a Volunteer / Donate toggle card.
-- [imnet] **Profiles and navigation:**
-  - Profiles got covers, org details, a donor About section and Edit profile.
-  - Event pages and a Following page with expandable causes were added.
-  - Notifications are now LinkedIn-style.
-  - Navigation is now 25–39 ms per click in a production build.
-  - Search shows suggestions as you type.
-- [imnet] **Audit and fixes:**
-  - A security fix (B-038) and bug fixes B-036, B-037, B-039 and B-040 (mid-width and phone sideways scroll).
-  - An optical alignment pass left every button within 1px.
-  - Moved and comment counts were added to the action bar.
-  - Tests now use their own database, and the suite runs in about 1 min instead of 3.
-  - 144 unit and 78 e2e tests pass.
-- [imnet] **Visual hierarchy:** four site-wide passes (type system, three text tones, fewer boxes, page leads). All were merged to `main` through PRs #3, #5, #6 and #7, except the last, which is pushed to `dev`.
-- [Admin] **Hours logged:** clocked out at 8h active (7:13 AM to 10:10 PM). 60 min for the AI Fellows meeting was requested but not yet added.
+- [GrantRadar] **2026 IRS load** finished: 271,959 nonprofit filings added and grants reloaded across 4 IRS years (2023–2026). 225K orgs now have 2+ years of filings.
+- [GrantRadar] **Grant linking** rose from 55.9% to 58% (3.08M grants). The ZIP rule (95% correct) and IRS alternate names (99%) added 88,266 grants and $3.8B.
+- [GrantRadar] **Rejected matching rules** that missed the 95% bar: name containment (78–83% on a fresh sample), nationally unique names, and Splink (73% at best, 64 min training). Nothing from them was linked.
+- [GrantRadar] **Federal Register and Congress.gov** loaded: 24,945 documents (78 funding notices) and 19,611 bills, all of the 119th Congress. Migration 019 added a `source_updates` freshness log. GDELT is built but blocked by rate limits, so it has no data yet.
+- [NomBot] **Search benchmark** results: hybrid 69% relevant in top 10, vector 68%, Postgres keyword 57%, OpenSearch BM25 54%. BM25 is 40–70x faster (25 ms) and a third the size.
+- [Admin] **Tyler brief** rebuilt into 4 tabs (Database, Data sources, Cloud plan, Insights), cut from 1,152 to about 650 words. It covers 11 GB database sizing, popovers, 12 data-source categories, a cloud diagram and a tools list. A copy is in GitHub at `docs/shared-database-brief.html`.
+- [imnet] **Speed work**: caching, streaming header and skeletons, and prefetch brought clicks to 25–39 ms in a production build.
+- [imnet] **Profiles and Ways to help**: demo covers and details for orgs and donors, donor Edit profile, Volunteer/Donate "Calls to help" toggle, volunteer hours confirmed by orgs, and LinkedIn-style Following and notifications.
+- [imnet] **Four visual hierarchy passes** (type scale, text tones, layout, page leads) plus an optical-alignment audit that brought every button within 1px.
+- [imnet] **Audit fixes** B-036 to B-040, including a medium security bug where users could date posts 2099 to pin them on top. Tests now run on their own Supabase stack, in about 1 min instead of 3. 144 unit and 78 e2e tests pass.
+- [imnet] **Moved and comment counts** added: comment count is public and Moved count is private to the author and org team. PRs #4 to #8 merged to `main`.
 
 **Decisions**
-- [NomBot] **Keep vector search.** OpenSearch stays a benchmark baseline, and a fast BM25 first pass is an option later if speed matters more.
-- [Admin] **Cloud plan:** Supabase Postgres with pgvector as the one shared database. An embedding API in production and half-precision vectors for each org's newest filing only.
-- [Admin] **Grade every matching rule on a fresh sample.** Only rules at 95% or better are applied, because the containment filters tuned on one sample scored 83% on a fresh one.
-- [imnet] **Moved count is private** to the post's author, the org team and admins. The comment count is public.
+- [NomBot] **Keep vectors** for search and keep OpenSearch only as a benchmark baseline, since vectors win on quality.
+- [GrantRadar] **95% accuracy bar** on a fresh, untuned sample before applying any match rule.
+- [Admin] **Production embeddings via API** (OpenAI or Voyage) on Supabase with pgvector, because a Mac cannot serve live search.
+- [imnet] **Moved count is private** to the post's author and org team (decision 0015).
 
 **Next**
-- [Admin] **Splink** is training in the background. Grade its matches against the 95% bar before linking anything.
-- [Admin] **Add 60 min** for today's meeting, then retry the GDELT load.
-- [Admin] **Update numbers** in the Tyler brief and READMEs after the 2026 grant reload finishes.
+- [GrantRadar] **Free matching options**: reuse trusted links across years and funders, and add "doing business as" names. Decide whether to commit the rejected Splink script.
+- [GrantRadar] **GDELT** retry once the block clears.
+- [Admin] **Share** the Tyler brief with Tyler.
 
 ## 2026-10-13 (Tuesday)
 
