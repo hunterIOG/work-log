@@ -10,5 +10,12 @@
   "2026-10-13": {
     "start": "11:37am",
     "end": "8:44pm"
+  },
+  "2026-10-14": {
+    "start": "7:13am",
+    "end": "10:10pm",
+    "inactive_min": 421,
+    "break_min": 0,
+    "offline_min": 0
   }
 }
