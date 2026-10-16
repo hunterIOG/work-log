@@ -6,6 +6,8 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 *Hours worked: 5.75h (9:12am–11:36pm, 558 min inactive removed) · 23 commits · 98 messages*
 
+**Meeting:** 40 min with Kate (12:00–12:40 pm), added to the hours above.
+
 **Summary:** Grant-link rate rose from 57.6% to 64.0%, NomBot got an Insights tab, and imnet got donations, communities, maps and IRS checks.
 
 **Done**
