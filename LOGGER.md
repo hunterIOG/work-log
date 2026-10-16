@@ -2,6 +2,43 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-15 (Thursday)
+
+*Hours worked: 5.75h (9:12am–11:36pm, 558 min inactive removed) · 23 commits · 98 messages*
+
+**Summary:** Grant-link rate rose from 57.6% to 64.0%, NomBot got an Insights tab, and imnet got donations, communities, maps and IRS checks.
+
+**Done**
+- [NomBot] **Insights tab** shipped with 32 verified patterns. Each card has a chart, method, CSV/PNG/SVG export and a saved report. Pushed as `7b00af3`.
+- [NomBot] **Funding by theme** now shows the median per organization, with the least-funded themes flagged. **Track record** (years tax-exempt) is in Overview and Breakdown.
+- [NomBot] **Claude client** accepts an optional workspace ID header, so user-level API keys work. A working key was verified.
+- [GrantRadar] **School districts and colleges** now show as recipients on funder pages. README updated to 64% linked.
+- [GrantRadar] **Grant link rate** went from 57.6% to 64.0% of grants. Dollar coverage went from about 47% to 57.4%.
+  - "Doing business as" names added 62.6K grants (97% right).
+  - National charities added 54K grants (95%).
+  - School districts and colleges added 39K grants (100%).
+  - Claude picks added 155K grants (94.9%) in round 1 and 104K (93%) in round 2.
+  - Donor-advised fund sponsors, top names and public universities are hand-linked.
+- [GrantRadar] **Wrong links removed:** about 100K from two fuzzy re-checks, plus 24K exact-name links on widely shared names (graded 14% right).
+- [GrantRadar] **Board interlocks:** low-confidence person matches improved from 53% to 88% right. High-confidence pairs stay at 100%.
+- [GrantRadar] **Data fixes:** the random "latest filing" pick is fixed (migration 028). The Insights miner is committed (`4e13f06`).
+- [imnet] **Donations in test mode** work from org pages, donation calls and the Calls to help card. No real money moves and no card numbers are stored.
+- [imnet] **Communities with group chats and DMs.** An anti-spam rule limits DMs to shared-community members or followers. Unread shows as a quiet dot, not a count.
+- [imnet] **Near you map** shows volunteering, events, communities, nonprofits and foundations. Types have distinct pins, a legend and list tags. Communities have their own icons.
+- [imnet] **Claims are checked against IRS records.** Org profiles have a Public filings card. Pushed as `7fc4576` (163 unit, 83 e2e tests pass).
+- [imnet] **Dev to main:** PRs #9, #10 and #11 merged.
+- [Admin] **Kate meeting:** 40 minutes, 12:00–12:40, logged as requested. She wants funding gaps by theme, track record and research starters.
+
+**Decisions**
+- [NomBot] **Audience** is philanthropic researchers and advisors. The new tab is named "Insights" and each card is report-grade.
+- [GrantRadar] **Claude picks** were applied at 94.9% and 93% accuracy, close to the 95% bar, because many "wrong" calls were arguable.
+- [NomBot] **Theme funding** uses the median, because one large grantee skewed the average.
+
+**Next**
+- [Admin] **Revoke** both API keys that were pasted in chat.
+- [NomBot] **Commit** the new `/api/v1/org/[ein]` endpoint, which is still uncommitted.
+- [GrantRadar] **Re-check** the 118K small fuzzy links (about 91% right).
+
 ## 2026-10-14 (Wednesday)
 
 *Hours worked: 9h (7:13am–10:16pm, 421 min inactive removed) · 0 commits · 122 messages*
