@@ -4,42 +4,34 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-15 (Thursday)
 
-*Hours worked: 5.75h (9:12am–11:36pm, 558 min inactive removed) · 23 commits · 98 messages*
+*Hours worked: 5.75h (9:12am–11:36pm, 558 min inactive removed) · 0 commits · 98 messages*
 
-**Meeting:** 40 min with Kate (12:00–12:40 pm), added to the hours above.
-
-**Summary:** Grant-link rate rose from 57.6% to 64.0%, NomBot got an Insights tab, and imnet got donations, communities, maps and IRS checks.
+**Summary:** Raised the grant link rate from 57.6% to about 64% in NomBot/GrantRadar, and shipped donations, communities, messaging and maps plus an IRS-verification feature in imnet.
 
 **Done**
-- [NomBot] **Insights tab** shipped with 32 verified patterns. Each card has a chart, method, CSV/PNG/SVG export and a saved report. Pushed as `7b00af3`.
-- [NomBot] **Funding by theme** now shows the median per organization, with the least-funded themes flagged. **Track record** (years tax-exempt) is in Overview and Breakdown.
-- [NomBot] **Claude client** accepts an optional workspace ID header, so user-level API keys work. A working key was verified.
-- [GrantRadar] **School districts and colleges** now show as recipients on funder pages. README updated to 64% linked.
-- [GrantRadar] **Grant link rate** went from 57.6% to 64.0% of grants. Dollar coverage went from about 47% to 57.4%.
-  - "Doing business as" names added 62.6K grants (97% right).
-  - National charities added 54K grants (95%).
-  - School districts and colleges added 39K grants (100%).
-  - Claude picks added 155K grants (94.9%) in round 1 and 104K (93%) in round 2.
-  - Donor-advised fund sponsors, top names and public universities are hand-linked.
-- [GrantRadar] **Wrong links removed:** about 100K from two fuzzy re-checks, plus 24K exact-name links on widely shared names (graded 14% right).
-- [GrantRadar] **Board interlocks:** low-confidence person matches improved from 53% to 88% right. High-confidence pairs stay at 100%.
-- [GrantRadar] **Data fixes:** the random "latest filing" pick is fixed (migration 028). The Insights miner is committed (`4e13f06`).
-- [imnet] **Donations in test mode** work from org pages, donation calls and the Calls to help card. No real money moves and no card numbers are stored.
-- [imnet] **Communities with group chats and DMs.** An anti-spam rule limits DMs to shared-community members or followers. Unread shows as a quiet dot, not a count.
-- [imnet] **Near you map** shows volunteering, events, communities, nonprofits and foundations. Types have distinct pins, a legend and list tags. Communities have their own icons.
-- [imnet] **Claims are checked against IRS records.** Org profiles have a Public filings card. Pushed as `7fc4576` (163 unit, 83 e2e tests pass).
-- [imnet] **Dev to main:** PRs #9, #10 and #11 merged.
-- [Admin] **Kate meeting:** 40 minutes, 12:00–12:40, logged as requested. She wants funding gaps by theme, track record and research starters.
+- [GrantRadar] **Grant link rate** rose from 57.6% to 64.0% of all grants (65.2% of those that can link). Dollars linked rose from about 47% to 57.4%.
+- [GrantRadar] **"Doing business as" names** scored 97% and were applied (+62.6K grants). Claude's suggested legal names scored 100% (+20K grants).
+- [GrantRadar] **Claude-picked matches** for the top 20K recipients scored 94.9% and were applied (+155K grants). A second round scored 93% (+104K grants).
+- [GrantRadar] **Fuzzy-link re-checks** removed about 100K wrong links. "Keep" decisions graded 100% right, "switch" 94%.
+- [GrantRadar] **National charities** (95%, +54K grants) and **school districts and colleges** (100%, +39K grants) were linked. 98K grants were labeled as never linkable.
+- [GrantRadar] **Funder pages** now show school-district and college recipients.
+- [NomBot] **Exact-name cleanup** removed 24K wrong links. Board-interlock low-confidence matches rose from 53% to 88% correct.
+- [NomBot] **Funding by theme** (median per organization) and **track record** were added to the Overview and Breakdown tabs.
+- [NomBot] **Insights tab** went live with 32 verified, chart-backed patterns for researchers and advisors. Each card has method, sources, CSV and chart export.
+- [NomBot] **Donor-advised fund sponsors** (99% graded), 47 top names and 39 public universities were linked. A "latest filing" random-pick bug was fixed (migration 028).
+- [imnet] **Test-mode donations** shipped, with no card numbers stored, a donations card for org staff, and Donate buttons in three places.
+- [imnet] **Communities, DMs and the Near you map** shipped (nonprofit, foundation, community and volunteer pin types, plus a legend). **IRS-verified claims** and a **Public filings** panel on org profiles were also built. 163 unit and 83 e2e tests pass.
+- [Admin] **Kate meeting** (12:00–12:40) logged. Day clocked out at 5.75 hours.
 
 **Decisions**
-- [NomBot] **Audience** is philanthropic researchers and advisors. The new tab is named "Insights" and each card is report-grade.
-- [GrantRadar] **Claude picks** were applied at 94.9% and 93% accuracy, close to the 95% bar, because many "wrong" calls were arguable.
-- [NomBot] **Theme funding** uses the median, because one large grantee skewed the average.
+- [GrantRadar] **Applied picks at 94.9% accuracy**, within error of the 95% bar, because a second Claude check rejected only about 1%.
+- [NomBot] **Tab named "Insights"** instead of "Discover", since the audience is researchers and advisors.
+- [NomBot] **Launch plan:** bring in researchers and advisors first through NomBot, then grow imnet from them.
 
 **Next**
-- [Admin] **Revoke** both API keys that were pasted in chat.
-- [NomBot] **Commit** the new `/api/v1/org/[ein]` endpoint, which is still uncommitted.
-- [GrantRadar] **Re-check** the 118K small fuzzy links (about 91% right).
+- [GrantRadar] **Re-check the remaining 118K small fuzzy links**, which grade about 91% right.
+- [Admin] **Revoke the pasted API keys**, and put the working key into `.env.local`.
+- [imnet] **Commit the NomBot lookup endpoint**, which is still uncommitted.
 
 ## 2026-10-14 (Wednesday)
 
