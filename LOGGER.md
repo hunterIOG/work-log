@@ -6,6 +6,8 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 *Hours worked: 7.75h (8:49am–11:00pm, 437 min inactive removed) · 38 commits · 126 messages*
 
+**Meeting:** 45 min with Una Osili (11:45–12:30)
+
 **Summary:** Research answers became a ChatGPT-style chat on a faster, Google-style NomBot that is self-hosted behind a partner API, and imnet gained friends, notable-giver and trust features.
 
 **Done**
