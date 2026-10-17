@@ -4,56 +4,34 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-16 (Friday)
 
-*Hours worked: 7.75h (8:49am–11:00pm, 437 min inactive removed) · 38 commits · 126 messages*
+*Hours worked: 7.75h (8:49am–11:00pm, 437 min inactive removed) · 0 commits · 127 messages*
 
-**Meeting:** 45 min with Una Osili (11:45–12:30)
-
-**Summary:** Research answers became a ChatGPT-style chat on a faster, Google-style NomBot that is self-hosted behind a partner API, and imnet gained friends, notable-giver and trust features.
+**Summary:** Shipped NomBot's research pages, ChatGPT-style answer chat, Google-style results and 10–60× faster search, set up Mac hosting with a partner API, and added three imnet features.
 
 **Done**
-- **[NomBot] Search speed:** full page dropped from 14–25 s to 5.3–8.1 s, with benchmark relevance unchanged at 69%.
-  - Candidates are capped at 3,000, a half-precision HNSW index replaces the full-size one, and one cached search feeds the page.
-  - A 15–20 s Appalachia slowdown was a ZIP type mismatch, now about 5 s.
-  - Postgres `shared_buffers` went from 128 MB to 4 GB.
-- **[NomBot] Research answers:** a question router and answer engine give a direct card with fixed, tested queries.
-  - Questions open in `/research/ask`, with follow-up threads and on-topic suggestions (`npm run test:followups`, 8 of 8 pass).
-  - The page was redesigned ChatGPT-style.
-  - Answers are exposed as `/v1/answer` and an MCP tool.
-- **[NomBot] Research layer:** the database gained a pre-summarized grants table (about 950K rows instead of 4.9M).
-  - It also gained plain-English names for 681 category codes and a data dictionary.
-  - 30 of 32 test questions now get an on-target answer, up from 19.
-  - Typical database time is 116 ms, down from 173 ms.
-- **[NomBot] Search UI:** results and side panel were redesigned in Google style, with the diagram first in the overview.
-  - A visual AI overview and first-slide export (PNG and PPTX) were added.
-  - Report and "Ask about this finding" became right-side panels.
-  - Insights was renamed Research, with a dedicated page per finding and short headlines with bullets for all 32 findings.
-- **[NomBot] Partner API:** per-key Bearer auth, `/api/v1` search, org and research endpoints, remote MCP at `/mcp`, and public docs and OpenAPI.
-  - Keys are hashed, rate-limited at 60/min and revocable.
-  - No endpoint calls Claude.
-- **[NomBot] Self-hosting:** NomBot runs on the MacBook as always-on services with an optional `SITE_PASSWORD` gate, nightly backups and a fixed Tailscale Funnel address.
-  - Postgres restart briefly took the live site down (about 1 minute), then recovered.
-- **[NomBot] Fixed:** the home prompt loading screen vanished because the flipping headline remounted the clicked chip.
-- **[GrantRadar] Fixed:** the same ZIP `char(5)` compare skipped the index in `lib/search.ts` (`072a102`).
-- **[imnet] Friends and notable givers:** added a Friends tab, friends' experiences (hours and dollars), ways to get involved, and opt-in notable givers.
-  - Demo public figures are fictional.
-  - Cover photos were added for South Bay orgs.
-  - Tests passed (166 unit, 86 e2e).
-- **[imnet] Trust and onboarding (PR #16):** added "Who can message me", a three-step first-week path, Report a person, a "What Verified means" page and an AI-assisted media label.
-  - 90 of 90 e2e tests pass.
-- **[generosity-data] Cause labels:** climate and women and girls labels graded at 95%+, with method docs.
-  - Migrations 031–040 added API keys, a weekly Parquet snapshot (378 MB, about 23 s) and the research layer.
-- **[Admin] Una meeting:** 45-minute meeting with Una logged. Her feedback shaped the cause labels, the first-slide export, the visual overview and imnet's personal-discovery features.
+- [NomBot] **Loading-screen bug** fixed: the rotating headline removed the clicked chip and the overlay went with it. Rotation now stops after a click.
+- [NomBot] **Rural-Appalachia search** cut from 15–20 s to 4.7 s by fixing a ZIP type mismatch. The same fix went into GrantRadar. A 17-hour stray query was cancelled.
+- [NomBot] **Insights became Research**, with a dedicated page per finding: key numbers, chart, data table, org side panel, scoped chat. All 32 findings now have short headlines and 2–3 bullets. Old links redirect.
+- [NomBot] **Research answers** cover 15 question types, using fixed queries (the AI never writes SQL). 30 of 32 test questions now get an on-target answer, up from 19. Answers open at `/research/ask` as a ChatGPT-style thread with follow-ups.
+- [NomBot] **Follow-up suggestions** now go through topic rules plus an AI picker. `npm run test:followups` passes on 8 threads.
+- [NomBot] **Search results** redesigned Google-style, with the diagram first in the knowledge panel. "Report" and "Ask about this finding" now open as right-side panels.
+- [NomBot] **Search speed:** database time went from 12–14 s to 0.2–3.4 s. Full page went from 8.3–14.6 s to 5.3–8.1 s. Benchmark relevance held at 69%. Postgres now has 4 GB `shared_buffers`, and the old 1.4 GB vector index is dropped.
+- [NomBot] **Database research layer:** a pre-summarized grants table (about 950K rows), 681 category codes with plain-English names, a data dictionary and a nightly refresh.
+- [NomBot] **Hosting and partner API:** the Mac runs always-on production apps behind a password gate, via Tailscale Funnel. Partner API with per-partner keys, remote MCP and public docs. Weekly Parquet snapshot of 378 MB. The architecture diagram was redrawn.
+- [imnet] **Three features** built, 165 unit and 85 e2e tests passing: friends' experiences, a "ways to get involved" path, and Notable givers with fictional demo figures.
+- [imnet] **Friends tab** merged (PR #15). Then message controls, a first-week welcome flow, person reports, a "What Verified means" page and an AI-assisted media label merged (PR #16).
+- [Admin] **Una Osili meeting** logged (45 min). Her feedback led to the climate and women-and-girls labels.
 
 **Decisions**
-- **[NomBot] MacBook hosting** instead of Supabase Large (about $129/month), at $0–5 per month.
-- **[NomBot] Partner access** is API plus MCP and weekly exports, with no direct database sharing, so the personal Mac stays private.
-- **[NomBot] Scoring models:** kept Sonnet for relevance scoring and Opus for question reading, because Haiku cost 5–7 points of relevance.
-- **[imnet] Public figures** are fictional demos, opt-in and admin-badged, since real people can't be shown without consent.
+- **Host on the MacBook** instead of Supabase at about $129/month.
+- **Partner access via APIs and snapshots only**, with no direct SQL on the personal Mac.
+- **Faster Claude models rejected** for scoring and question parsing. Each cost 2–7 benchmark points.
+- **Notable givers are opt-in and fictional in the demo.** Real people need their consent.
 
 **Next**
-- **[NomBot]** Review and commit the background agent's data expansion (Schedule I, Census ACS, USAspending) and the redrawn architecture diagram.
-- **[NomBot]** Decide whether to bring spending, staff and volunteers back into the result lines.
-- **[Admin]** Create per-partner API keys and revoke the keys pasted in chat.
+- **Tailscale:** the install was still pending at last check; the later live check shows the address working.
+- **Data expansion:** Schedule I, Census ACS and USAspending are still running and not committed.
+- **Open questions:** restore spending, staff and volunteers in result lines. Add the state-answer headquarters caveat and DC handling.
 
 ## 2026-10-15 (Thursday)
 
