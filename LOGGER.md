@@ -2,6 +2,57 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-16 (Friday)
+
+*Hours worked: 7.75h (8:49am–11:00pm, 437 min inactive removed) · 38 commits · 126 messages*
+
+**Summary:** Research answers became a ChatGPT-style chat on a faster, Google-style NomBot that is self-hosted behind a partner API, and imnet gained friends, notable-giver and trust features.
+
+**Done**
+- **[NomBot] Search speed:** full page dropped from 14–25 s to 5.3–8.1 s, with benchmark relevance unchanged at 69%.
+  - Candidates are capped at 3,000, a half-precision HNSW index replaces the full-size one, and one cached search feeds the page.
+  - A 15–20 s Appalachia slowdown was a ZIP type mismatch, now about 5 s.
+  - Postgres `shared_buffers` went from 128 MB to 4 GB.
+- **[NomBot] Research answers:** a question router and answer engine give a direct card with fixed, tested queries.
+  - Questions open in `/research/ask`, with follow-up threads and on-topic suggestions (`npm run test:followups`, 8 of 8 pass).
+  - The page was redesigned ChatGPT-style.
+  - Answers are exposed as `/v1/answer` and an MCP tool.
+- **[NomBot] Research layer:** the database gained a pre-summarized grants table (about 950K rows instead of 4.9M).
+  - It also gained plain-English names for 681 category codes and a data dictionary.
+  - 30 of 32 test questions now get an on-target answer, up from 19.
+  - Typical database time is 116 ms, down from 173 ms.
+- **[NomBot] Search UI:** results and side panel were redesigned in Google style, with the diagram first in the overview.
+  - A visual AI overview and first-slide export (PNG and PPTX) were added.
+  - Report and "Ask about this finding" became right-side panels.
+  - Insights was renamed Research, with a dedicated page per finding and short headlines with bullets for all 32 findings.
+- **[NomBot] Partner API:** per-key Bearer auth, `/api/v1` search, org and research endpoints, remote MCP at `/mcp`, and public docs and OpenAPI.
+  - Keys are hashed, rate-limited at 60/min and revocable.
+  - No endpoint calls Claude.
+- **[NomBot] Self-hosting:** NomBot runs on the MacBook as always-on services with an optional `SITE_PASSWORD` gate, nightly backups and a fixed Tailscale Funnel address.
+  - Postgres restart briefly took the live site down (about 1 minute), then recovered.
+- **[NomBot] Fixed:** the home prompt loading screen vanished because the flipping headline remounted the clicked chip.
+- **[GrantRadar] Fixed:** the same ZIP `char(5)` compare skipped the index in `lib/search.ts` (`072a102`).
+- **[imnet] Friends and notable givers:** added a Friends tab, friends' experiences (hours and dollars), ways to get involved, and opt-in notable givers.
+  - Demo public figures are fictional.
+  - Cover photos were added for South Bay orgs.
+  - Tests passed (166 unit, 86 e2e).
+- **[imnet] Trust and onboarding (PR #16):** added "Who can message me", a three-step first-week path, Report a person, a "What Verified means" page and an AI-assisted media label.
+  - 90 of 90 e2e tests pass.
+- **[generosity-data] Cause labels:** climate and women and girls labels graded at 95%+, with method docs.
+  - Migrations 031–040 added API keys, a weekly Parquet snapshot (378 MB, about 23 s) and the research layer.
+- **[Admin] Una meeting:** 45-minute meeting with Una logged. Her feedback shaped the cause labels, the first-slide export, the visual overview and imnet's personal-discovery features.
+
+**Decisions**
+- **[NomBot] MacBook hosting** instead of Supabase Large (about $129/month), at $0–5 per month.
+- **[NomBot] Partner access** is API plus MCP and weekly exports, with no direct database sharing, so the personal Mac stays private.
+- **[NomBot] Scoring models:** kept Sonnet for relevance scoring and Opus for question reading, because Haiku cost 5–7 points of relevance.
+- **[imnet] Public figures** are fictional demos, opt-in and admin-badged, since real people can't be shown without consent.
+
+**Next**
+- **[NomBot]** Review and commit the background agent's data expansion (Schedule I, Census ACS, USAspending) and the redrawn architecture diagram.
+- **[NomBot]** Decide whether to bring spending, staff and volunteers back into the result lines.
+- **[Admin]** Create per-partner API keys and revoke the keys pasted in chat.
+
 ## 2026-10-15 (Thursday)
 
 *Hours worked: 5.75h (9:12am–11:36pm, 558 min inactive removed) · 0 commits · 98 messages*
