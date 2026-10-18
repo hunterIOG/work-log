@@ -2,6 +2,36 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-17 (Saturday)
+
+*Active in Claude Code: ~6h 19m (estimate) · 0 commits · 87 messages*
+
+**Summary:** Added Schedule I, ACS and USAspending data to NomBot, recovered 157K missing IRS returns, shipped many research-answer upgrades, and ran a subscription-based labeler that left substance use unloaded.
+
+**Done**
+- [NomBot] **Three new sources** loaded: Schedule I (3.17M grants, $602B), Census ACS 2020–24 (every county) and USAspending (408K award-years, $272B). They support per-person-in-poverty and breakdown questions.
+- [NomBot] **IRS recovery:** 156,971 missing returns restored, caused by an unread 05B file in the IRS 2025 and 2026 releases. Fidelity's 2023 return now matches its own return at 99.2%. A reusable `recover_missing_xml.py` was added.
+- [NomBot] **Research answers:** the open-ended question test rose from 19/42 to 49/49. Wrong premises are now corrected ("didn't fall, the total grew 13%"). Largest-1% routing, school districts vs public colleges and the opioid keyword bug were fixed.
+- [NomBot] **Medians** are about 3x faster using precomputed tables (1.1 GB). The **question reader** is about 80% cheaper per question with a warm cache and scores 112/112 on its routing test.
+- [NomBot] **Cause labels** (climate, women and girls) are now in search chips, org pages, the API and MCP, and the snapshots. Answers for unlabeled themes carry a "not a checked label" note.
+- [NomBot] **Org pages** gained Grants received and Grants given, including federal awards. Fidelity's grants-given block dropped from about 1.1 s to about 20 ms.
+- [NomBot] **Schedule I placeholder split:** "SEE ATTACHED" and "VARIOUS" rows no longer count in place, cause or recipient answers. National answers add "plus $41.7B reported but not itemized". The SVCF gap was traced to the filer's own e-file, which lists $2.06B of $3.63B.
+- [NomBot] **Inflation and benchmarks:** trend answers show growth after inflation. NomBot counts 65% of the IRS SOI 2022 foundation total.
+- [NomBot] **150-question benchmark:** 73/150 at first, then 79/150 after fixes. Misleading answers fell from 13 to 0. Household giving (IRS SOI deductions by county and ZIP, 2013–2023) was added.
+- [NomBot] **Grant linking** rose from 63.2% to 66.5% of foundation grants. Federal award linking rose from 80.6% to 85.5%. The company-foundation flag grew to 1,757 foundations, with 102 of 102 known ones found and 48/50 right on a fresh sample.
+- [NomBot] **Subscription labeler** screened 22,713 substance-use orgs at $0 on the API key. Main focus graded 99% and partial 89%, just under the 90% bar, so it is **not loaded**. A renewal top-up (`after_load.sh`) was built.
+- [NomBot] **Overnight finance panels** added foundation finances (458K foundation-years) and a nonprofit panel (1.23M org-years). Median foundation payout fell from 5.7% in 2022 to 5.2% in 2024.
+
+**Decisions**
+- [NomBot] **Labeling runs on the subscription first.** The API key needs explicit confirmation.
+- [NomBot] **Labels renew after every data load,** labeling only new or changed orgs.
+- [NomBot] **Placeholder rows are split.** They are excluded from recipient, place and cause answers but kept as "reported but not itemized".
+- [NomBot] **The raw federal audit file stays local,** git-ignored. Focus is now research-question quality.
+
+**Next**
+- [NomBot] **Substance use:** run a Sonnet check of the 4,715 partials, then re-grade and load.
+- [NomBot] **Overnight:** history back to about 2012 and the theme pilots are running. Re-run the benchmark, then commit and rebuild.
+
 ## 2026-10-16 (Friday)
 
 *Hours worked: 7.75h (8:49am–11:00pm, 437 min inactive removed) · 0 commits · 127 messages*
