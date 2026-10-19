@@ -32,6 +32,31 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 - [NomBot] **Research tab chips:** still show the old 5 prompts. Swap in the new ones.
 - [Admin] **End-of-day log:** yesterday's wasn't closed out, so the start-of-day step needs to be done.
 
+## 2026-10-18 (Sunday)
+
+*Hours worked: 0.25h (2:52am–5:48am, 162 min inactive removed) · 2 commits · 3 messages*
+
+**Summary:** Overnight agents finished, so the 2012–2025 history, foundation payout and nonprofit finance panels, and a substance use label were tested, committed and pushed live.
+
+**Done**
+- [NomBot] **Benchmark** rose from 79 to 83 of 150. Routing is 71/71, research 66/66, and answer checks show 0 mismatches.
+- [NomBot] **History** now reaches back to 2012. Foundation grants grew from 5.7M to 14.8M ($838B, 64% linked). Charity grants grew from 3.4M to 8.5M ($1.52T, 81% linked).
+- [NomBot] **Foundation payout** answers are live: in 2024 the median private foundation paid out 5.2% of its investment assets, and 55% paid out 5% or more.
+- [NomBot] **Nonprofit finance** answers are live: deficits by year, months of cash and multi-year streaks.
+- [NomBot] **Substance use label** is loaded and passed both grading bars: main focus 98%, partial 91%. It has 9,275 main focus and 4,191 partial. Opioid questions now use it instead of keywords, and the stale C24 benchmark entry was fixed.
+- [NomBot] **Label fix:** Sonnet can keep or drop a partial but never promote it to main focus. That rule removed the errors.
+- [NomBot] **Housing and homelessness label** finished its full run and passed both bars: main focus 98%, partial 94%. It has 19,110 main focus and 13,645 partial. It is not loaded yet.
+- [NomBot] **Theme pilots** failed on partials: racial equity 91% main focus and 87% partial, immigrants and refugees 84% partial, mental health 77% partial. They need definition fixes.
+- [Admin] **Commits** pushed: generosity-data `8a79030` and NomBot `c7c7f5b`. The live site was rebuilt. Labeling used 22% of the weekly subscription limit.
+
+**Decisions**
+- [NomBot] **Same-funder growth:** for trends reaching before 2020, growth should use the same funders in both years. E-filing wasn't required before 2020, so early years miss smaller foundations (48K in 2015 vs 93K in 2022). This is a recommendation, not yet approved.
+
+**Next**
+- [NomBot] **Fix pre-2020 growth.** The food bank trend currently shows a misleading 456% for 2015–2024.
+- [NomBot] **Load housing and homelessness**, a 9-minute refresh, then add it to NomBot.
+- [NomBot] **Re-pilot** racial equity, immigrants and refugees, and mental health after definition fixes.
+
 ## 2026-10-17 (Saturday)
 
 *Hours worked: 6.25h (12:39am–10:58pm, 961 min inactive removed) · 29 commits · 87 messages*
