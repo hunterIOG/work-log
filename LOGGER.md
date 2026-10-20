@@ -4,33 +4,35 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-19 (Monday)
 
-*Active in Claude Code: ~0h 11m (estimate) · 0 commits · 7 messages*
+*Hours worked: 8h (11:37am–11:39pm, 298 min inactive removed) · 52 commits · 155 messages*
 
-**Summary:** Prepared NomBot for a live demo and checked 10 new Research prompts, 9 of which answer well.
+**Summary:** Shipped the partner API's news, Giving Guides, tax-status and semantic-search endpoints, set up the Linux GPU helper with nightly monitoring and backups, and built imnet's pilot dashboard and donor Wrapped.
 
 **Done**
-- [NomBot] **Demo stack** brought up: Postgres and the live app on localhost:4000, with 4 key pages pre-warmed (home 0.4 s, climate 10.7 s, payout 4.1 s, rural-Appalachia search 18.5 s first load).
-- [NomBot] **Public link** restored via Tailscale Funnel and confirmed to respond and ask for sign-in.
-- [NomBot] **Research prompts** tested: 10 new prompts on the live site, 9 answered well and are now cached.
-  - **DAFs to climate:** $1.8B, 2022–24.
-  - **Foundation payout:** median 5.2%, 55% pay 5% or more.
-  - **Household deductions:** $205.8B in 2023.
-  - **Federal awards, Ohio:** HHS $4.7B, 78% of the total.
-  - **Corporate foundations to education:** $1.5B, 16% of their grant dollars.
-  - **Poverty and giving:** $144 vs $159 per resident.
-  - **Substance use and addiction:** $389.1M.
-  - **Appalachia:** $7.3B.
-  - **Wrong-premise check:** correctly says education funding grew 35% from 2020 to 2024.
-- [NomBot] **Demo flow** drafted: search, then research, then new-data prompts, then an org page.
+- [NomBot] **Giving Guides endpoints** live: 13 guides, 168 searchable sections, right guide ranked first on 6 of 6 test questions, locked behind `iog_internal`.
+- [NomBot] **Partner API** expanded to 10 data endpoints plus news, with MCP tools. API tests rose from 169 to 209, all passing.
+- [NomBot] **Two-cause answers** fixed: both funder rankings plus overlap (7 of the top 50 climate funders also fund women and girls), readable names, and a guard against skipped causes.
+- [NomBot] **Semantic search** (`semantic=true`) live on news, bills, Federal Register and MCP. 48,776 items were embedded on the Linux GPU in 4 minutes.
+- [NomBot] **News dedupe** removed 883 copies (23%): 3,819 headlines became 2,936 stories. Similar-meaning pairs were 98% correct on a 50-pair check.
+- [NomBot] **IRS tax status** live: 1.43M deductible orgs and 1.25M revocations. 201 revoked orgs still received $12.0M in foundation grants.
+- [NomBot] **Housing and homelessness label** loaded: 32,755 orgs (19,110 primary, 13,645 partial). The tech and AI skills label is also loaded (307 primary, 834 partial).
+- [NomBot] **Nightly checks on /admin**: the first data quality run gave 21 pass, 3 warn, 0 fail. The first benchmark answered 84 of 150 with 0 misleading, at about $0.52 a night.
+- [Admin] **Linux GPU helper** set up: embeddings match the Mac's vectors and run about 4x faster, and 106 GB of raw data is copied. The backup restore test passed (13 of 13 tables, 18 min), and weekly snapshots plus an IRS batch watcher are running.
+- [Admin] **Local-model pre-screen** (Qwen 2.5 7B) saves about a third of Claude labeling work on narrow labels (climate 34%, tech 35%) at under 1% loss, but only 3% on education.
+- [Admin] **API access** created for Muneeb and Tyler (read plus `iog_internal`, 120 requests a minute). Neither had made a real call yet.
+- [Admin] **generosity-data README** rewritten (680 to 131 lines) with endpoint status and a request-an-endpoint flow. The repo is now private, and the README is updated with every commit.
+- [imnet] **Pilot dashboard** at `/admin/pilot` (weekly acts, funnel, communities) and a private **Year in giving** Wrapped with a share card. 173 unit tests and 93 e2e tests pass.
 
 **Decisions**
-- [NomBot] **Avoid pre-2020 trends** in the demo, because growth figures for those ranges run high and the fix isn't done.
-- [NomBot] **Skip the food-bank deficit prompt** in the demo, because it returned no research answer and likely fell through to search.
+- **Linux as helper only:** it has 15 GB RAM against the Mac's 24 GB, so the database stays on the Mac.
+- **Pre-filter for narrow labels only,** never education, since education gains just 3%.
+- **Partner access is read-only:** the API has no write actions for any key.
+- **Transfers excluded from grant totals:** non-cash related-party transfers like the $7.63B UL to ULSE line stay visible but are left out.
 
 **Next**
-- [NomBot] **Food-bank deficit prompt:** check why it fell to search, after the demo.
-- [NomBot] **Research tab chips:** still show the old 5 prompts. Swap in the new ones.
-- [Admin] **End-of-day log:** yesterday's wasn't closed out, so the start-of-day step needs to be done.
+- **Education label** and the three re-piloted narrow labels still need grading and approval.
+- **Service areas, grant matching round 5** and the transfer fix are still running.
+- **Meeting to add at end of day:** 60 min AI Fellows session with Joshua Elder.
 
 ## 2026-10-18 (Sunday)
 
