@@ -18,6 +18,8 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 *Hours worked: 9h (11:37am–11:39pm, 298 min inactive removed) · 54 commits · 156 messages*
 
+**Meetings:** 120 min in 2 meetings, the second with Josh (Joshua Elder, Siegel Family Endowment) at the AI Fellows session with Helen, Tyler, Rafael and Julia
+
 **Summary:** Built the Linux GPU helper, shipped new APIs and labels, and ran Year-in-giving, backups and nightly monitoring.
 
 **Done**
