@@ -16,32 +16,35 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-19 (Monday)
 
-*Hours worked: 8h (11:37am–11:39pm, 298 min inactive removed) · 0 commits · 156 messages*
+*Hours worked: 9h (11:37am–11:39pm, 298 min inactive removed) · 54 commits · 156 messages*
 
-**Summary:** Shipped housing and homelessness data, Giving Guides, news and policy APIs, Linux helper setup and a donor "Year in giving" recap, and set up unattended nightly backups, checks and benchmarks.
+**Summary:** Built the Linux GPU helper, shipped new APIs and labels, and ran Year-in-giving, backups and nightly monitoring.
 
 **Done**
-- [NomBot] **Housing and homelessness label** loaded: 32,755 orgs (19,110 main focus, 13,645 partial), graded 98% main and 94% partial. It is in search, research answers, API and MCP. Tests pass, routing 75/75.
-- [NomBot] **Two-cause answers** fixed: climate and women and girls now both answered, with an overlap line (7 of the top 50 climate funders also fund women and girls). A guard marks any answer that skips a cause. Names now read "Foundation" instead of "Fdn".
-- [NomBot] **IoG Giving Guides endpoints** live: 13 guides, 168 searchable sections, behind the `iog_internal` permission. 48/48 tests pass.
-- [NomBot] **News and policy API** live: 2,936 unique stories after removing 883 duplicates (23%). `semantic=true` search covers 48,776 embedded items (news, bills, Federal Register). API tests 209/209.
-- [NomBot] **"Year in giving" donor recap** built: story-style `/wrapped` with an opt-in dollar share card, shown on Home Dec 1 to Jan 31. 173 unit and 93 e2e tests pass.
-- [NomBot] **Nightly monitoring** added on `/admin`. First data-quality run: 21 pass, 3 warn, 0 fail. First benchmark: 84 of 150 answered, 0 misleading, about $0.52 per night.
-- [NomBot] **Weekly backup restore test** passed: 3.9 GB restored in 18 min, 13 of 13 tables match. The nightly copy to Linux now runs unattended.
-- [NomBot] **Daily 6am news and policy refresh** works after the Full Disk Access grant. A local-model pre-screen test saved about 34% of Claude work on climate and tech labels, but only 3% on education.
-- [Admin] **Linux GPU helper** set up: embeddings 4x faster than the Mac, 106 GB of raw data copied and verified, snapshots of 13 Parquet files, and an IRS batch watcher.
-- [Admin] **generosity-data repo** README rewritten (680 to 131 lines), made private, and given a request-an-endpoint section and an in-progress and planned data list. API keys issued to Muneeb and Tyler. Neither has made a real call yet.
-- [Admin] **Joshua Elder meeting** logged at 60 min. Clocked out at 8 h.
+- [NomBot] **Housing and homelessness label** loaded: 32,755 orgs (19,110 main, 13,645 partial), graded 98% and 94%. It adds $2.89B of foundation grants (2022–24) for main-focus orgs. Routing 75/75, research 70/70.
+- [NomBot] **Two-cause answers** now rank both causes with overlap (7 of the top 50 climate funders also top 50 for women and girls) and readable foundation names. Routing 73/73, research 69/69.
+- [NomBot] **Partner API** gained 10 data endpoints, news, IoG Giving Guides (13 guides, 168 sections, behind `iog_internal`) and MCP tools. API tests 169/169 at first, then 209/209.
+- [NomBot] **Semantic search** (`semantic=true`) is live for news, bills and Federal Register. 48,776 items were embedded on the Linux GPU in 4 min, and keyword search had found nothing for 9 of 10 test questions.
+- [NomBot] **News dedupe** found 883 duplicate copies (23%), so 3,819 headlines become 2,936 stories. The API returns one row per story with `also_reported_by`.
+- [NomBot] **Grant linking round 5** raised foundation grants linked from 64.2% to 65.6% (+209,533 grants, +$7.82B). Seven new rules each scored 58–60 of 60 on hand-graded samples.
+- [NomBot] **IRS tax status** went live: 1.43M Pub 78 orgs and 1.25M revocations. 201 revoked orgs still received $12.0M in foundation grants. Added the `/orgs/{ein}/status` endpoint.
+- [NomBot] **Nightly checks** on `/admin`: the first data-quality run gave 21 pass, 3 warn, 0 fail. The benchmark answered 84 of 150 with 0 misleading, at about $0.52 per night.
+- [NomBot] **Local-model pre-screen test** (Qwen 2.5 7B) saves 34% of Claude work on climate and 35% on tech and AI skills, at under 1% loss. It saves only 3% on education.
+- [NomBot] **Tech and AI skills label** loaded (307 primary, 834 partial).
+- [imnet] **Year in giving** shipped: a private, story-style donor Wrapped with an opt-in share card, a Home card for Dec 1–Jan 31, a pilot admin dashboard and the first sign-in flow. 173 unit and 93 e2e tests pass.
+- [Admin] **Linux helper** is set up: its GPU embeds 4x faster than the Mac and its vectors match (0.999998+). It holds a verified 106 GB raw-data copy. The nightly backup copy runs unattended, and the first restore test passed (18 min, 13/13 tables). Weekly Parquet snapshots (13 files, 686 MB) and an IRS batch watcher are live.
+- [Admin] **Muneeb and Tyler** received read-only API keys with `iog_internal`. The generosity-data README was rewritten from 680 to 131 lines and the repo was made private. The day was clocked at 8 h, with the 60-min meeting with Joshua Elder added.
 
 **Decisions**
-- [NomBot] **API access is key-only:** no local database copies, and Muneeb's key is read-only with every permission, so it cannot change the database.
-- [NomBot] **Linux is a helper, not the database server,** since it has 15 GB RAM against the Mac's 24 GB.
-- [NomBot] **Local pre-filter used per label** only where it is proven. It is skipped for education, which is limited by the subscription rate, not by the machine.
+- **Linux as helper, not server:** it has 15 GB RAM against the Mac's 24 GB, so the database stays on the Mac.
+- **Access by API key only:** no local runs, and the repo is private because a public README could not enforce that.
+- **Pre-filter for narrow labels only:** it is skipped for education, where it saves about 3% for 12 GPU-hours.
+- **Related-party transfers** (such as the $7.63B UL to ULSE line) will be excluded from grant totals but kept visible as transfers.
 
 **Next**
-- [NomBot] **Overnight jobs:** transfer fix for UL-style $7.6B non-cash grants, grant matching round 5, service areas, narrow-label pilots, education label run and the "Show the steps" evidence chain.
-- [NomBot] **Education label** needs about 13 more hours. Nothing loads until approved.
-- [Admin] **Keep the Mac awake** overnight (`disablesleep` is still 0).
+- **Overnight jobs:** the transfer fix, the "Show the steps" evidence chain, service areas, narrow-label pilots and the education run (about 13 h left).
+- **Approvals needed:** education and the narrow labels load only after Hunter approves them.
+- **Mac sleep:** `disablesleep` is still off, so a closed lid would stop the overnight work.
 
 ## 2026-10-18 (Sunday)
 
