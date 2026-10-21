@@ -19,4 +19,6 @@ Install: `cp com.hunterzhang.worklog.plist ~/Library/LaunchAgents/ && launchctl 
 - **Start:** your first message to Claude in a NomBot, GrantRadar or imnet chat that day.
 - **End:** when you tell Claude you're done for the day, it runs `python3 daily_log.py --end` (add `--break=30` to take a break off).
 - **Hours** = start → end, rounded to the nearest 15 min. Saved in `clock.json` and `hours.json`; the entry shows e.g. `Hours worked: 3.5h (8:20am–11:50am)`.
+- **Saturdays:** only time after 4:30pm counts; the clock starts at max(first message, 4:30pm) and anything earlier is ignored.
+- **Recompute a past day:** `python3 daily_log.py --day=2026-10-17` (keeps its saved end/break/offline, updates `hours.json`, `clock.json` and the LOGGER.md hours line; add `--dry-run` to only show).
 - **Manual:** add `"2026-10-08": 3` to `hours.json`. No hours → the entry shows an estimate of active Claude Code time.

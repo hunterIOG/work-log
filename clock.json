@@ -33,9 +33,9 @@
     "offline_min": 45
   },
   "2026-10-17": {
-    "start": "12:39am",
+    "start": "4:30pm",
     "end": "10:58pm",
-    "inactive_min": 961,
+    "inactive_min": 349,
     "break_min": 0,
     "offline_min": 0
   },

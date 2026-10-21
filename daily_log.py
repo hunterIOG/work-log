@@ -9,6 +9,9 @@
   python3 daily_log.py --end --idle=20    # count gaps over 20 minutes as inactive (default 15)
   python3 daily_log.py --preview       # show today's hours and inactive gaps so far; changes nothing
   python3 daily_log.py --end --add=45  # add back 45 minutes of offline work (a meeting, a call) that left no chat activity
+  python3 daily_log.py --day=2026-10-17   # recompute a past day's hours (keeps its saved end/break/offline); --dry-run to just show
+
+Saturdays: only time after 4:30pm counts (clock starts at max(first message, 4:30pm)).
 
 Inactive time: any stretch longer than the idle limit with no chat activity at all (no message from you,
 no reply, tool call or task notice from Claude), including the gap from the last activity to clocking out.
@@ -155,30 +158,90 @@ def save(path, data: dict):
 
 # Hours = first message of the day -> the moment you end the day, minus inactive gaps and any break,
 # rounded to the nearest quarter hour.
-def clock_out(day: dt.date, msgs, times):
-    if day != dt.date.today():
-        raise SystemExit("--end only works for today")
+# Saturday rule: only time after 4:30pm counts. The clock starts at max(first message, 4:30pm), so anything
+# earlier (work or inactive gaps) is simply ignored.
+SAT_START = dt.time(16, 30)
+
+
+def hours_for(day: dt.date, msgs, times, end, brk=0, extra=0, idle=IDLE):
     starts = [t for t, role, _ in msgs if role == "user"]
     if not starts:
-        raise SystemExit("No messages today: nothing to clock")
-    start, end = starts[0], dt.datetime.now().astimezone()
-    brk = next((int(a.split("=")[1]) for a in sys.argv if a.startswith("--break=")), 0)  # minutes off the clock
-    idle = next((int(a.split("=")[1]) * 60 for a in sys.argv if a.startswith("--idle=")), IDLE)
+        raise SystemExit(f"{day}: no messages: nothing to clock")
+    start = starts[0]
+    if day.weekday() == 5:  # Saturday
+        start = max(start, dt.datetime.combine(day, SAT_START).astimezone())
+    end = max(end, start)
     gaps = idle_gaps(times, start, end, idle)
     away = sum((b - a).total_seconds() for a, b in gaps)
-    extra = next((int(a.split("=")[1]) for a in sys.argv if a.startswith("--add=")), 0)  # offline work: meetings, calls
     hours = round(max(0, (end - start).total_seconds() - away - brk * 60 + extra * 60) / 900) / 4
-    if "--preview" not in sys.argv:  # --preview: show the math, save nothing
-        save(CLOCK, {**load(CLOCK), str(day): {"start": f"{start:%-I:%M%p}".lower(), "end": f"{end:%-I:%M%p}".lower(),
-                                               "inactive_min": round(away / 60), "break_min": brk, "offline_min": extra}})
-        save(HOURS, {**load(HOURS), str(day): hours})
-    print(f"{day}: {start:%-I:%M%p} -> {end:%-I:%M%p} = {(end - start).total_seconds() / 3600:.2f}h on the clock")
+    return start, end, gaps, away, hours
+
+
+def report(day, start, end, gaps, away, brk, extra, hours):
+    print(f"{day}: {start:%-I:%M%p} -> {end:%-I:%M%p} = {(end - start).total_seconds() / 3600:.2f}h on the clock"
+          + (" (Saturday: from 4:30pm)" if day.weekday() == 5 else ""))
     for a, b in gaps:
         print(f"  inactive {a:%-I:%M%p} -> {b:%-I:%M%p} ({round((b - a).total_seconds() / 60)} min)")
     print(f"  minus {round(away / 60)} min inactive" + (f" and {brk} min break" if brk else "") + (f", plus {extra} min offline work" if extra else "") + f" = {hours:g}h worked")
 
 
+def store(day, start, end, away, brk, extra, hours):
+    save(CLOCK, {**load(CLOCK), str(day): {"start": f"{start:%-I:%M%p}".lower(), "end": f"{end:%-I:%M%p}".lower(),
+                                           "inactive_min": round(away / 60), "break_min": brk, "offline_min": extra}})
+    save(HOURS, {**load(HOURS), str(day): hours})
+
+
+def opt(name, default):
+    return next((int(a.split("=")[1]) for a in sys.argv if a.startswith(f"--{name}=")), default)
+
+
+def clock_out(day: dt.date, msgs, times):
+    if day != dt.date.today():
+        raise SystemExit("--end only works for today (use --day=YYYY-MM-DD to recompute a past day)")
+    brk, extra, idle = opt("break", 0), opt("add", 0), opt("idle", IDLE // 60) * 60  # break/offline work in minutes
+    start, end, gaps, away, hours = hours_for(day, msgs, times, dt.datetime.now().astimezone(), brk, extra, idle)
+    if "--preview" not in sys.argv:  # --preview: show the math, save nothing
+        store(day, start, end, away, brk, extra, hours)
+    report(day, start, end, gaps, away, brk, extra, hours)
+
+
+# --day=YYYY-MM-DD: recompute a past day's hours with the current rules. Keeps that day's saved end time,
+# break and offline minutes from clock.json (end defaults to the last chat activity), then rewrites the
+# hours line of its LOGGER.md entry in place. Doesn't touch today, re-summarize, commit or push.
+def recompute(day: dt.date):
+    msgs, _, times = collect(day)
+    saved = load(CLOCK).get(str(day), {})
+    if saved.get("end"):
+        e = dt.datetime.strptime(saved["end"].upper(), "%I:%M%p").time()
+        end = dt.datetime.combine(day, e).astimezone()
+    elif times:
+        end = times[-1]
+    else:
+        raise SystemExit(f"{day}: no chat activity and no saved end time")
+    brk, extra = opt("break", saved.get("break_min", 0)), opt("add", saved.get("offline_min", 0))
+    start, end, gaps, away, hours = hours_for(day, msgs, times, end, brk, extra, opt("idle", IDLE // 60) * 60)
+    old = load(HOURS).get(str(day))
+    report(day, start, end, gaps, away, brk, extra, hours)
+    print(f"  hours.json: {old if old is not None else '-'} -> {hours:g}")
+    if "--dry-run" in sys.argv:
+        return
+    store(day, start, end, away, brk, extra, hours)
+    if os.path.exists(LOG):
+        span = load(CLOCK)[str(day)]
+        inactive = f", {span['inactive_min']} min inactive removed" if span.get("inactive_min") else ""
+        line = f"Hours worked: {hours:g}h ({span['start']}–{span['end']}{inactive})"
+        text = open(LOG).read()
+        sec = re.search(rf"(?ms)^## {day} .*?(?=^## \d{{4}}-|\Z)", text)
+        if sec:
+            body = re.sub(r"^\*(?:Hours worked: [^·]*|Active in Claude Code: [^·]*) ·", f"*{line} ·", sec.group(0), count=1, flags=re.M)
+            open(LOG, "w").write(text[: sec.start()] + body + text[sec.end():])
+
+
 def main():
+    day_opt = next((a.split("=")[1] for a in sys.argv if a.startswith("--day=")), None)
+    if day_opt:
+        recompute(dt.date.fromisoformat(day_opt))
+        return
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     dry = "--dry-run" in sys.argv
     day = dt.date.fromisoformat(args[0]) if args else dt.date.today()
