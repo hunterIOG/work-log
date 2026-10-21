@@ -4,42 +4,35 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-20 (Tuesday)
 
-*Hours worked: 7.75h (12:06am–6:08pm, 624 min inactive removed) · 81 commits · 127 messages*
+*Hours worked: 7.75h (12:06am–6:08pm, 624 min inactive removed) · 0 commits · 187 messages*
 
-**Summary:** Shipped the go-to-market features, a decluttered imnet UI, and an expanded NomBot Research tab; loaded the education and three narrow labels, and paused service areas.
+**Summary:** Shipped go-to-market features, a decluttered imnet UI, six NomBot data upgrades and the 10/20 invoice.
 
 **Done**
-- [imnet] **Go-to-market features** built and pushed to `dev`: invite links with invite-only mode (F-131), Go together (F-132), Claim your profile (F-133), weekly "Ways to help" email (F-134), giving-day page (F-135), landing page (F-137) and launch readiness (F-136). 185 unit/RLS and 101 e2e tests passed at that point.
-- [imnet] **Decluttering pass:** removed privacy notes, thank-you notes, share buttons and redundant subtitles. Replaced words with icons, set one Apple system font, split the org page into Volunteer and Donate tiles, and showed posts as short paragraphs with bold figures.
-- [imnet] **Post header:** cause | place | time, plus stacked friend faces. The logo now fills the header height.
-- [imnet] **Ownership shares:** "What my giving became" shows your share of each org's total, hidden under 5 contributors.
-- [imnet] **Shifts:**
-  - Sign-up opens as a pop-over, with a Calendly-style picker.
-  - Cancel confirmation (F-163) and add-to-calendar for Google, Apple and Outlook (F-164).
-  - In-progress shifts are marked and can't be booked (F-165).
-  - Donation calls show a progress bar.
-- [imnet] **Impact panel** (F-166): totals act as the switch, with a by-cause view, outcomes, Together, and a Strava-style 12-month chart.
-- [imnet] **PR #17 merged to main** (`fe2fa74`). CI e2e had failed on the dev server; running it against a production build fixed that (B-048). 110 e2e tests pass locally.
-- [NomBot] **Evidence chain:** "Show the steps" appears on every research answer, in the API and MCP. It adds a start-year spike check ("Since 2021?") and an answer-cache bump to v32.
-- [NomBot] **Related-party transfers:** $23.3B (67 lines) removed from grant totals. 2021 total went from $149.7B to $141.5B.
-- [NomBot] **Labels loaded:** racial equity (97% main, 96% partial), immigrants and refugees (98% and 100%) and mental health (96% and 90%). The immigrants label is now split into services and policy sub-types. Services graded 99% and policy 84%, so policy carries a "lower confidence" note.
-- [NomBot] **Education label loaded:** 64,934 main focus and 99,336 partial. Raw grades were 94.9% and 89.9%, within one org of the bars. Recall rose from 75% to 86% in one run, then settled at about 73% on the final grading.
-- [NomBot] **New features:** similar organizations on org pages, API and MCP (`find_similar_orgs`), and news headlines linked to the orgs they name.
-- [NomBot] **Research tab:** now 34 checked prompts in 11 topic blocks, shown by tapping a block. All 34 answered fully when run.
-- [NomBot] **Foundation names:** 14,200 names cut short on 990-PF filings were restored from the IRS master file.
-- [NomBot] **Nightly prompt check:** all 34 prompts run on Linux and report to /admin. First run was 34/34.
-- [Admin] **Work log fixed:** Oct 19 raised to 9 h with 120 min of meetings. Clocked out for Oct 20.
+- [imnet] **Go-to-market features** built and pushed to `dev` in 7 commits: invite links with invite-only mode (F-131), "Go together" event invites (F-132), claim-your-profile (F-133), weekly "Ways to help" email (F-134), giving-day page (F-135), launch readiness (F-136) and a **landing page** (F-137). 185 unit/RLS and 101 e2e tests passed.
+- [imnet] **Decluttering pass** cut privacy notes, subtitles, the thank-you feature and the share button. The Home filters merged into one row, and post headers became icon-based.
+- [imnet] **Post header** now reads cause | place | time, with stacked friend faces on a second line. The logo is sized to the header height, and the **site font** is now the system font. 102 e2e tests passed.
+- [imnet] **Giving shares** show each gift or hour as a percentage of an org's recorded total, hidden when fewer than 5 people contributed. **Commenter bios** show hours and dollars for opted-in people, and post text is auto-formatted into short paragraphs with bold figures.
+- [NomBot] **Transfer fix** removed **$23.3B** of non-cash transfers from grant totals. 2021 went from $149.7B to $141.5B.
+- [NomBot] **Evidence chain** ("Show the steps") is live on every research answer, in the API and MCP. It adds a spike check on the 2020 food bank figures.
+- [NomBot] **Four labels loaded:** racial equity, immigrants and refugees and mental health (all graded 90%+), then health equity (98% main, 100% partial, recall ~54%). Routing tests reached 93/93 and research 91/91.
+- [NomBot] **Education label** is live with a 3-question Research block ($46.2B, 24% of foundation dollars). **Token logging** with an /admin section went live at 6:32 PM.
+- [NomBot] **Grant matching round 6** raised foundation grant links from 65.6% to **67.4%** (+$9.8B linked across both rounds). It also added 9,487 orgs missing from the IRS file. **Board-name merges** are now used in NomBot.
+- [NomBot] **IRS category corrections** found 4,049 miscoded orgs (94% on a fresh hand check). They now appear on org pages and in the API, plus an optional "corrected categories" answer mode.
+- [NomBot] **Service areas** were built (573K orgs) but fell below the accuracy bar, so they are not used yet. A guard fixed the dev-server error.
+- [Admin] **Invoice 10_20_26** was produced: **60 h × $60 = $3,600** for Oct 8–20, 3 pages with the imnet screenshot and a single LOGGER.md link. A Gmail draft was made, and nothing was sent.
+- [Admin] **Saturday rule** (only time after 4:30 PM counts) added to the clock-out script. Oct 17 dropped from 6.25 h to 0.75 h. Oct 19 was corrected to 9 h with 120 min of meetings.
 
 **Decisions**
-- **Education loaded with a caveat** ("within one org of the bar, counts are a floor"). Researchers get the label now.
-- **Immigrants policy sub-type kept,** with a lower-confidence note. Services is the default for "funding for immigrants" questions.
-- **Service areas paused** after three rounds missed the 90% bar (round 3: 82% scope, 81% places by hand). A single sample swung about ±10 points. Place answers keep the "counted where the recipient is based" note.
-- **Next label pilots:** arts and culture, youth development, animal welfare and health equity. Full runs still need approval.
+- **Immigrants label split:** immigration-policy groups of any stance get their own sub-type so they don't skew the funder rankings.
+- **Label runs:** all four remaining label runs (animal welfare, youth, arts, health equity) were queued one at a time to spread weekly subscription use.
+- **work-log repo:** it stays public so the LOGGER.md link works for the invoice recipient.
+- **Go-to-market plan:** launch in the South Bay, invite-only, with nonprofits signing up first and GivingTuesday (Dec 1) as the first test.
 
 **Next**
-- **Label pilots:** review the four pilot results and approve full runs.
-- **IRS code fixes:** grade the Linux run (about 40K of 51K done) and decide whether to load the suggested codes.
-- **Linux overnight:** report on grant matching round 6 and board-member matching. Add the Education block to the Research tab.
+- **Label full runs:** animal welfare is running, then youth and arts. Each needs approval before loading.
+- **Service areas:** re-run on Linux, aiming for 90% accuracy on national and international scope.
+- **Invoice:** attach the PDF to the Gmail draft and send. Confirm whether imnet hours are billable.
 
 ## 2026-10-19 (Monday)
 
