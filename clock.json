@@ -55,8 +55,8 @@
   },
   "2026-10-20": {
     "start": "12:06am",
-    "end": "12:06am",
-    "inactive_min": 0,
+    "end": "6:08pm",
+    "inactive_min": 624,
     "break_min": 0,
     "offline_min": 0
   }

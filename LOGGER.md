@@ -4,15 +4,42 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-20 (Tuesday)
 
-*Hours worked: 0h (12:06am–12:06am) · 0 commits · 1 messages*
+*Hours worked: 7.75h (12:06am–6:08pm, 624 min inactive removed) · 81 commits · 127 messages*
 
-**Summary:** Light day; the only logged activity was a request to update the README and close out the day.
+**Summary:** Shipped the go-to-market features, a decluttered imnet UI, and an expanded NomBot Research tab; loaded the education and three narrow labels, and paused service areas.
 
 **Done**
-- [Admin] **README** update requested, then the day was ended. The messages show no details on the changes or the project.
+- [imnet] **Go-to-market features** built and pushed to `dev`: invite links with invite-only mode (F-131), Go together (F-132), Claim your profile (F-133), weekly "Ways to help" email (F-134), giving-day page (F-135), landing page (F-137) and launch readiness (F-136). 185 unit/RLS and 101 e2e tests passed at that point.
+- [imnet] **Decluttering pass:** removed privacy notes, thank-you notes, share buttons and redundant subtitles. Replaced words with icons, set one Apple system font, split the org page into Volunteer and Donate tiles, and showed posts as short paragraphs with bold figures.
+- [imnet] **Post header:** cause | place | time, plus stacked friend faces. The logo now fills the header height.
+- [imnet] **Ownership shares:** "What my giving became" shows your share of each org's total, hidden under 5 contributors.
+- [imnet] **Shifts:**
+  - Sign-up opens as a pop-over, with a Calendly-style picker.
+  - Cancel confirmation (F-163) and add-to-calendar for Google, Apple and Outlook (F-164).
+  - In-progress shifts are marked and can't be booked (F-165).
+  - Donation calls show a progress bar.
+- [imnet] **Impact panel** (F-166): totals act as the switch, with a by-cause view, outcomes, Together, and a Strava-style 12-month chart.
+- [imnet] **PR #17 merged to main** (`fe2fa74`). CI e2e had failed on the dev server; running it against a production build fixed that (B-048). 110 e2e tests pass locally.
+- [NomBot] **Evidence chain:** "Show the steps" appears on every research answer, in the API and MCP. It adds a start-year spike check ("Since 2021?") and an answer-cache bump to v32.
+- [NomBot] **Related-party transfers:** $23.3B (67 lines) removed from grant totals. 2021 total went from $149.7B to $141.5B.
+- [NomBot] **Labels loaded:** racial equity (97% main, 96% partial), immigrants and refugees (98% and 100%) and mental health (96% and 90%). The immigrants label is now split into services and policy sub-types. Services graded 99% and policy 84%, so policy carries a "lower confidence" note.
+- [NomBot] **Education label loaded:** 64,934 main focus and 99,336 partial. Raw grades were 94.9% and 89.9%, within one org of the bars. Recall rose from 75% to 86% in one run, then settled at about 73% on the final grading.
+- [NomBot] **New features:** similar organizations on org pages, API and MCP (`find_similar_orgs`), and news headlines linked to the orgs they name.
+- [NomBot] **Research tab:** now 34 checked prompts in 11 topic blocks, shown by tapping a block. All 34 answered fully when run.
+- [NomBot] **Foundation names:** 14,200 names cut short on 990-PF filings were restored from the IRS master file.
+- [NomBot] **Nightly prompt check:** all 34 prompts run on Linux and report to /admin. First run was 34/34.
+- [Admin] **Work log fixed:** Oct 19 raised to 9 h with 120 min of meetings. Clocked out for Oct 20.
+
+**Decisions**
+- **Education loaded with a caveat** ("within one org of the bar, counts are a floor"). Researchers get the label now.
+- **Immigrants policy sub-type kept,** with a lower-confidence note. Services is the default for "funding for immigrants" questions.
+- **Service areas paused** after three rounds missed the 90% bar (round 3: 82% scope, 81% places by hand). A single sample swung about ±10 points. Place answers keep the "counted where the recipient is based" note.
+- **Next label pilots:** arts and culture, youth development, animal welfare and health equity. Full runs still need approval.
 
 **Next**
-- [Admin] Confirm the **README** changes were saved and committed. No commits were logged for the day.
+- **Label pilots:** review the four pilot results and approve full runs.
+- **IRS code fixes:** grade the Linux run (about 40K of 51K done) and decide whether to load the suggested codes.
+- **Linux overnight:** report on grant matching round 6 and board-member matching. Add the Education block to the Research tab.
 
 ## 2026-10-19 (Monday)
 
