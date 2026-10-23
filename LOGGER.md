@@ -2,6 +2,31 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-22 (Thursday)
+
+*Active in Claude Code: ~0h 24m (estimate) · 0 commits · 17 messages*
+
+**Summary:** Mostly admin and outreach day: checked API key usage for two testers, set up remote access for a Chicago trip, and drafted outreach messages.
+
+**Done**
+- [NomBot] **API key usage** verified for Muneeb (3 calls) and Tyler (1 call). Both were successful `/api/v1/search` calls on Oct 19, with no errors and no calls since.
+- [NomBot] **Failed-auth log** checked: 34 keyless rejections, all from our own test suite. No outside failed attempts.
+- [NomBot] **Public API availability** confirmed. The Tailscale Funnel link is up and rejects keyless calls. The API stays reachable only while the Mac is awake, online, running Tailscale and running NomBot on :4000.
+- [Admin] **Remote access** set up for Chicago. Screen Sharing is on and reachable over Tailscale. The travel Mac answered in 11 ms on home Wi-Fi and 105 ms on a phone hotspot, with a direct path and no relay.
+- [Admin] **Follow-up draft to Kate** written as a WhatsApp message. It covers NomBot progress and four requested items: past diligence reports, advisor-group questions, contact names and a Salesforce example.
+- [Admin] **Intro request to Stephanie** drafted, asking for 2–3 advisor or researcher introductions.
+- [Admin] **IoG team ask** edited for grammar and clarity. It now asks for researchers and advisors for NomBot, and for foundations, nonprofits and donors for iMNet onboarding.
+- [Admin] **Background agents** stopped. The grant matching round 8 agent had finished and pushed its work. The data quality and nightly benchmark agent also finished.
+
+**Decisions**
+- [Admin] **Screen Sharing over Tailscale** chosen for Mac-to-Mac access from Chicago. It reaches the live terminal session, and Remote Control and SSH stay as lighter fallbacks.
+- [NomBot] **Rebuild deferred.** Rebuilding now would cause downtime and ship the half-finished rating change.
+
+**Next**
+- [Admin] **Screen Sharing login** still to be tested from the travel Mac before leaving.
+- [Admin] **Mac sleep** must be prevented while away, by staying plugged in with the lid open or running `caffeinate`.
+- [Admin] **Subscriptions question** for Keith about Inside Philanthropy, Chronicle of Philanthropy and Giving USA access.
+
 ## 2026-10-20 (Tuesday)
 
 *Hours worked: 7.75h (12:06am–6:08pm, 624 min inactive removed) · 0 commits · 187 messages*
