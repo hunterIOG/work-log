@@ -2,6 +2,45 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-26 (Monday)
+
+*Active in Claude Code: ~3h 42m (estimate) · 15 commits · 98 messages*
+
+**Summary:** Shipped NomBot's Inglewood place-search fixes, the UN-goal restructure with Browse by cause, and a search summary, patched Next.js on NomBot and imnet, and started a site-wide UI simplification.
+
+**Done**
+- [NomBot] **Next.js 16.4.3 security upgrade** closed 2 critical remote-code flaws and 1 high denial-of-service flaw (GHSA advisories). Public link stayed up. A fix-log and a NomBot dev-server restart were needed so imnet's trust-signal panel recovered.
+- [NomBot] **Inglewood test** against hand-checked ground truth found NomBot missed about half the relevant orgs: 4/7 health, 3/10 girls' leadership, 3/8 youth sports.
+- [NomBot] **Place search fixes** lifted coverage to 7/7 health, 9/10 girls' leadership and 8/8 youth sports.
+  - **Tiers:** in the city, serving it, nearby, county.
+  - **Matching:** name and cause-code candidates, whole-word "must mention".
+  - **Research answers:** city filter added, false "no city data" caveat removed.
+  - **Tests:** API 276/276, routing 109/109.
+- [NomBot] **Youth development label** is live in research answers, org pages, API and MCP. "Girls" now ranks rather than filters, and "girls only" still filters. Girls' leadership reached 10/10 coverage and 9/10 top-10 relevance. Routing tests 114/114.
+- [NomBot] **Download report and richer CSV** added for search results. Three PDF reports, CSVs and a summary were generated for Keith.
+- [NomBot] **Causes restructured around the 17 UN SDGs:**
+  - **Research Report:** 17 goal blocks, 70 questions (54 existing, 16 new).
+  - **Browse by cause (`/browse`):** goal and subcategory pages. Pages load in 0.4 s or less.
+  - **Coverage:** 8 goals strong, 7 limited, 9 subcategories not in the data yet.
+- [NomBot] **Search summary** under the search bar: count by tier, a description checked against the results, and "Did you know" as a lighter card. Summary tests 39/39. First build was slow at 9–13 s, so it was switched to start before relevance scoring.
+- [NomBot] **UX audit** found 90 issues (1 critical, 36 main-task, 53 polish). Top issues were contradicting numbers on search, no ask box on Research Report and no focal point.
+- [NomBot] **Site-wide redesign** is in progress: fewer words, icons, more space, softer colors, less repetition. The search and home pages ship first.
+- [NomBot] **Place-search work** was preceded by a WIP rating merge saved on a side branch so it did not ship.
+- [imnet] **Next.js 16.4.3 upgrade** pushed to `dev`. The repo was on 16.3.8, which is also affected. Typecheck, lint, 209 unit tests and build pass. Browser end-to-end tests were skipped.
+- [imnet] **Demo data and linked funders:** local ASPCA demo seed with 10 comments and 7 volunteer shifts. Funders on the public record now link to their records (F-181).
+- [Admin] **Migrations and labels:** migrations 083–085 added ZIP places and indexes for city scopes. Pilots for environment, workforce and health care labels were committed.
+- [Admin] **Meetings and write-ups:** drafted the AI Fellowship write-up for Keith and a WhatsApp blurb for the GSB user tests. Updated the to-do list from both meetings.
+
+**Decisions**
+- **Search summary:** chose speed over exactness. Count shows first, description starts before scoring.
+- **Security:** patched NomBot before the demo and kept the public link open. Full tests were deferred.
+- **Reports:** the report feature stays as a print-ready page for now. A direct PDF with an IoG cover page is a proposed follow-up.
+
+**Next**
+- **Labels:** finish the full runs for environment, workforce and health care.
+- **Redesign:** ship the simplified search and home pages, then org, research and browse pages.
+- **imnet:** fix the `zod` vulnerability and handle the moderate `@dicebear` one later.
+
 ## 2026-10-22 (Thursday)
 
 *Active in Claude Code: ~0h 24m (estimate) · 0 commits · 17 messages*
