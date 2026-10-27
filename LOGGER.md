@@ -33,7 +33,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 - [NomBot] **Next.js 16.4.3** security upgrade, closing 2 critical and 1 high advisory. Public link left open. The half-finished rating work is saved on `wip-rating-merge`.
 - [imnet] **Next.js 16.4.3** upgrade pushed (it was on 16.3.8). Typecheck, lint, 209 unit tests and build pass. Funders in the public record now link to their records.
 - [imnet] **Demo data seeded locally** for ASPCA: 10 comments and 7 volunteer shifts, gitignored. NomBot's :3001 test server was restarted after the upgrade broke the trust signals panel.
-- [Admin] **Scheduling:** connected the Alex scheduling MCP and wrote 7 actionables with times. Alex gained list/update/delete tools, and the duplicates were deleted. Drafted the write-up for Keith and a WhatsApp blurb for Julia.
+- [Admin] **Follow-ups:** drafted the write-up for Keith and a WhatsApp blurb for Julia.
 
 **Decisions**
 - **Speed over exactness** for the search summary: the description starts from the closest matches and may differ slightly from the final list.
