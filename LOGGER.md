@@ -4,7 +4,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-26 (Monday)
 
-*Hours worked: 3.25h (9:33am–10:29pm, 537 min inactive removed) · 16 commits · 102 messages*
+*Hours worked: 4.75h (9:33am–10:29pm, 537 min inactive removed) · 16 commits · 102 messages*
 
 **Summary:** Fixed NomBot's place search for the Inglewood test (coverage 30–57% → 7/7, 9/10, 8/8), built Browse by cause on the 17 UN goals, and began a minimal-UI redesign. Also patched Next.js in NomBot and iMNet.
 
