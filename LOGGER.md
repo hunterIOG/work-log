@@ -4,34 +4,39 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-27 (Tuesday)
 
-*Hours worked: 5.75h (9:21am–6:59pm, 290 min inactive removed) · 20 commits · 66 messages*
+*Hours worked: 5.75h (9:21am–6:59pm, 290 min inactive removed) · 0 commits · 81 messages*
 
-**Summary:** NomBot got a goal popover, article-style reports with photos and its own cause icons; imnet's Discover became a Pinterest-style board; and the user-testing blurb went out.
+**Summary:** Shipped a full NomBot UI/UX overhaul (Discover, Research, reports, cause icons, round 2 audit fixes) and set up user-testing outreach.
 
 **Done**
-- **[Admin] Craig's tech project plan:** reviewed it and assisted Keith (1 h, offline).
-- **[NomBot] Research redesign** is live. Answers show a big number, headline and one chart, with details folded away. The count appears in 2–4 s (was 7–10 s). Words above the fold are down 27–52% (Search −52%, Browse −47%, Org −36%, Home −27%).
-- **[NomBot] Goal popover** replaces the table the user rejected. Step 1 picks a topic and step 2 shows up to 5 questions. It opens below the tile and stays put, and step 2 keeps the cause header and breadcrumb. Questions are short, and "‹ Back to chat" returns from Browse with the popover reopened.
-- **[NomBot] Research split into Ask and Reports.** Reports are article pages with a hero photo, credit line, large headline and a pulled-out key number. The 39 reports sit at `/research/reports`.
-- **[NomBot] Every report now has a relevant photo:** 22 match the headline exactly and 17 use the closest scene. No photo is used on more than 2 reports. A rubber-chicken photo on a donor-advised fund report was caught and swapped.
-- **[NomBot] Cause icons** are now our own line icons in soft tinted circles, replacing the UN artwork. Along the way, cause grids got no truncated names (5/4/3/2 columns, names wrap to two lines) and a shared layering scale fixed popover z-fighting.
-- **[NomBot] Deploy safety:** a safe deploy script builds first, swaps only on success and rolls back on failure. A half-built Reports page had crashed :4000 at 12:14. It was restored from the last good build (ab80f30) and the :3001 test server was restarted.
-- **[NomBot] Environment label** reached 53,913 of 66,912 orgs (81%) by 18:24.
-- **[NomBot] Workforce and health care label pilots** (p3) passed. Workforce was 100% primary and 96% partial. Health care was 96% and 100% (raw).
-- **[imnet] Discover rebuilt as a Pinterest-style board:** topic chips, a masonry layout of tall photos, and ways-to-help as pins. Pins show friends going or supporting the org. "People you may know" is a card on the board and an Edit causes chip replaced the old sections.
-- **[imnet] Consistency and bug fixes:** one button each, friends instead of followers, and Sign up/Donate buttons in lists. Two bugs were fixed: events across the Nov 1 clock change keep their time (B-052), and share previews embed photos after the Next 16.4.3 upgrade (B-053). PR #20 was merged to `main` with 31 commits after all 4 checks passed.
-- **[Admin] User-testing setup:** the booking link was checked, and Julia's blurb was revised to her voice (AI Fellow, AI tools, calls with Hunter) and sent. The Oct 26 log was updated to 4.75 h by adding 1.5 h of meetings.
+- [NomBot] **Research popover** now opens below the tile and stays put through both steps. It keeps the cause header and breadcrumb, shows short questions, and adds "Back to chat" from Browse.
+- [NomBot] **Speed:** 502 known popover and home questions are pre-computed and answer in under 1 s. Typed questions take about 2.5 s, or 3.8–4.6 s end to end with live loading steps.
+- [NomBot] **Reports** are now article-style pages, split from Ask. All 39 have a real credited photo: 22 exact matches, 17 closest scene.
+- [NomBot] **Cause icons** are now our own line-icon family. The UN artwork was tried first and removed.
+- [NomBot] **Follow-up bug fixed:** every typed follow-up was silently falling back because the settings exceeded the AI size limit. Added a guard test and a fallback counter.
+- [NomBot] **Hover preview cards** on org and foundation names across search, answers, reports and chart bars. Foundations get a computed "Funds mostly…" line instead of "No mission on file".
+- [NomBot] **Round 2 UX audit:** fixed all 10 top issues and 9 of 10 quick wins.
+  - Org pages got section navigation, a folded "By year" and a Compare button.
+  - Raw IRS capitalization is now readable.
+  - Missing income no longer shows as "$0" or "Shrinking −100%".
+  - Browse subcategory pages list the top 10 orgs.
+  - Charts use one palette.
+  - Org page text sizes dropped from 13 to 7.
+- [NomBot] **Outage fixed:** a failed Reports build crashed :4000. Restored the last good version, and deploys now build, check, then swap, with rollback.
+- [NomBot] **Environment label:** at 81% and in its second check. Workforce and healthcare pilots passed.
+- [iMNet] **Discover** now works like Pinterest: a masonry board, topic chips, ways-to-help pins, friends on pins and a People you may know card. "Follow" became "Add friend" for people. PR #20 merged to `main` after 4 checks passed.
+- [iMNet] **Bugs fixed:** event times shifted by an hour after the Nov 1 clock change (B-052), and share previews broke after the Next.js upgrade (B-053).
+- [Admin] **User-testing setup:** Google Calendar booking link done. Julia's blurb was revised (no emoji, a specific audience, AI tools and Hunter named) and sent. Craig's tech plan review took 1 h.
 
 **Decisions**
-- **Popover over table:** progressive disclosure (topic, then questions) is easier to scan than a table.
-- **Own icons over UN icons:** the UN rules bar recoloring or cropping, so 17 bright icons could not be made harmonious. The "By cause" wording replaces "By goal".
-- **Corrected categories becomes a switch,** not a follow-up prompt, since it is a setting that re-runs the answer in place.
-- **Friends are one-way:** no acceptance step for now.
+- **Cause icons:** own line icons chosen over quieter UN icons, since UN rules block recoloring.
+- **Search rows:** Save and Compare stay hover-only.
+- **Popover design:** a two-step popover replaced the table layout.
 
 **Next**
-- **[NomBot]** Ship the speed and wording batch: known questions under 1 s and typed questions under 4 s. Remove "(SDG 13)" from answers, remove horizontal scroll in the popover and fix the environmental-education category. Then add hover preview cards for orgs and foundations.
-- **[NomBot]** Finish the environment label run, then grade it before loading anything.
-- **[Admin]** Reboot the Linux box (GPU error) and draft the 30-minute user-test script.
+- **Linux GPU:** needs a reboot.
+- **Environment label:** finish grading, then load once approved.
+- **User-testing script:** draft the 30-minute script for interviews.
 
 ## 2026-10-26 (Monday)
 
