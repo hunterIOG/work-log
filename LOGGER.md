@@ -4,11 +4,12 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-27 (Tuesday)
 
-*Hours worked: 4.75h (9:21am–6:59pm, 290 min inactive removed) · 20 commits · 66 messages*
+*Hours worked: 5.25h (9:21am–6:59pm, 290 min inactive removed) · 20 commits · 66 messages*
 
 **Summary:** NomBot got a goal popover, article-style reports with photos and its own cause icons; imnet's Discover became a Pinterest-style board; and the user-testing blurb went out.
 
 **Done**
+- **[Admin] Craig's tech project plan:** reviewed it and assisted Keith (30 min, offline).
 - **[NomBot] Research redesign** is live. Answers show a big number, headline and one chart, with details folded away. The count appears in 2–4 s (was 7–10 s). Words above the fold are down 27–52% (Search −52%, Browse −47%, Org −36%, Home −27%).
 - **[NomBot] Goal popover** replaces the table the user rejected. Step 1 picks a topic and step 2 shows up to 5 questions. It opens below the tile and stays put, and step 2 keeps the cause header and breadcrumb. Questions are short, and "‹ Back to chat" returns from Browse with the popover reopened.
 - **[NomBot] Research split into Ask and Reports.** Reports are article pages with a hero photo, credit line, large headline and a pulled-out key number. The 39 reports sit at `/research/reports`.
