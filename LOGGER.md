@@ -2,6 +2,36 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-27 (Tuesday)
+
+*Hours worked: 4.75h (9:21am–6:59pm, 290 min inactive removed) · 20 commits · 66 messages*
+
+**Summary:** NomBot got a goal popover, article-style reports with photos and its own cause icons; imnet's Discover became a Pinterest-style board; and the user-testing blurb went out.
+
+**Done**
+- **[NomBot] Research redesign** is live. Answers show a big number, headline and one chart, with details folded away. The count appears in 2–4 s (was 7–10 s). Words above the fold are down 27–52% (Search −52%, Browse −47%, Org −36%, Home −27%).
+- **[NomBot] Goal popover** replaces the table the user rejected. Step 1 picks a topic and step 2 shows up to 5 questions. It opens below the tile and stays put, and step 2 keeps the cause header and breadcrumb. Questions are short, and "‹ Back to chat" returns from Browse with the popover reopened.
+- **[NomBot] Research split into Ask and Reports.** Reports are article pages with a hero photo, credit line, large headline and a pulled-out key number. The 39 reports sit at `/research/reports`.
+- **[NomBot] Every report now has a relevant photo:** 22 match the headline exactly and 17 use the closest scene. No photo is used on more than 2 reports. A rubber-chicken photo on a donor-advised fund report was caught and swapped.
+- **[NomBot] Cause icons** are now our own line icons in soft tinted circles, replacing the UN artwork. Along the way, cause grids got no truncated names (5/4/3/2 columns, names wrap to two lines) and a shared layering scale fixed popover z-fighting.
+- **[NomBot] Deploy safety:** a safe deploy script builds first, swaps only on success and rolls back on failure. A half-built Reports page had crashed :4000 at 12:14. It was restored from the last good build (ab80f30) and the :3001 test server was restarted.
+- **[NomBot] Environment label** reached 53,913 of 66,912 orgs (81%) by 18:24.
+- **[NomBot] Workforce and health care label pilots** (p3) passed. Workforce was 100% primary and 96% partial. Health care was 96% and 100% (raw).
+- **[imnet] Discover rebuilt as a Pinterest-style board:** topic chips, a masonry layout of tall photos, and ways-to-help as pins. Pins show friends going or supporting the org. "People you may know" is a card on the board and an Edit causes chip replaced the old sections.
+- **[imnet] Consistency and bug fixes:** one button each, friends instead of followers, and Sign up/Donate buttons in lists. Two bugs were fixed: events across the Nov 1 clock change keep their time (B-052), and share previews embed photos after the Next 16.4.3 upgrade (B-053). PR #20 was merged to `main` with 31 commits after all 4 checks passed.
+- **[Admin] User-testing setup:** the booking link was checked, and Julia's blurb was revised to her voice (AI Fellow, AI tools, calls with Hunter) and sent. The Oct 26 log was updated to 4.75 h by adding 1.5 h of meetings.
+
+**Decisions**
+- **Popover over table:** progressive disclosure (topic, then questions) is easier to scan than a table.
+- **Own icons over UN icons:** the UN rules bar recoloring or cropping, so 17 bright icons could not be made harmonious. The "By cause" wording replaces "By goal".
+- **Corrected categories becomes a switch,** not a follow-up prompt, since it is a setting that re-runs the answer in place.
+- **Friends are one-way:** no acceptance step for now.
+
+**Next**
+- **[NomBot]** Ship the speed and wording batch: known questions under 1 s and typed questions under 4 s. Remove "(SDG 13)" from answers, remove horizontal scroll in the popover and fix the environmental-education category. Then add hover preview cards for orgs and foundations.
+- **[NomBot]** Finish the environment label run, then grade it before loading anything.
+- **[Admin]** Reboot the Linux box (GPU error) and draft the 30-minute user-test script.
+
 ## 2026-10-26 (Monday)
 
 *Hours worked: 4.75h (9:33am–10:29pm, 537 min inactive removed) · 16 commits · 102 messages*
