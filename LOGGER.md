@@ -4,35 +4,33 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-28 (Wednesday)
 
-*Hours worked: 6.75h (5:03am–9:25pm, 817 min inactive removed) · 8 commits · 47 messages*
+*Hours worked: 6.75h (5:03am–9:25pm, 817 min inactive removed) · 0 commits · 47 messages*
 
-**Summary:** Shipped the first advisor-driven NomBot changes (vetting signals, one-page memos, data-year badges, cause trust marks, no repeated questions), graded two cause labels, and paused the health care labeling run.
+**Summary:** Shipped the advisor-research changes to NomBot (memos, vetting questions, data-year badges, cause-quality marks, de-duplicated questions) while health care labeling was paused and the environment and workforce load stayed blocked.
 
 **Done**
-- **[Admin] Craig's interview:** assisted Keith (3 h, offline).
-- **[Admin] AI Fellows meeting** (1 h, offline).
-- [NomBot] **Advisor research** finished: 75 cited sources. It found advisors spend minutes on desk research, and it recommends a smaller NomBot.
-- [NomBot] **Track record line** and **questions to ask** (3–5 per org, rule-based, each with its reason, no AI) are live on org pages and in the API.
-- [NomBot] **One-page memos** are live: an org brief and a Compare options memo, as PDF or Word, with a "Prepared by" field. One-page fit was checked on 6 samples.
-- [NomBot] **Data-year badges** are on every figure in answers, Browse, org pages, search and reports. A **Memo** button is on org pages.
-- [NomBot] **Cause trust marks** added to every By-cause surface: ✓ checked, ◐ partial, ◌ limited data. "Estimated" was renamed to "partial". Org tiers now read "main focus" / "part of their work".
-- [NomBot] **Home subhead** removed.
-- [NomBot] **Repeated questions** removed everywhere. The popover now has one question per type, 46 duplicate prompts are hidden, and follow-ups skip questions already asked. New checks cover 726 question lists and 68 topics, and the nightly check now covers 365 prompts, up from 70.
-- [NomBot] **Environment** graded at 97% main focus and 98% partial (7,847 main-focus orgs plus 18,323 partial, recall about 76%). **Workforce** graded at 98% and 96% (8,059 plus 6,146, recall about 80%). Neither is loaded, because the safety system blocked the database load.
-- [NomBot] **Health care** pre-labeling: 1 of 3 no-text rules passed (96%, 9,579 orgs at partial). The Claude run was started, then **paused at 7,493 of 147,456 orgs** to save subscription usage. It resumes without losing work.
-- [imnet] **Local app restored** at :3100 after Docker, the local database and the dev server had stopped.
-- [Admin] **Muneeb's Anthropic key** problem diagnosed: the user-level key (`sk-ant-usr`) was the wrong type. Walked through creating a workspace-scoped, unlinked standard key.
-- [Admin] **Hours** added offline: **3 h** assisting Keith with Craig's interview and **1 h** AI fellow meeting.
+- [NomBot] **Environment and workforce labels** graded and ready: environment 97% main focus / 98% partial (7,847 + 18,323 orgs, recall ~76%); workforce 98% / 96% (8,059 + 6,146 orgs, recall ~80%). Database load blocked by the safety system, so not loaded.
+- [NomBot] **Cause quality marks** live: ✓ checked, ◐ partial (renamed from "estimated"), ◌ limited data. A test checks each mark against how NomBot counts that cause. Org labels reworded to "main focus" / "part of their work".
+- [NomBot] **Home subtext removed** under "Look up research".
+- [NomBot] **Advisor research** finished: 75 cited sources, finding that advisors vet in phases and NomBot covers phase one (desk research).
+- [NomBot] **"Questions to ask"** (3–5 per org, rules only, each with its reason) and a **track record line** live on org pages.
+- [NomBot] **One-page memos** live: org brief and Compare options memo, as PDF or Word, with a "Prepared by" field. Layout checked on 6 orgs.
+- [NomBot] **Data-year badges** on research answers, Browse, org pages, search stats and reports. A "Memo" button was added to org pages.
+- [NomBot] **Duplicate questions removed** everywhere: 46 hand-written prompts hidden, `test:questions` covers 726 lists and `test:popover` covers 68 topics. No duplicates remain.
+- [NomBot] **Health care labeling paused** at 7,493 of 147,456 orgs screened, to stop subscription use. Rules settled only ~9,600 no-text orgs (96%), saving ~6% of cost, not the hoped-for 45%.
+- [imnet] **Local app restored** at :3100 after Docker, the database and the dev server had stopped.
+- [Admin] **Anthropic key issue for Muneeb** diagnosed: his tool needs a standard `sk-ant-api03` key, not a user-level key. Guided creating a workspace-scoped key.
+- [Admin] **Time logged:** 6.75 h, including 3 h assisting Keith with Craig's interview and 1 h AI Fellows meeting.
 
 **Decisions**
-- [NomBot] **Hold the big restructure** (two front doors, vetting card rebuild, cuts) until the GSB interviews, because the research had no data on vetting time or daily tools.
-- [NomBot] **"Partial" means only the cause mark**, so org tiers were reworded to avoid the clash.
-- [NomBot] **Pause health care labeling** until after the Mon Nov 2 weekly reset.
+- **Mark wording:** "partial" replaces "estimated" for IRS-code-only counts, because it is clearer.
+- **Interface restructure held:** the two front doors, vetting card and cuts wait for the GSB interviews, since the research lacked data on advisors' daily tools.
+- **Health care run paused** to save subscription usage; it resumes later without losing work.
 
 **Next**
-- [NomBot] **Load environment and workforce** by running the load commands manually, then switch NomBot to the new labels.
-- [NomBot] **Restart the :3001 test server**, which is down and breaks iMNet's trust signals. Or point iMNet at :4000.
-- [NomBot] **Reword "2025 is partial"** to "2025 returns are still arriving"?
+- **Load environment and workforce:** the user must run the load and refresh commands, then NomBot is wired to the labels.
+- **Restart the :3001 test server:** it is down, so iMNet's trust signals fail.
+- **Resume health care labeling** after the Mon Nov 2 weekly reset.
 
 ## 2026-10-27 (Tuesday)
 
