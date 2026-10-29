@@ -2,6 +2,36 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-28 (Wednesday)
+
+*Hours worked: 6.75h (5:03am–9:25pm, 817 min inactive removed) · 8 commits · 47 messages*
+
+**Summary:** Shipped the first advisor-driven NomBot changes (vetting signals, one-page memos, data-year badges, cause trust marks, no repeated questions), graded two cause labels, and paused the health care labeling run.
+
+**Done**
+- [NomBot] **Advisor research** finished: 75 cited sources. It found advisors spend minutes on desk research, and it recommends a smaller NomBot.
+- [NomBot] **Track record line** and **questions to ask** (3–5 per org, rule-based, each with its reason, no AI) are live on org pages and in the API.
+- [NomBot] **One-page memos** are live: an org brief and a Compare options memo, as PDF or Word, with a "Prepared by" field. One-page fit was checked on 6 samples.
+- [NomBot] **Data-year badges** are on every figure in answers, Browse, org pages, search and reports. A **Memo** button is on org pages.
+- [NomBot] **Cause trust marks** added to every By-cause surface: ✓ checked, ◐ partial, ◌ limited data. "Estimated" was renamed to "partial". Org tiers now read "main focus" / "part of their work".
+- [NomBot] **Home subhead** removed.
+- [NomBot] **Repeated questions** removed everywhere. The popover now has one question per type, 46 duplicate prompts are hidden, and follow-ups skip questions already asked. New checks cover 726 question lists and 68 topics, and the nightly check now covers 365 prompts, up from 70.
+- [NomBot] **Environment** graded at 97% main focus and 98% partial (7,847 main-focus orgs plus 18,323 partial, recall about 76%). **Workforce** graded at 98% and 96% (8,059 plus 6,146, recall about 80%). Neither is loaded, because the safety system blocked the database load.
+- [NomBot] **Health care** pre-labeling: 1 of 3 no-text rules passed (96%, 9,579 orgs at partial). The Claude run was started, then **paused at 7,493 of 147,456 orgs** to save subscription usage. It resumes without losing work.
+- [imnet] **Local app restored** at :3100 after Docker, the local database and the dev server had stopped.
+- [Admin] **Muneeb's Anthropic key** problem diagnosed: the user-level key (`sk-ant-usr`) was the wrong type. Walked through creating a workspace-scoped, unlinked standard key.
+- [Admin] **Hours** added offline: **3 h** assisting Keith with Craig's interview and **1 h** AI fellow meeting.
+
+**Decisions**
+- [NomBot] **Hold the big restructure** (two front doors, vetting card rebuild, cuts) until the GSB interviews, because the research had no data on vetting time or daily tools.
+- [NomBot] **"Partial" means only the cause mark**, so org tiers were reworded to avoid the clash.
+- [NomBot] **Pause health care labeling** until after the Mon Nov 2 weekly reset.
+
+**Next**
+- [NomBot] **Load environment and workforce** by running the load commands manually, then switch NomBot to the new labels.
+- [NomBot] **Restart the :3001 test server**, which is down and breaks iMNet's trust signals. Or point iMNet at :4000.
+- [NomBot] **Reword "2025 is partial"** to "2025 returns are still arriving"?
+
 ## 2026-10-27 (Tuesday)
 
 *Hours worked: 5.75h (9:21am–6:59pm, 290 min inactive removed) · 0 commits · 81 messages*
