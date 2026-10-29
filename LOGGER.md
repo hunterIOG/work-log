@@ -9,6 +9,8 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 **Summary:** Shipped the first advisor-driven NomBot changes (vetting signals, one-page memos, data-year badges, cause trust marks, no repeated questions), graded two cause labels, and paused the health care labeling run.
 
 **Done**
+- **[Admin] Craig's interview:** assisted Keith (3 h, offline).
+- **[Admin] AI Fellows meeting** (1 h, offline).
 - [NomBot] **Advisor research** finished: 75 cited sources. It found advisors spend minutes on desk research, and it recommends a smaller NomBot.
 - [NomBot] **Track record line** and **questions to ask** (3–5 per org, rule-based, each with its reason, no AI) are live on org pages and in the API.
 - [NomBot] **One-page memos** are live: an org brief and a Compare options memo, as PDF or Word, with a "Prepared by" field. One-page fit was checked on 6 samples.
