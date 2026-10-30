@@ -2,18 +2,9 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
-## 2026-10-30 (Friday)
-
-*Active in Claude Code: ~0h 00m (estimate) · 0 commits · 1 messages*
-
-**Summary:** No work was recorded on 2026-10-30; the only message was "end today".
-
-**Done**
-- [Admin] **Session** ended at 01:06 with no commits and no development activity logged.
-
 ## 2026-10-29 (Thursday)
 
-*Active in Claude Code: ~3h 19m (estimate) · 0 commits · 46 messages*
+*Hours worked: 3.25h (9:32am–10:21pm, 571 min inactive removed) · 0 commits · 46 messages*
 
 **Summary:** Inglewood reports for Keith went from v2 to v3 and were polished for the demo, with all fixes pushed to NomBot.
 
