@@ -2,6 +2,37 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-29 (Thursday)
+
+*Active in Claude Code: ~3h 19m (estimate) · 0 commits · 46 messages*
+
+**Summary:** Inglewood reports for Keith went from v2 to v3 and were polished for the demo, with all fixes pushed to NomBot.
+
+**Done**
+- [NomBot] **Website profiles:** 88 orgs with no filing text got a description from their own website, checked at 97% correct (29 of 30). Only 35 of 201 no-filing orgs had a findable site.
+- [NomBot] **Dental bus finding:** no confirmed mobile or school-based dental service in Inglewood. UCLA dental students' clinic at Children's Dental Center is confirmed.
+- [NomBot] **One-page summary** added to all 3 reports: top picks with badges and questions to ask, top funders, gaps, method.
+- [NomBot] **v3 scoring (ba98ea1):** local-first ranking, fairer scoring, and website text counted for every org. Girls' leadership top-10 hit rate went 70% to 80%, with recall 64% to 86%. Youth sports hit rate went 50% to 60%, with recall 100% to 88%. Health and dental held at 70% and 100%.
+- [NomBot] **UI batch (50438a3):**
+  - Clearer place labels with tooltips.
+  - The Export menu, which opened off-screen, now works.
+  - Key facts no longer cut off or repeated.
+  - Saved (starred) searches, with no repeats in Recents.
+  - The 70 vs 50 cutoff explained the same way in report and app.
+- [NomBot] **Health and dental top-10 dip** to 60% was a hand-checked list gap, not a bug. The Achievable Foundation is a real clinic, so it's marked "maybe". Accuracy is 100% counting "maybe", and recall is 100%.
+- [NomBot] **Preference counts (adfda16):** the search page now counts orgs matching the "especially" part, with a filter chip. Girls' focus shows 17 of 65. The dental line reads "none of the 66 mention it" under the stricter rule.
+- [NomBot] **Back to results and memo fix (18c72fa):** Back returns to the exact search with filters kept. Placeholder missions like "See Schedule O" affected 11,421 orgs. 9,869 now show programs, 1,552 show nothing. 12 orgs in Keith's reports were fixed, and the reports were regenerated.
+- [Admin] **Keith partnership message:** drafted a message to Keith proposing to partner with Tyler (front end) while Hunter handles the data.
+
+**Decisions**
+- **Stricter dental match:** requires "mobile" and "dental" together, or "dental bus"/"van", so the gap finding is honest.
+- **Rename for saved searches skipped;** saves are per browser.
+
+**Next**
+- **Test Export on the public link** while signed in, then prewarm and star the demo searches.
+- **Export with a chip selected** still exports every org, not just the filtered ones.
+- **Send Keith the partnership message** and the legal update due today.
+
 ## 2026-10-28 (Wednesday)
 
 *Hours worked: 6.75h (5:03am–9:25pm, 817 min inactive removed) · 0 commits · 47 messages*
