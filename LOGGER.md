@@ -4,27 +4,32 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-30 (Friday)
 
-*Hours worked: 3h (1:06am–6:25pm, 990 min inactive removed) · 1 commits · 29 messages*
+*Hours worked: 3h (1:06am–6:25pm, 990 min inactive removed) · 0 commits · 34 messages*
 
-**Summary:** Removed the "nearby" chip from NomBot search results, issued Craig a read-only API key with setup docs, and scoped a password-protected Vercel deployment.
+**Summary:** Removed the nearby chip, issued Craig a read-only NomBot API key with setup docs, and updated the generosity-data README.
 
 **Done**
-- [NomBot] **Nearby chip** removed and pushed as fdd40f7. The summary now shows "29 based in Inglewood" and "5 based elsewhere". The Nearby section, reports and CSV are unchanged, and the 3 Inglewood searches were prewarmed again.
-- [NomBot] **Craig's API key** is live: read-only, 60 requests per minute, and a check returned 200. I revoked the first key (121) after the clipboard was overwritten and issued key 122.
-- [Admin] **API setup doc** saved at `~/Desktop/craig-nombot-api.md`. It has no key in it and covers the 17 endpoints, Python examples and the Claude Code MCP setup.
-- [Admin] **Reply to Craig** drafted. It links the docs, the OpenAPI spec and the base URL, includes curl examples, and tells him to feed the docs to his agent harness.
-- [NomBot] **Key usage check:** Craig made 9 successful `/search` calls, last at 1:02 PM, with no errors. One of the 9 was our own setup check.
-- [NomBot] **Vercel hosting scoped:** the blocker is the 38 GB database, which would need hosted Postgres at roughly $30–40/mo. The disk caches (`lib/memo.ts`, `lib/browse.ts`) would also move into the database. I estimated 1–2 days of agent work.
-- [Meeting] **Meeting with Keith and Craig interview** (1 hour, offline).
+- [NomBot] **Nearby chip** removed from the search summary, now showing only "29 based in Inglewood" and "5 based elsewhere". The Nearby section stays in results, reports and CSV. Pushed as fdd40f7 with a README update.
+- [NomBot] **Inglewood searches** (3) prewarmed again on :4000 after the change, and all tests pass.
+- [NomBot] **Craig's API key** created as read-only at 60 requests per minute. The first key (121) was lost when the clipboard was overwritten, so it was revoked and replaced with key 122, which returns 200.
+- [NomBot] **Key-rotation script** written so the revoke, create and check steps run as one command, and the key is never printed.
+- [NomBot] **API setup doc** written at `~/Desktop/craig-nombot-api.md`. It covers auth, 17 read-only endpoints, Python examples and a `claude mcp add` command. It contains no key.
+- [NomBot] **Craig's usage** checked: 9 successful `/search` calls, last at 1:02 PM, no errors and no org lookups yet.
+- [NomBot] **Reply email to Craig** drafted with docs link, OpenAPI spec, base URL and curl examples. It tells him to feed the docs to his agent harness.
+- [NomBot] **Always-on setup** diagnosed. Closing the lid would take down :4000, the public link, Craig's API and :3001. `sudo pmset -a disablesleep 1` was given as the fix.
+- [NomBot] **generosity-data README** updated and pushed as 784688a. It now says the database is 38 GB, lists all 12 loaded labels, and notes that health care labeling is paused at 7,493 of 147,456 orgs. It also adds a "See Schedule O" data-quality note.
+- [NomBot] **Vercel hosting** assessed: the real blocker is the 38 GB database, which would need a hosted Postgres at roughly $30–40/mo. Disk caches would also move into the database.
+- [Admin] **Time log** recorded as 3 hours for the day, including 135 minutes offline with a 1-hour meeting with Keith and Craig's interview.
 
 **Decisions**
-- **Key delivery:** send the key through a one-time link, separate from the doc. Plain email is acceptable only if he's in a rush, since the key is read-only and can be revoked in seconds.
-- **Password gate:** use the app's own `SITE_PASSWORD` sign-in on Vercel rather than Vercel's paid password protection.
+- **One-time link for Craig's key:** the key is sent through a one-time link rather than plain email or Wormhole, and the doc goes in a separate email. Wormhole needs both people online at once.
+- **Own password gate on Vercel:** if hosted, use the app's `SITE_PASSWORD` gate instead of Vercel's paid password protection.
+- **README commit scope:** only the README was committed. `arts_culture.json` and migration 082 stay uncommitted.
 
 **Next**
-- [Admin] **Send Craig** the key by one-time link and the setup doc, then send the reply email.
-- [NomBot] **Keith demo (Fri):** export one report through the public link while signed in. That path is untested.
-- [NomBot] **Quality fixes:** exports that respect the chip filter, Schedule O mission text and steadier scores.
+- **Craig:** send the key by one-time link and the setup doc separately, and check that the doc's examples work with the real key.
+- **Exports:** test an export through the public link while signed in, and make exports match the active filter.
+- **Quality fixes:** load Schedule O mission text and average scores for orgs near the 70 cutoff.
 
 ## 2026-10-29 (Thursday)
 
