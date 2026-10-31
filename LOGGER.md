@@ -2,6 +2,30 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-10-30 (Friday)
+
+*Hours worked: 1.75h (1:06am–6:25pm, 990 min inactive removed) · 1 commits · 29 messages*
+
+**Summary:** Removed the "nearby" chip from NomBot search results, issued Craig a read-only API key with setup docs, and scoped a password-protected Vercel deployment.
+
+**Done**
+- [NomBot] **Nearby chip** removed and pushed as fdd40f7. The summary now shows "29 based in Inglewood" and "5 based elsewhere". The Nearby section, reports and CSV are unchanged, and the 3 Inglewood searches were prewarmed again.
+- [NomBot] **Craig's API key** is live: read-only, 60 requests per minute, and a check returned 200. I revoked the first key (121) after the clipboard was overwritten and issued key 122.
+- [Admin] **API setup doc** saved at `~/Desktop/craig-nombot-api.md`. It has no key in it and covers the 17 endpoints, Python examples and the Claude Code MCP setup.
+- [Admin] **Reply to Craig** drafted. It links the docs, the OpenAPI spec and the base URL, includes curl examples, and tells him to feed the docs to his agent harness.
+- [NomBot] **Key usage check:** Craig made 9 successful `/search` calls, last at 1:02 PM, with no errors. One of the 9 was our own setup check.
+- [NomBot] **Vercel hosting scoped:** the blocker is the 38 GB database, which would need hosted Postgres at roughly $30–40/mo. The disk caches (`lib/memo.ts`, `lib/browse.ts`) would also move into the database. I estimated 1–2 days of agent work.
+- [Admin] **Extra meeting with Keith and Craig interview** added to today's log. No duration was given.
+
+**Decisions**
+- **Key delivery:** send the key through a one-time link, separate from the doc. Plain email is acceptable only if he's in a rush, since the key is read-only and can be revoked in seconds.
+- **Password gate:** use the app's own `SITE_PASSWORD` sign-in on Vercel rather than Vercel's paid password protection.
+
+**Next**
+- [Admin] **Send Craig** the key by one-time link and the setup doc, then send the reply email.
+- [NomBot] **Keith demo (Fri):** export one report through the public link while signed in. That path is untested.
+- [NomBot] **Quality fixes:** exports that respect the chip filter, Schedule O mission text and steadier scores.
+
 ## 2026-10-29 (Thursday)
 
 *Hours worked: 3.25h (9:32am–10:21pm, 571 min inactive removed) · 0 commits · 46 messages*
