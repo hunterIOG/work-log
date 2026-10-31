@@ -93,6 +93,6 @@
     "end": "6:25pm",
     "inactive_min": 990,
     "break_min": 0,
-    "offline_min": 60
+    "offline_min": 135
   }
 }

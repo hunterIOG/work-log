@@ -4,7 +4,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-30 (Friday)
 
-*Hours worked: 1.75h (1:06am–6:25pm, 990 min inactive removed) · 1 commits · 29 messages*
+*Hours worked: 3h (1:06am–6:25pm, 990 min inactive removed) · 1 commits · 29 messages*
 
 **Summary:** Removed the "nearby" chip from NomBot search results, issued Craig a read-only API key with setup docs, and scoped a password-protected Vercel deployment.
 
