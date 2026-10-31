@@ -15,7 +15,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 - [Admin] **Reply to Craig** drafted. It links the docs, the OpenAPI spec and the base URL, includes curl examples, and tells him to feed the docs to his agent harness.
 - [NomBot] **Key usage check:** Craig made 9 successful `/search` calls, last at 1:02 PM, with no errors. One of the 9 was our own setup check.
 - [NomBot] **Vercel hosting scoped:** the blocker is the 38 GB database, which would need hosted Postgres at roughly $30–40/mo. The disk caches (`lib/memo.ts`, `lib/browse.ts`) would also move into the database. I estimated 1–2 days of agent work.
-- [Admin] **Extra meeting with Keith and Craig interview** added to today's log. No duration was given.
+- [Meeting] **Meeting with Keith and Craig interview** (1 hour, offline).
 
 **Decisions**
 - **Key delivery:** send the key through a one-time link, separate from the doc. Plain email is acceptable only if he's in a rush, since the key is read-only and can be revoked in seconds.
