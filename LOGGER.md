@@ -4,31 +4,37 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-01 (Sunday)
 
-*Hours worked: 3h (1:06pm–9:33pm, 355 min inactive removed) · 0 commits · 34 messages*
+*Hours worked: 3h (1:06pm–9:33pm, 355 min inactive removed) · 0 commits · 35 messages*
 
-**Summary:** Ran Keith's personas 4 and 5 on WayToMatter, scored both, and drafted the findings email to Keith.
+**Summary:** Ran WayToMatter persona tests 4 and 5, scored them, and sent Craig and Keith replies, while the API's dependence on a sleeping Mac was identified as the cause of failed org suggestions.
 
 **Done**
-- [NomBot] **API status check** for Craig: key active, 2 searches on Nov 1 all returned 200, and the 9 searches on Oct 30 also returned 200.
-- [NomBot] **Outage diagnosed:** the Mac slept on battery overnight until 1:00 PM, which took NomBot, the public link and Craig's API offline. Sleep is now disabled (`SleepDisabled 1`).
-- [NomBot] **Org lookups verified:** Marcus's United Effort Organization (Mountain View) and Pittsburgh Cares (Pittsburgh) both exist in NomBot, and the EIN and website were correct.
-- [Admin] **Craig reply sent** after rewriting the draft: no motivation data exists yet, impact history is limited to IRS filings, and the reply proposes brainstorming how to collect motivation data.
-- [Admin] **Persona test script** built to type the persona questions in text mode and save transcripts and screenshots. Fixed a bug where it checked for text mode too early. It ran for personas 4 and 5, but some replies were cut off because questions were sent while Hope was still looking up orgs.
-- [Admin] **Persona 4 (Angela, with Hope) scored:** humanness 4/5, self-discovery 2/5, accuracy 3/5, guardrail passed. The reply never named NORC and gave the sample size inconsistently.
-- [Admin] **Persona 5 (Robert, with Marcus, voice) scored:** commitment 5/5, relevance 5/5, accuracy 5/5, guardrail passed. Marcus cited IRS Form 990 filings as the source, not as an endorsement.
-- [Admin] **Screenshots prepared:** split Angela's tall screenshot into 4 readable images and cropped Robert's into 3, for upload to the doc.
-- [Admin] **Feedback collected for Craig:** no source link, long paragraphs, spelled-out numbers, no way to save conversations, and memory carried across accounts.
-- [Admin] **Findings email to Keith** drafted and shortened to a single message. It explains the org failure as my API being offline, not Craig's tool, and says I preferred Marcus over Hope.
+- [NomBot] **API health** checked for Craig: key active, 2 searches on Nov 1 all returned 200, no errors, only `/search` used.
+- [NomBot] **Outage cause** found: the Mac slept on battery overnight until 1:00 PM, so NomBot, the public link and Craig's API were offline. Sleep is now disabled (`SleepDisabled 1`).
+- [Admin] **Craig reply** drafted, sent and cc'd to Keith. It says there is no motivation data yet and proposes brainstorming how to collect it.
+- [Admin] **Browser script** built to run persona questions in text mode on WayToMatter, saving transcripts and screenshots. After a text-mode switching bug was fixed, it ran personas 4 and 5 with Hope.
+- [Admin] **Persona 4 (Angela)** scored on Keith's scorecard. Highlights: trust vs. effectiveness kept separate, guardrail passed, NORC not named, accuracy 3/5, self-discovery 2/5.
+- [Admin] **Persona 5 (Robert)** scored on the scorecard from a manual voice run with Marcus. Highlights: commitment 5/5, relevance 5/5, accuracy 5/5. Both orgs were real, and I checked them in NomBot.
+- [Admin] **Screenshots** for Angela (4 parts) and Robert (3 parts) cropped to readable chat columns, ready to drag into the persona doc tabs.
+- [Admin] **Product feedback** logged for Craig:
+  - no source link
+  - sample size stated inconsistently
+  - long paragraphs
+  - spelled-out numbers
+  - no saved conversations
+  - Hope reused my account history
+- [Admin] **Keith email** written combining persona 4 and 5 notes, with a preference for Marcus over Hope and the API explanation.
+- [Admin] **Time logged** for Nov 1 at 3 hours and pushed to the work-log repo.
 
 **Decisions**
-- **Link to org websites:** suggested as a trust signal that fits Keith's "explore, don't endorse" framing.
-- **Passwords out of memory:** declined to save the WayToMatter password and recommended Keychain instead.
-- **Fresh test accounts:** recommended separate accounts for Angela and Robert so prior memory doesn't skew results.
+- [NomBot] **Cloud migration:** move the database to the Institute's Supabase so the API stays up without the Mac, because the current plan can't hold the database.
+- [Admin] **Org links:** suggest linking to an org's own website as a trust signal that fits Keith's "explore, don't endorse" framing.
+- [Admin] **Test accounts:** a fresh account was recommended for persona runs so prior memory doesn't skew results.
 
 **Next**
-- **Cloud migration:** discuss with Keith this week moving the database to the Institute's Supabase, since the current plan can't hold it.
-- **Persona doc:** drag the Angela and Robert screenshots into the Persona 4 and 5 tabs.
-- **Rerun Angela:** redo persona 4 so replies aren't cut off.
+- [Admin] **Keith email:** send it and discuss the Supabase upgrade this week.
+- [Admin] **Persona doc:** add the Angela and Robert screenshots to the Persona 4 and 5 tabs.
+- [Admin] **Angela rerun:** redo persona 4 so replies aren't cut off during org lookups.
 
 ## 2026-10-30 (Friday)
 
