@@ -54,6 +54,7 @@ Write a work-log entry in Markdown for {day}. Output ONLY these sections, no tit
 
 Rules: short declarative bullets, bold the key noun of each bullet. Use only what the messages show.
 Never include secrets, API keys, tokens, passwords, home addresses, phone numbers or email addresses.
+Never mention Salesforce, Stripe or Generosity Symposium admin work. Leave those tasks out entirely.
 
 Commits:
 {commits}

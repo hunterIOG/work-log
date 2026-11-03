@@ -244,7 +244,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 - [NomBot] **Failed-auth log** checked: 34 keyless rejections, all from our own test suite. No outside failed attempts.
 - [NomBot] **Public API availability** confirmed. The Tailscale Funnel link is up and rejects keyless calls. The API stays reachable only while the Mac is awake, online, running Tailscale and running NomBot on :4000.
 - [Admin] **Remote access** set up for Chicago. Screen Sharing is on and reachable over Tailscale. The travel Mac answered in 11 ms on home Wi-Fi and 105 ms on a phone hotspot, with a direct path and no relay.
-- [Admin] **Follow-up draft to Kate** written as a WhatsApp message. It covers NomBot progress and four requested items: past diligence reports, advisor-group questions, contact names and a Salesforce example.
+- [Admin] **Follow-up draft to Kate** written as a WhatsApp message. It covers NomBot progress and three requested items: past diligence reports, advisor-group questions and contact names.
 - [Admin] **Intro request to Stephanie** drafted, asking for 2–3 advisor or researcher introductions.
 - [Admin] **IoG team ask** edited for grammar and clarity. It now asks for researchers and advisors for NomBot, and for foundations, nonprofits and donors for iMNet onboarding.
 - [Admin] **Background agents** stopped. The grant matching round 8 agent had finished and pushed its work. The data quality and nightly benchmark agent also finished.
