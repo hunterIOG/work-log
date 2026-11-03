@@ -235,7 +235,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-10-22 (Thursday)
 
-*Active in Claude Code: ~0h 24m (estimate) · 0 commits · 17 messages*
+*Hours worked: 1h (2:28am–10:22am, 450 min inactive removed) · 0 commits · 17 messages*
 
 **Summary:** Mostly admin and outreach day: checked API key usage for two testers, set up remote access for a Chicago trip, and drafted outreach messages.
 
