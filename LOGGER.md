@@ -4,7 +4,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-02 (Monday)
 
-*Hours worked: 3.5h (8:40am–10:16pm, 651 min inactive removed) · 1 commits · 62 messages*
+*Hours worked: 4h (8:40am–10:16pm, 651 min inactive removed) · 1 commits · 62 messages*
 
 **Summary:** Shipped NomBot's "Near me" feature and prepared WayToMatter's tester rollout, including the Craig call, feedback review and tester email.
 
