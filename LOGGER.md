@@ -2,6 +2,36 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-02 (Monday)
+
+*Hours worked: 3.5h (8:40am–10:16pm, 651 min inactive removed) · 1 commits · 62 messages*
+
+**Summary:** Shipped NomBot's "Near me" feature and prepared WayToMatter's tester rollout, including the Craig call, feedback review and tester email.
+
+**Done**
+- [NomBot] **"Near me" feature** committed and pushed (00ae652, 23 files). It is live on :4000 and all tests pass.
+- [NomBot] **Location privacy:** the browser converts location to a ZIP using local Census data. Only the ZIP goes to the server, and the test confirmed coordinates are never sent.
+- [NomBot] **Typed places win:** a typed place such as "in Inglewood" overrides the user's location.
+- [NomBot] **Blocked-location fallback:** a ZIP box appears. Typing 15222 gave "Near you: Pittsburgh, PA".
+- [NomBot] **Saved location:** the ZIP is remembered in the browser, with a "Forget my location" option.
+- [NomBot] **Map and API:** the map centers on the user's county. The API accepts `near_zip=` for Craig's partners.
+- [Admin] **GivingPath feedback located:** Keith shared the correct folder. It covers 3 formats tested on ChatGPT, Claude and Gemini, and the hybrid format won. The first folder shared was the Laura voice GPT, which is the wrong one.
+- [Admin] **Craig call held:** Craig had already applied our feedback. The call covered the email feature, metrics and the Giving Impact Score, which waits until after Giving Tuesday. The summary was drafted and not sent.
+- [Admin] **Feedback survey approved:** Keith approved it. Craig was asked to turn it into a Google Form, and the live Form's "Try it" link now points to waytomatter.vercel.app.
+- [Admin] **ElevenLabs Pro upgrade:** Keith agreed and was sent upgrade instructions on WhatsApp, so credits last through tester access.
+- [Admin] **IoG tester email** drafted as one message to the 9 testers, with Keith and Craig cc'd. It is not sent.
+
+**Decisions**
+- **Near me** asks for location only on click, never on page load, to avoid denied prompts.
+- **Hybrid format** (GivingPath) is the model for a light "go deeper" step in WayToMatter.
+- **Tester logins:** the draft links the shared Sheet, which holds every tester's password. The assistant recommended a mail merge instead, and the user chose a single email.
+- **Email sending:** emails are drafted only and sent only after the user confirms.
+
+**Next**
+- **Tester email:** send it Wednesday morning once Craig confirms the accounts work, and share the logins Sheet view-only.
+- **iMNet server:** :3001 is still down after the Mac restart. Restart it with `cd ~/Desktop/NomBot/web && npm run dev -- -p 3001`.
+- **API uptime:** keep the API running Wednesday to Thursday, or finish the Supabase move.
+
 ## 2026-11-01 (Sunday)
 
 *Hours worked: 3h (1:06pm–9:33pm, 355 min inactive removed) · 0 commits · 35 messages*
