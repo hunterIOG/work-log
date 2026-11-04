@@ -4,33 +4,31 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-03 (Tuesday)
 
-*Hours worked: 7.75h (9:26am–8:43pm, 210 min inactive removed) · 14 commits · 278 messages*
+*Hours worked: 7.75h (9:26am–8:43pm, 210 min inactive removed) · 0 commits · 292 messages*
 
-**Summary:** Invoiced 31.5 hours, moved health care labeling to a personal Max login, and loaded Schedule O, similar orgs and grant links round 10 into generosity-data.
+**Summary:** Moved labeling to a personal Max login, loaded new cause labels, and shipped "Serves Inglewood" and "Serves LA County" in NomBot.
 
 **Done**
-- [Admin] **Invoice** for Protocol Z dated 11/03/26 covers 10/22–11/02. It totals 31.5 h at $60/h, or $1,890. Logged 10/22 as 1 h, committed (f04811c) and sent to Bill.com with Helen and Keith on cc.
-- [Admin] **Work-log repo** has the sensitive mention removed from the 10/22 entry (4829eae). The logger now skips that kind of work in future entries.
-- [NomBot] **Database size audit** finished. The app and API use about 37 of 38 GB, so trimming saves little. Safe cuts bring it to about 34 GB, and harder cuts to about 29 GB. Every extension we use works on Supabase.
-- [NomBot] **Supabase check** shows the project is on IoG's Pro plan in US East. Compute is Nano and disk is 8 GB, so it needs Medium or Large compute and about 50 GB of disk. Estimated cost is about $80 a month for Medium or $130 for Large.
-- [NomBot] **Labeling now runs on the personal Max login** through `CLAUDE_CONFIG_DIR`, with no MCP. A 10-org test passed 10 of 10 with 0 errors. The change is committed (fc3e332).
-- [NomBot] **Health care classify finished** at about 148.5K orgs, with 0 failed calls. Sonnet verify is running on the 20,574 borderline orgs. **Arts & culture classify** is about 15% through 135K orgs and should finish around 11 AM tomorrow. Weekly Max usage is about 12%.
-- [NomBot] **Environment and workforce labels** are loaded into the database and into search, research answers, Browse, the API and MCP (a37f581, 207047b). A top-up now runs after every load (1cd1724).
-- [NomBot] **Schedule O missions** now cover older filings, adding 5,167 missions and 1,068 program texts. It graded 29 of 30 (96.7%), above the 94% bar. API search rows now carry tax status and place tiers (f87d691).
-- [NomBot] **Similar orgs** were rebuilt from the 2026_09A filings: 4.33M pairs across 517K orgs, up from 514K. The weekly rebuild now reads the newest filings.
-- [NomBot] **Grant linking** round 10 loaded 288 grants worth $30.2M after 3 new guard rules. All 125 recipient names graded correct and the top 50 by dollars had 0 wrong. Round 9 added 20,238 grants worth $1.12B (882bf7c).
-- [NomBot] **NTEE refresh** was held twice. It graded 89.3%, then 82.7% on the retry, against a 94% bar. A Claude-based recheck of about 4K suggestions is running.
-- [NomBot] **Linux helper** was rebuilt as the Omarchy box "hunty" (1504ec1). Systemd timers replace cron. The Admin page has a Real Time Data section (e288a94, e4169bc).
+- [Admin] **Invoice** for 10/22–11/02 created and pushed: 31.5 h × $60 = $1,890, with 10/22 logged as 1 h. The 3 invoice PDFs and the work-log repo were checked clean.
+- [NomBot] **Database size audit:** the app and API use about 37 of 38 GB, so the cloud copy would be about 30–34 GB after safe cuts. Supabase is Pro with Nano compute and 8 GB disk, so it needs Large compute and about 50 GB disk.
+- [NomBot] **Labeling moved to a personal Max login,** with the IoG login, Chrome and MCP untouched. A 10-org test passed 10 of 10. Pushed as fc3e332.
+- [NomBot] **Health care labeling classify finished:** about 148,500 orgs, 0 failed calls, 5% of weekly Max used. Sonnet verify of the 20,574 borderline orgs is running.
+- [NomBot] **NTEE corrections loaded** after a Claude check graded 99.3% (149 of 150), against the 94% bar. The local model had scored 82.7%. 2,945 orgs corrected, shifting $839M of 2022–24 grants.
+- [NomBot] **Serves Inglewood is live in the build.** City places loaded: 56,736 for 49,388 orgs, graded 92.5%. 30 orgs serve Inglewood, and the lookup takes about 8 ms. Pushed as 0566eec.
+- [NomBot] **Serves LA County built.** County places graded 93.2% against the 90% bar and loaded: 97,236 places for 72,110 orgs. 392 outside orgs name LA County. API tests 314 of 314. Pushed as f9fcc5e.
+- [NomBot] **Data work pushed:** grant links round 10 (+288 grants, $30.2M), Schedule O for older filings (+5,167 missions), similar orgs (4.33M pairs), and a snapshot export of 15 files, 789 MB.
+- [NomBot] **2019–20 IRS filings** were parsed into staging only. A fuller 25–30 GB download and parse is running on hunty.
+- [Admin] **progress-bar plugin** released v0.11.0 through v0.13.0. These added compact job lines, a Log tab, time-left estimates, and an overnight recap with `/progress-bar checkpoint`.
 
 **Decisions**
-- **Supabase migration** is on hold. The database stays on the MacBook until Keith is asked. Supabase Pro was chosen over Pinecone because most of the 34 GB is relational tables.
-- **NTEE and grant-link loads** are held back when they score below their bars, so known errors don't reach NomBot's answers.
-- **GrantRadar branch** was deleted locally and on the remote. Its 36 commits are kept in the tag `archive/GrantRadar-2026-11-03`.
+- **Database stays on the MacBook for now.** Keith isn't being asked to upgrade compute yet. Supabase Pro was chosen over Pinecone because the data is mostly relational tables.
+- **Cities loaded first, counties later.** City places passed at 92.5% while counties failed, so counties waited for a rule fix.
+- **Personal Max for bulk labeling only.** It keeps IoG token usage separate. Jobs must pass `--api cli`.
 
 **Next**
-- **Service areas v4 pilot** and the hunty CPU batch (data checks, 2019–20 filings, board links) are running.
-- **Health care** needs grade and load after verify. **Arts** needs verify, grade and load after classify.
-- **Full data refresh** after labeling finishes, so research tables pick up the new links and filings.
+- **Deploy** the combined Serves Inglewood and LA County build with the swap command.
+- **Fix NomBot org pages** to say the NTEE corrections graded 99.3% for 2,945 orgs, not 94%.
+- **Decide** on loading 2019–20 filings, which needs a board history table first.
 
 ## 2026-11-02 (Monday)
 
