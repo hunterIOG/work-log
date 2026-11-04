@@ -277,5 +277,16 @@ def main():
     print(f"{day}: logged" + ("" if r.returncode == 0 else f"; push failed: {r.stderr.strip()}"))
 
 
+# After a successful "end today", save what's running so the Status panel can show an overnight recap.
+# Best effort: a missing or failing checkpoint never fails the log.
+def overnight_checkpoint():
+    try:
+        subprocess.run([sys.executable, os.path.expanduser("~/.claude-progress/checkpoint.py"), "end today"], timeout=60, capture_output=True)
+    except Exception:
+        pass
+
+
 if __name__ == "__main__":
     main()
+    if "--end" in sys.argv and not ({"--preview", "--dry-run"} & set(sys.argv)) and not any(a.startswith("--day=") for a in sys.argv):
+        overnight_checkpoint()
