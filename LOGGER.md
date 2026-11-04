@@ -2,6 +2,36 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-03 (Tuesday)
+
+*Hours worked: 7.75h (9:26am–8:43pm, 210 min inactive removed) · 14 commits · 278 messages*
+
+**Summary:** Invoiced 31.5 hours, moved health care labeling to a personal Max login, and loaded Schedule O, similar orgs and grant links round 10 into generosity-data.
+
+**Done**
+- [Admin] **Invoice** for Protocol Z dated 11/03/26 covers 10/22–11/02. It totals 31.5 h at $60/h, or $1,890. Logged 10/22 as 1 h, committed (f04811c) and sent to Bill.com with Helen and Keith on cc.
+- [Admin] **Work-log repo** has the sensitive mention removed from the 10/22 entry (4829eae). The logger now skips that kind of work in future entries.
+- [NomBot] **Database size audit** finished. The app and API use about 37 of 38 GB, so trimming saves little. Safe cuts bring it to about 34 GB, and harder cuts to about 29 GB. Every extension we use works on Supabase.
+- [NomBot] **Supabase check** shows the project is on IoG's Pro plan in US East. Compute is Nano and disk is 8 GB, so it needs Medium or Large compute and about 50 GB of disk. Estimated cost is about $80 a month for Medium or $130 for Large.
+- [NomBot] **Labeling now runs on the personal Max login** through `CLAUDE_CONFIG_DIR`, with no MCP. A 10-org test passed 10 of 10 with 0 errors. The change is committed (fc3e332).
+- [NomBot] **Health care classify finished** at about 148.5K orgs, with 0 failed calls. Sonnet verify is running on the 20,574 borderline orgs. **Arts & culture classify** is about 15% through 135K orgs and should finish around 11 AM tomorrow. Weekly Max usage is about 12%.
+- [NomBot] **Environment and workforce labels** are loaded into the database and into search, research answers, Browse, the API and MCP (a37f581, 207047b). A top-up now runs after every load (1cd1724).
+- [NomBot] **Schedule O missions** now cover older filings, adding 5,167 missions and 1,068 program texts. It graded 29 of 30 (96.7%), above the 94% bar. API search rows now carry tax status and place tiers (f87d691).
+- [NomBot] **Similar orgs** were rebuilt from the 2026_09A filings: 4.33M pairs across 517K orgs, up from 514K. The weekly rebuild now reads the newest filings.
+- [NomBot] **Grant linking** round 10 loaded 288 grants worth $30.2M after 3 new guard rules. All 125 recipient names graded correct and the top 50 by dollars had 0 wrong. Round 9 added 20,238 grants worth $1.12B (882bf7c).
+- [NomBot] **NTEE refresh** was held twice. It graded 89.3%, then 82.7% on the retry, against a 94% bar. A Claude-based recheck of about 4K suggestions is running.
+- [NomBot] **Linux helper** was rebuilt as the Omarchy box "hunty" (1504ec1). Systemd timers replace cron. The Admin page has a Real Time Data section (e288a94, e4169bc).
+
+**Decisions**
+- **Supabase migration** is on hold. The database stays on the MacBook until Keith is asked. Supabase Pro was chosen over Pinecone because most of the 34 GB is relational tables.
+- **NTEE and grant-link loads** are held back when they score below their bars, so known errors don't reach NomBot's answers.
+- **GrantRadar branch** was deleted locally and on the remote. Its 36 commits are kept in the tag `archive/GrantRadar-2026-11-03`.
+
+**Next**
+- **Service areas v4 pilot** and the hunty CPU batch (data checks, 2019–20 filings, board links) are running.
+- **Health care** needs grade and load after verify. **Arts** needs verify, grade and load after classify.
+- **Full data refresh** after labeling finishes, so research tables pick up the new links and filings.
+
 ## 2026-11-02 (Monday)
 
 *Hours worked: 4h (8:40am–10:16pm, 651 min inactive removed) · 0 commits · 63 messages*
