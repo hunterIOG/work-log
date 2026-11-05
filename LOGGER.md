@@ -4,34 +4,43 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-04 (Wednesday)
 
-*Active in Claude Code: ~7h 38m (estimate) · 28 commits · 187 messages*
+*Hours worked: 8.25h (8:25am–4:31pm, 28 min inactive removed) · 28 commits · 187 messages*
 
-**Summary:** Loaded 2019–2025 IRS filings and the new labels, links and finance trends into the database, shipped NomBot catch-up and Max-plan evals, and released progress-bar plugin v0.20.0–v0.22.4.
+**Summary:** Loaded the full 2019–23 IRS history into generosity-data, shipped the NomBot catch-up deploy, and released progress-bar plugin v0.13.1 to v0.22.4.
 
 **Done**
-- **[NomBot]** Catch-up build live (BUILD_ID `HCn5Jn5VFb2mCYXDnZ1-e`). It adds a **finance chart** from 2019, "Board over time" and "Also served on" on org pages, and a `county=` API option. It also adds health care and arts labels, older-filer labeling and the underfunded fixes. API tests 320/320.
-- **[NomBot]** **Underfunded search fixed.** "Near me" uses a ZIP or asks for one, "consistently" needs 3+ years, the chart uses two colors, ranking is by gap ratio, and acronym casing is fixed.
-- **[NomBot]** **Max-plan backend** (`NOMBOT_LLM=cli`) lets evals run on the personal Max plan with no API key. Evals: **route 120/134, research 113/117**. Most misses were outdated expectations, and 3 real router misses went to a fix agent.
-- **[GrantRadar]** **Grant links.** Round 11 added 50 grants ($244K). Round 12 rematched to the new orgs: **11,126 grants ($252.7M)** and **12,426 Schedule I lines ($1.08B)**, graded 50/50. Grants are now 68.5% linked.
-- **[imnet]** **2019–20 IRS set loaded.** 916K filings, 199K foundation-years and 17.3M board seats in a new board history table. The database grew from 40 GB to 51 GB.
-- **[imnet]** **2019–2025 finance trends** built for 614K orgs: 23,649 underfunded every year checked, 26,792 with 3+ consecutive deficit years. Found that 2021–22 returns were nearly missing, which prompted a 2021–23 load.
-- **[imnet]** **Labels loaded.** Health care: 43,289 primary and 29,063 partial (99% and 96% graded). Arts and culture: 106,969 primary and 10,934 partial. NTEE fixes for 2,945 orgs graded 99.3%.
-- **[imnet]** **Service places.** The cleanup fixed 52 rows in 41 orgs. A model read of Schedule O places kept 457 of 610 (**97.3%** graded), for 102,908 places total. The 2019–20 Schedule O set added 21,522 rows.
-- **[imnet]** **Board links across years:** 1.08M org pairs, 67 of 75 checked correct and 0 wrong. Similar orgs were rebuilt (4.69M pairs for 558K orgs). Basic org rows were added for 45,415 orgs that only file a 2019–20 990.
-- **[Admin]** **Progress-bar plugin v0.13.1 → v0.22.4.** Added machine labels, connector links, priority to-dos with auto-next, an inbox watcher and a secure channel (tested Mac to hunty). Also added WAITING cards, a Chat tab, and zero-setup install.
-- **[Admin]** **Plugin fixes.** Fixed duplicate or false stuck alerts, the blank panel and Log tab, and a 2nd-laptop visibility bug. The test suite is now **133/133** green.
-- **[Admin]** **8 Dependabot alerts fixed** and pushed (npm audit clean). 30 minutes of meeting time logged.
+- [NomBot] **Catch-up deploy** is live (HCn5Jn5VFb2mCYXDnZ1-e). It adds health care labels, a revenue/expense **finance chart** from 2019, a **board history** view, older Schedule O missions, and a `county=` API option. API tests: 320 of 320.
+- [NomBot] **"Under-funded near me"** fixed: it uses your ZIP or asks for one. "Consistently" needs 3+ years. The chart uses two colors. Ranking is by gap ratio. Acronym casing is fixed.
+- [NomBot] **Max plan backend** (`NOMBOT_LLM=cli`) runs evals without the API key. **Route eval 120/134**, **research eval 113/117**. A fix for 3 real router misses is in progress.
+- [NomBot] **NTEE note** now says 99.3% checked by Claude. **Health care** covers 43,289 primary and 29,063 partial orgs.
+- [GrantRadar] **2019–20 IRS set loaded:** 916K filings, 199K foundation-years, 17.3M board seats. Database grew from 40 GB to 51 GB.
+- [GrantRadar] **Health care labels loaded** (grade 99% primary, 96% partial). **Arts labels loaded:** 106,969 primary, 10,934 partial.
+- [GrantRadar] **Finance trends 2019–2025** built for 614,004 orgs. **23,649** orgs were under-funded in every year checked.
+- [GrantRadar] **Links rebuilt:**
+  - **Board links:** 1.08M org pairs, 67 of 75 checked correct, 0 wrong.
+  - **Grant rematch:** 11,126 grants ($252.7M) and 12,426 Schedule I lines ($1.08B) linked, 50 of 50 graded.
+  - **Similar orgs:** 4.69M pairs for 558K orgs.
+- [GrantRadar] **Service places:** cleanup fixed 52 rows. Claude reading 610 Schedule O places kept 457, **graded 97.3%**. Total is now **102,908 places**.
+- [GrantRadar] **Schedule O 2019–20** loaded (21,522 rows, 30/30 hand-check). **8 Dependabot alerts** fixed.
+- [Admin] **progress-bar plugin** shipped v0.13.1 through v0.22.4, adding:
+  - priority to-dos with auto-next
+  - Gmail inbox watcher
+  - clickable connectors
+  - encrypted hunty channel and Chat tab
+  - zero-setup install
+  - blank-panel fixes
+  - a green test suite (133/133)
 
 **Decisions**
-- **Load everything** from 2019–20, including board history, rather than foundation finances only.
-- **Max-plan switch** for evals instead of the API key, to avoid billing. The switch is off on the live site.
-- **Rules held at 83%** for Schedule O places, so a model read per place replaced further rule tuning.
-- **Neutral label** "Newest 990 on file: 2020" for orgs with no later filing, since 2021–22 is missing data and not a decline.
+- **Loaded everything** from 2019–20, not just foundation finances.
+- **Max plan switch** for NomBot evals instead of using the API key.
+- **Held Schedule O places** at 83% until a model read passed the 90% bar.
+- **Label missing 2021–22 filings** as "Newest 990 on file", never "stopped filing".
 
 **Next**
-- **[imnet]** Finish the 2021–23 load and research refresh, then rebuild finance trends and board links.
-- **[imnet]** Run the 2021–23 grant rematch and service places (agent running).
-- **[NomBot]** Swap in the router-fix build once the evals pass.
+- **Finish 2021–23 load** and the research layer refresh. Hunty jobs follow.
+- **NomBot router fixes:** build, then swap.
+- **Rematch grants** and **build service places** for 2021–23 orgs.
 
 ## 2026-11-03 (Tuesday)
 
