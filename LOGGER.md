@@ -4,43 +4,33 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-04 (Wednesday)
 
-*Hours worked: 8.25h (8:25am–4:31pm, 28 min inactive removed) · 28 commits · 187 messages*
+*Hours worked: 8.25h (8:25am–4:31pm, 28 min inactive removed) · 0 commits · 220 messages*
 
-**Summary:** Loaded the full 2019–23 IRS history into generosity-data, shipped the NomBot catch-up deploy, and released progress-bar plugin v0.13.1 to v0.22.4.
+**Summary:** Loaded and pushed the 2019–23 IRS filings, health care labels and many NomBot upgrades, and shipped progress-bar plugin v0.13.1 through v0.22.8.
 
 **Done**
-- [NomBot] **Catch-up deploy** is live (HCn5Jn5VFb2mCYXDnZ1-e). It adds health care labels, a revenue/expense **finance chart** from 2019, a **board history** view, older Schedule O missions, and a `county=` API option. API tests: 320 of 320.
-- [NomBot] **"Under-funded near me"** fixed: it uses your ZIP or asks for one. "Consistently" needs 3+ years. The chart uses two colors. Ranking is by gap ratio. Acronym casing is fixed.
-- [NomBot] **Max plan backend** (`NOMBOT_LLM=cli`) runs evals without the API key. **Route eval 120/134**, **research eval 113/117**. A fix for 3 real router misses is in progress.
-- [NomBot] **NTEE note** now says 99.3% checked by Claude. **Health care** covers 43,289 primary and 29,063 partial orgs.
-- [GrantRadar] **2019–20 IRS set loaded:** 916K filings, 199K foundation-years, 17.3M board seats. Database grew from 40 GB to 51 GB.
-- [GrantRadar] **Health care labels loaded** (grade 99% primary, 96% partial). **Arts labels loaded:** 106,969 primary, 10,934 partial.
-- [GrantRadar] **Finance trends 2019–2025** built for 614,004 orgs. **23,649** orgs were under-funded in every year checked.
-- [GrantRadar] **Links rebuilt:**
-  - **Board links:** 1.08M org pairs, 67 of 75 checked correct, 0 wrong.
-  - **Grant rematch:** 11,126 grants ($252.7M) and 12,426 Schedule I lines ($1.08B) linked, 50 of 50 graded.
-  - **Similar orgs:** 4.69M pairs for 558K orgs.
-- [GrantRadar] **Service places:** cleanup fixed 52 rows. Claude reading 610 Schedule O places kept 457, **graded 97.3%**. Total is now **102,908 places**.
-- [GrantRadar] **Schedule O 2019–20** loaded (21,522 rows, 30/30 hand-check). **8 Dependabot alerts** fixed.
-- [Admin] **progress-bar plugin** shipped v0.13.1 through v0.22.4, adding:
-  - priority to-dos with auto-next
-  - Gmail inbox watcher
-  - clickable connectors
-  - encrypted hunty channel and Chat tab
-  - zero-setup install
-  - blank-panel fixes
-  - a green test suite (133/133)
+- [imnet] **2019–20 filings** loaded (916K filings, 199K foundation finance years, 17.3M board seats). The database grew from 40 GB to 48 GB. A check of 209 sample orgs showed none of their newest values went backwards.
+- [imnet] **2021–23 filings** loaded later in the day. Board history reached 30.9M rows across 847K orgs. Orgs whose newest return is 2019–20 dropped from 90K to 34K. The database is now 68 GB.
+- [imnet] **Health care labels** loaded: 43,289 main and 29,063 secondary orgs. They graded 99% and 96% against bars of 95% and 90%.
+- [imnet] **Finance trends table** covers 690,886 orgs. 23,649 were underfunded in every year checked.
+- [imnet] **Board links** rebuilt with 2021–23 seats: 1.29M pairs, up from 1.08M. A 75-link check found 67 right, 8 unsure and 0 wrong.
+- [imnet] **Service places cleanup** fixed 52 wrong rows and graded 92.7%. The 2021–23 round added 1,019 places and graded 96.7%.
+- [imnet] **Grant links** added 50 more grants in round 11. Round 13 added 473 grants ($13.2M) and 554 Schedule I lines ($62.3M), each graded 50 of 50.
+- [imnet] **Dependabot** alerts fixed: all 8 closed with `undici` and `zod` bumps.
+- [NomBot] **Health care catch-up deploy** shipped. It adds health care search, a finance chart, board history, the `county=` API option, and fixes for the "near me" and "consistently underfunded" answers.
+- [NomBot] **Router fixes** went live. Route eval went from 120 of 134 to 137 of 137, and research eval from 113 of 117 to 119 of 119. NomBot's Claude calls can now run on a subscription through `NOMBOT_LLM=cli`.
+- [NomBot] **2021–23 board and finance update** went live. It adds board changes by year and a confidence tag on each board link.
+- [Admin] **Progress-bar plugin** shipped as v0.13.1 through v0.22.8. It adds machine labels, connector links, priority to-dos with auto-next, an inbox watcher, a Log tab fix, a 3-second chat refresh and a 30-minute usage meter. The plugin's test suite went fully green at 133, then 142.
 
 **Decisions**
-- **Loaded everything** from 2019–20, not just foundation finances.
-- **Max plan switch** for NomBot evals instead of using the API key.
-- **Held Schedule O places** at 83% until a model read passed the 90% bar.
-- **Label missing 2021–22 filings** as "Newest 990 on file", never "stopped filing".
+- **Load everything** from the 2019–20 set, including a new board history table. The old partial staging folder was deleted.
+- **Label jobs and evals** now default to the IOG subscription. The personal Max is a fallback only.
+- **Auto-next** starts the top ready to-do when a job finishes. Your own items, pushes and deploy swaps still need your approval.
 
 **Next**
-- **Finish 2021–23 load** and the research layer refresh. Hunty jobs follow.
-- **NomBot router fixes:** build, then swap.
-- **Rematch grants** and **build service places** for 2021–23 orgs.
+- **Label top-ups:** about 36K of 77K are done, with roughly 5 hours left on the Mac.
+- **Queued Mac to-dos:** the eval rerun, board-link grading and Form 990 trends from 2019 in research answers.
+- **Queued hunty to-dos:** data checks on 2021–23, finance trend flags and the person-matcher fix. Similar orgs and NTEE suggestions are still running.
 
 ## 2026-11-03 (Tuesday)
 
