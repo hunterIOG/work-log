@@ -2,6 +2,33 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-06 (Friday)
+
+*Active in Claude Code: ~0h 22m (estimate) · 1 commits · 9 messages*
+
+**Summary:** Linked $4.08B of unlinked grants to recipient orgs and queued board-link and held-grant jobs on hunty.
+
+**Done**
+- [GrantRadar] **Grant linking round 14** applied: 40,802 lines worth $4.08B linked to their recipient orgs (29,328 grants $1.51B, 11,474 Schedule I lines $2.57B). Committed and pushed (e5ff9f0). Live site still returns 200.
+- [GrantRadar] **Link accuracy:** each of the 4 shipped groups scored 80/80 on hand check.
+- [GrantRadar] **Coverage:** private-foundation dollars to US orgs that are linked rose 83.65% → 83.93%. Charity-reported grants rose 90.94% → 91.11%.
+- [GrantRadar] **Largest link:** City of Fort Worth, $554M, hand-checked as correct.
+- [GrantRadar] **Gap found:** a probe showed 95K grant lines worth $5.0B had no recipient org but matched exactly one org by name and state. Most of the money ($3.65B) went to orgs added after the last plain match.
+- [NomBot] **Board links job** started on hunty for people on more than 8 boards in one state (about 26K people-in-a-state). Today's cap gives them no links.
+- [GrantRadar] **Held-grants job** started on hunty: tighter rules for the $0.36B of grants held back.
+- [Admin] **Hunty queue** refilled with 3 items: held grants, EIN-only grants plus the common-name $1.04B, and the 459 uncertain duplicate orgs.
+- [NomBot] **Duplicate orgs:** loading the 351 newly promoted duplicate orgs, started after approval.
+
+**Decisions**
+- [GrantRadar] **Held back $0.36B** from the fifth group (orgs elsewhere in the same state): it scored 93%, under the 95% bar.
+- [GrantRadar] **Left $1.04B unlinked** for now: names too common to tell apart. Earlier hand checks found only 14% right.
+- [Admin] **Did not start EIN-only grants or the 459 duplicates:** the first would write the same grant columns as the running held-grants job. The second would build on a file not yet loaded.
+
+**Next**
+- [Admin] **Swap** the "count each org once" build into the live site. The permission check blocked it, so it needs a manual run.
+- [Admin] **Fix the progress-bar plugin:** auto-next fired 3 times because freshly started jobs look idle.
+- [NomBot] **Decide on the revenue fix:** $116M counted twice across 101 org-years.
+
 ## 2026-11-05 (Thursday)
 
 *Active in Claude Code: ~10h 00m (estimate) · 0 commits · 200 messages*
