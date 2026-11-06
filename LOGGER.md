@@ -2,6 +2,37 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-05 (Thursday)
+
+*Active in Claude Code: ~10h 00m (estimate) · 0 commits · 200 messages*
+
+**Summary:** Labeling got about 2x faster with Jev as first pass, NomBot passed all evals on the bigger 2021-23 database, and board-link and board-answer fixes went live.
+
+**Done**
+- [NomBot] **Evals** pass at 100% on the much bigger database with no regressions: routing 137/137, research 119/119, answers vs SQL 117 match and 0 mismatches.
+- [NomBot] **Board answers** went live: most-boards people, foundation-grantee shared boards (20,442 foundations, 46,621 links), one org's board, and shared members between two orgs. Answer checks 126/126.
+- [NomBot] **Board eval checks** added. They found 9 real mistakes (vacant seats shown as members, placeholder names with person keys, two wrong "no data" answers). 58 of 59 pass after the fixes.
+- [NomBot] **Org pages** now show one board-links section, "Also served on". Weak links appear under "Possible matches". The page went live.
+- [NomBot] **Duplicate orgs:** build counting each org once is ready, not yet live. The 171 applied duplicates affect $72M in grants and $116M in revenue.
+- [GrantRadar] **Labeling pilot** (Jev vs free classifier): Jev decides 54% of orgs without Claude, 60% with the classifier. It takes about 30 seconds per 1K orgs, against about 13 minutes for Claude. Pilot spend was $0.55.
+- [GrantRadar] **Jev first pass** replaced Claude-only labeling. The remaining queue fell from 198K to 141K labels. Jev plus LightGBM agreement now decides 55–64% for healthcare, housing and environment.
+- [GrantRadar] **Jev recheck:** Claude re-read 1,222 Jev-decided labels and 652 changed, so two too-generous Jev tiers were turned off.
+- [imnet] **Board links** are cleaner. Strong and medium links grade 100% on 400 Opus-checked pairs. Shown links are 99.2% right after 4,225 weak links were hidden. The 3 placeholder names stopped getting person keys.
+- [imnet] **One return per org and year** fixed the 279 cases where a blank return hid a filled one. Finance numbers changed for 3,258 orgs. Research totals now use the picked return.
+- [imnet] **Borderline duplicates:** 351 promoted to real duplicates, bringing the merged total to 522, with 38 of 40 right on hand check. 646 were dropped as separate orgs and 459 stay uncertain.
+- [imnet] **Data checks and finance flags:** finance flags are live for 689K orgs (456K with at least one flag), and all 300 recomputed values matched. Places added for 4,849 more orgs, graded 98.7%.
+- [Admin] **Progress-bar plugin** went from 0.22.9 to 0.27.8. It added the compact usage meter, thin bars and an auto-next fix.
+
+**Decisions**
+- **Jev first pass for labels:** Claude only reads orgs Jev is unsure about, because it cuts the remaining work from about 12 hours to about 7.
+- **Dropped the grant-linking pick for personal-mac:** the last rounds found little, so the borderline duplicates went there instead.
+- **Dropped 17 GB of old table copies:** after checking nothing depended on them.
+
+**Next**
+- **Swap live** the build that counts each org once, and apply the 351 new duplicates.
+- **Fix the double-counted revenue** ($116M) in the finance tables.
+- **Finish hunty's places run** for the next 98K orgs (about 14 hours).
+
 ## 2026-11-04 (Wednesday)
 
 *Hours worked: 8.25h (8:25am–4:31pm, 28 min inactive removed) · 0 commits · 220 messages*
