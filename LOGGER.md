@@ -4,34 +4,39 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-06 (Friday)
 
-*Active in Claude Code: ~0h 22m (estimate) · 1 commits · 9 messages*
+*Hours worked: 6.5h (6:19am–11:01pm, 604 min inactive removed) · 19 commits · 109 messages*
 
-**Summary:** Linked $4.08B of unlinked grants to recipient orgs and queued board-link and held-grant jobs on hunty.
+**Summary:** Shipped the closed-org flag, a giver-matching API and next-step links for California nonprofits, and linked about $5.5B more grants to their recipient orgs.
 
 **Done**
-- [GrantRadar] **Grant linking round 14** applied: 40,802 lines worth $4.08B linked to their recipient orgs (29,328 grants $1.51B, 11,474 Schedule I lines $2.57B). Committed and pushed (e5ff9f0). Live site still returns 200.
-- [GrantRadar] **Link accuracy:** each of the 4 shipped groups scored 80/80 on hand check.
-- [GrantRadar] **Coverage:** private-foundation dollars to US orgs that are linked rose 83.65% → 83.93%. Charity-reported grants rose 90.94% → 91.11%.
-- [GrantRadar] **Largest link:** City of Fort Worth, $554M, hand-checked as correct.
-- [GrantRadar] **Gap found:** a probe showed 95K grant lines worth $5.0B had no recipient org but matched exactly one org by name and state. Most of the money ($3.65B) went to orgs added after the last plain match.
-- [NomBot] **Board links job** started on hunty for people on more than 8 boards in one state (about 26K people-in-a-state). Today's cap gives them no links.
-- [GrantRadar] **Held-grants job** started on hunty: tighter rules for the $0.36B of grants held back.
-- [Admin] **Hunty queue** refilled with 3 items: held grants, EIN-only grants plus the common-name $1.04B, and the 459 uncertain duplicate orgs.
-- [NomBot] **Duplicate orgs:** loading the 351 newly promoted duplicate orgs, started after approval.
+- [NomBot] **Closed-org flag** is live: 8,949 closed, 19,172 revoked and 8,661 likely closed orgs, hand check 119/120. Org pages and the API show the status, and recommendations skip closed orgs.
+- [NomBot] **Match API** `/api/v1/match` is live, with the MCP tool `match_nonprofits`. It takes a giver's words plus a ZIP code and returns up to 10 open orgs with "why it fits" lines. It runs in about 0.4 s per request, and the match tests pass 10/10 (11/11 after next steps were added).
+- [NomBot] **Volunteer, event and donate links** are live in match results and in a new "Get involved" org-page section, covering 40,887 California orgs. Hand checks: volunteer 95%, donate 94%, events 93%. In LA, 19 of the top 20 orgs now have links.
+- [NomBot] **Duplicate orgs** counted once rose from 171 to 544 after two loads, and the second borderline pass was 22/22 right.
+- [NomBot] **Craig's API key** now has all read scopes, including IoG internal docs.
+- [NomBot] **Restart** refreshed the Browse figures with today's data.
+- [imnet] None this day.
+- [GrantRadar] None this day.
+- [NomBot] **Grants linked** to recipient orgs in rounds 14, 14b, 15 and 16 (e5ff9f0, 5e21c4d, 2e412f5, 945589a): $4.08B, $213.5M, $1.35B and $35.7M. Hand checks were 80/80 per group, 97–98%, 140/140 on the largest group, and 138/140 and 82/82.
+- [NomBot] **Board links** added for 15,413 people on 9+ boards in a state: 682K new shown links, 97.9% right on a hand check. A second pass from the newest returns added 4,403 people and 78,583 pairs, 98.3% right.
+- [NomBot] **Cause labels** added for 1,362 unlabeled orgs, hand check 96%. It stopped when TypeSafe credits ran out and IoG usage hit 82%.
+- [NomBot] **Service places** added from org websites for 7,834 + 4,004 orgs. Hand checks were 97.4% and 57/60.
+- [Admin] **progress-bar plugin** fixed through 0.27.12: a missing percent, a double row, and stale and waiting rows. 183 tests pass.
+- [Admin] **Drafts and messages** written: reply-all to Keith on the FCo website plan (user-testing CTA, SEO/GEO/AEO), a weekly NomBot update newsletter, and WhatsApp messages.
 
 **Decisions**
-- [GrantRadar] **Held back $0.36B** from the fifth group (orgs elsewhere in the same state): it scored 93%, under the 95% bar.
-- [GrantRadar] **Left $1.04B unlinked** for now: names too common to tell apart. Earlier hand checks found only 14% right.
-- [Admin] **Did not start EIN-only grants or the 459 duplicates:** the first would write the same grant columns as the running held-grants job. The second would build on a file not yet loaded.
+- **Hosting:** keep NomBot on the Tailscale Funnel link served from the Mac for the Nov 20 closed beta. Move to Supabase (about $80 a month) only when it goes public.
+- **Grant linking:** stop queuing more rounds, because returns are diminishing and the held groups can't reach 95%.
+- **Usage cutoff:** stop IoG-plan jobs at 90% usage, with no new tasks. Both final jobs finished first, at 83%.
 
 **Next**
-- [Admin] **Swap** the "count each org once" build into the live site. The permission check blocked it, so it needs a manual run.
-- [Admin] **Fix the progress-bar plugin:** auto-next fired 3 times because freshly started jobs look idle.
-- [NomBot] **Decide on the revenue fix:** $116M counted twice across 101 org-years.
+- **TypeSafe credits:** add them before the next labeling round (about 139K orgs, roughly $10–20).
+- **Website places:** about 203K more orgs can be done on hunty's own model, around 7 h per 25K.
+- **Review and send** the NomBot update email draft.
 
 ## 2026-11-05 (Thursday)
 
-*Active in Claude Code: ~10h 00m (estimate) · 0 commits · 200 messages*
+*Hours worked: 10h (12:17am–11:02pm, 765 min inactive removed) · 0 commits · 200 messages*
 
 **Summary:** Labeling got about 2x faster with Jev as first pass, NomBot passed all evals on the bigger 2021-23 database, and board-link and board-answer fixes went live.
 
