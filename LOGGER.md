@@ -4,35 +4,33 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-06 (Friday)
 
-*Hours worked: 6.5h (6:19am–11:01pm, 604 min inactive removed) · 19 commits · 109 messages*
+*Hours worked: 6.5h (6:19am–11:01pm, 604 min inactive removed) · 0 commits · 109 messages*
 
-**Summary:** Shipped the closed-org flag, a giver-matching API and next-step links for California nonprofits, and linked about $5.5B more grants to their recipient orgs.
+**Summary:** Closed-org flags, a match API, and volunteer/event/donate links went live in NomBot, and about $5.5B more grants were linked to recipient orgs.
 
 **Done**
-- [NomBot] **Closed-org flag** is live: 8,949 closed, 19,172 revoked and 8,661 likely closed orgs, hand check 119/120. Org pages and the API show the status, and recommendations skip closed orgs.
-- [NomBot] **Match API** `/api/v1/match` is live, with the MCP tool `match_nonprofits`. It takes a giver's words plus a ZIP code and returns up to 10 open orgs with "why it fits" lines. It runs in about 0.4 s per request, and the match tests pass 10/10 (11/11 after next steps were added).
-- [NomBot] **Volunteer, event and donate links** are live in match results and in a new "Get involved" org-page section, covering 40,887 California orgs. Hand checks: volunteer 95%, donate 94%, events 93%. In LA, 19 of the top 20 orgs now have links.
-- [NomBot] **Duplicate orgs** counted once rose from 171 to 544 after two loads, and the second borderline pass was 22/22 right.
-- [NomBot] **Craig's API key** now has all read scopes, including IoG internal docs.
-- [NomBot] **Restart** refreshed the Browse figures with today's data.
-- [imnet] None this day.
-- [GrantRadar] None this day.
-- [NomBot] **Grants linked** to recipient orgs in rounds 14, 14b, 15 and 16 (e5ff9f0, 5e21c4d, 2e412f5, 945589a): $4.08B, $213.5M, $1.35B and $35.7M. Hand checks were 80/80 per group, 97–98%, 140/140 on the largest group, and 138/140 and 82/82.
-- [NomBot] **Board links** added for 15,413 people on 9+ boards in a state: 682K new shown links, 97.9% right on a hand check. A second pass from the newest returns added 4,403 people and 78,583 pairs, 98.3% right.
-- [NomBot] **Cause labels** added for 1,362 unlabeled orgs, hand check 96%. It stopped when TypeSafe credits ran out and IoG usage hit 82%.
-- [NomBot] **Service places** added from org websites for 7,834 + 4,004 orgs. Hand checks were 97.4% and 57/60.
-- [Admin] **progress-bar plugin** fixed through 0.27.12: a missing percent, a double row, and stale and waiting rows. 183 tests pass.
-- [Admin] **Drafts and messages** written: reply-all to Keith on the FCo website plan (user-testing CTA, SEO/GEO/AEO), a weekly NomBot update newsletter, and WhatsApp messages.
+- [NomBot] **Grant linking:** linked $4.08B (40,802 lines) to recipient orgs. Each shipped group scored 80/80 on hand checks. Follow-up rounds added $1.35B, $213.5M and $35.7M. Linking has hit diminishing returns.
+- [NomBot] **Duplicate orgs:** loaded 351 new duplicates, then 22 more. Orgs counted once went from 171 to 544. Fixed the loader that broke on the new status table.
+- [NomBot] **Board links:** added 15,413 people on 9+ boards in one state, with 682K new links. About 98% right on a hand check (46 of 47 in the random sample). Board evals pass 54/54.
+- [NomBot] **Closed-org flag:** statuses are live: 8,949 closed, 19,172 revoked, 8,661 likely closed. 119 of 120 right on hand check. Closed orgs are left out of recommendations.
+- [NomBot] **Match API:** `/api/v1/match` is live. It takes the giver's words plus a ZIP code and returns up to 10 open orgs with "why it fits" lines. It runs at about 0.4–0.5s per request and passes 11 of 11 match checks.
+- [NomBot] **Next steps in match results:** volunteer, event and donate links are live. 7,009 Bay Area orgs were covered first. A California crawl then brought the total to 40,887 orgs. Hand-check accuracy was 95% for volunteer links, 94% for donate and 93% for events.
+- [NomBot] **Cause labels:** 1,362 more orgs now have a cause (96% right). It stopped early when Jev credits ran out.
+- [NomBot] **Service places from websites:** 4,004 more orgs have places (6,078 places), 95% right (57 of 60).
+- [NomBot] **Craig's API key:** added the IoG internal read scope. Key stays read-only.
+- [NomBot] **Public access:** confirmed the Tailscale Funnel link already serves NomBot from the Mac. Restarted NomBot to refresh Browse figures.
+- [Admin] **progress-bar plugin:** shipped 0.27.9 to 0.27.12. Fixes cover hidden percent, double rows, stale background rows and stuck "waiting" rows. 183 tests pass.
+- [Admin] **Fellowship comms:** drafted the reply to Keith on the FCo website plan, the weekly NomBot update email, and a recap for the AI fellows group. Logged 6.5h for the day.
 
 **Decisions**
-- **Hosting:** keep NomBot on the Tailscale Funnel link served from the Mac for the Nov 20 closed beta. Move to Supabase (about $80 a month) only when it goes public.
-- **Grant linking:** stop queuing more rounds, because returns are diminishing and the held groups can't reach 95%.
-- **Usage cutoff:** stop IoG-plan jobs at 90% usage, with no new tasks. Both final jobs finished first, at 83%.
+- **Held-back grant groups:** loaded only groups scoring 95% or better on hand check. Common-name lines and parent-affiliate lookalikes stayed unlinked.
+- **Hosting:** use Tailscale Funnel from the Mac for the Nov 20 closed beta. Defer a hosted database (about $80 a month) until NomBot goes public.
+- **Usage cap:** wind down at 90% IoG usage with no new tasks. Usage ended at 83%.
 
 **Next**
-- **TypeSafe credits:** add them before the next labeling round (about 139K orgs, roughly $10–20).
-- **Website places:** about 203K more orgs can be done on hunty's own model, around 7 h per 25K.
-- **Review and send** the NomBot update email draft.
+- **Jev credits:** add credits before the next labeling round (about $10–20 for the remaining 139K orgs).
+- **Service places:** about 203K more orgs can be done from websites (about 7h per 25K).
+- **Revenue fix:** $116M counted twice across 101 org-years is awaiting a go-ahead.
 
 ## 2026-11-05 (Thursday)
 
