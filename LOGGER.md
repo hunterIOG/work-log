@@ -2,6 +2,35 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-07 (Saturday)
+
+*Active in Claude Code: ~1h 47m (estimate) · 0 commits · 41 messages*
+
+**Summary:** Fixed NomBot match results (restaurant-name and out-of-state mailing-address charities, weak volunteer links, city-only location) and shipped Hope/Marcus fixes and org comparison to WayToMatter PR #2.
+
+**Done**
+- [NomBot] **Health check** passed 20 of 21 checks on both runs. The one failure was speed (8–11 s) right after a swap restart, and it recovered to about 1 s.
+- [NomBot] **Restaurant-name charities** no longer appear in matches. Tiny, website-less charities at an address shared with 10 or more others now rank last with a caution (83a3cbc). LA food results are now LA Regional Food Bank, Plentiful and FarmLink.
+- [NomBot] **Out-of-state mailing addresses** now drop to the bottom of local results (1a899d2). A North Carolina hospital with a San Francisco PO Box is gone from San Francisco results.
+- [NomBot] **Search speed** went from about 6 s back to about 1 s after adding a database index (migration 112).
+- [NomBot] **Weak volunteer links** were cleared. The check re-opened 9,586 links, cleared 378 and kept 9,208 (9c8c64b).
+- [NomBot] **City without a state** is now accepted. "Mountain View" alone resolves to Mountain View, CA, and 10 of 10 test results were in California (fa0eb51).
+- [NomBot] **New York recommendations** traced to WayToMatter sending no location. NomBot worked as designed.
+- [imnet] **WayToMatter UI feedback** went into a Google Doc. It covers the duplicate buttons, too many in-call controls, "[REDACTED:medical]" garbling replies, and the wrong-location bug.
+- [imnet] **WayToMatter PR #1** sends the city even without a state, and Craig merged it.
+- [imnet] **WayToMatter PR #2** is open on `hunter-dev`. It fixes Hope's replies that never appeared as text, adds typing in sync with her voice, and fixes the stray "That" city. It also found the 3 placeholder orgs are hard-coded fallbacks.
+- [imnet] **Org comparison** lets Hope and Marcus answer "what's the main difference?" from real NomBot data (a90b82d). Tests: 119 pass.
+- [imnet] **Spoken-style answers** (a676340): no bullets, about 45–70 words. Retested on 5 questions each for Hope and Marcus.
+
+**Decisions**
+- [NomBot] **Fix city-only on NomBot's side** so it works with no change from Craig.
+- [imnet] **Work stays on `hunter-dev`** so main is untouched.
+
+**Next**
+- [imnet] **Craig's review:** PR #2, and whether placeholder orgs should ever reach real users.
+- [imnet] **Live test:** try the voice typing and org comparison in the real app, which needs Craig's `.env` or a preview deploy.
+- [Admin] **Revoke the test API key** that was pasted into chat.
+
 ## 2026-11-06 (Friday)
 
 *Hours worked: 6.5h (6:19am–11:01pm, 604 min inactive removed) · 0 commits · 109 messages*
