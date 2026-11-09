@@ -2,9 +2,38 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-08 (Sunday)
+
+*Hours worked: 4.25h (7:33am–9:59pm, 608 min inactive removed) · 70 commits · 109 messages*
+
+**Summary:** Fixed Keith's location bug and hardened location matching across WayToMatter and NomBot, shipped two NomBot builds, merged PRs #3, #6 and #7, and fixed several Hope/org-list bugs.
+
+**Done**
+- [NomBot] **Full city spellings** now match: "Fort Lauderdale" = "Ft Lauderdale", "Saint Louis" = "St Louis" (`9b93080`). Live and verified.
+- [NomBot] **Stored-name matching** fixed: "SN BERNRDNO" (San Bernardino), Winston-Salem, O'Fallon and Coeur d'Alene now resolve, about 3,300 spellings in total (`552bd78`). NomBot match tests rose from 65 to 81, all passing.
+- [GrantRadar] **Not worked on today.** No GrantRadar work appears in the messages.
+- [imnet] **Not worked on today.** No imnet work appears in the messages.
+- [Admin] **Hunter's work-log hours** corrected: Nov 7 logged as 3h, Nov 8 as 4.25h. The script now reads chats from both Claude logins.
+- [Admin] **Vercel access** diagnosed and partly resolved. Hunter is on the IoG team, and the Preview keys pulled, but 9 keys come down as `[SENSITIVE]`, so local testing is still blocked.
+- [Admin] **Claude Code setup:** personal login linked to the same instructions, notes, style and plugins. progress-bar plugin shipped 0.28.5 to 0.28.7: Check account button, `[x]` stop/pause, server rows, ADHD-friendly layout. 221 tests pass.
+- [Admin] **Dev recorder** improved: status header in every frame, server logs, readable React errors and less noise. Local only, not pushed.
+
+**Decisions**
+- **Location rule:** a place counts only when clearly stated in the current session ("I live in…", ZIP, switch phrases like "try Atherton"). This stops story mentions becoming search locations.
+- **Preview keys for local testing:** used for now, despite the shared production database. A separate dev database is the safer follow-up.
+- **End Conversation:** dropped my own fix from the PR. Craig's version (greyed Resume/New until the goodbye ends) already covers it.
+- **Hope hold:** Hope stays silent from search start until the org list plays, instead of cutting her off afterwards.
+
+**Next**
+- **Hope hold** (`3f106f8`) is pushed to `hunter-dev` but untested live and has no PR yet.
+- **"in Brooklyn" rule:** decide whether to fix Craig's `0817c03` regression or flag it to him.
+- **"Match me" with no place this session:** pick how it should behave. The options are re-show last session's orgs, search the saved city, or ask for the city.
+
+Correction: the two bullets for GrantRadar and imnet carry no work, so drop them. The WayToMatter work above is the main output, but the project tag list only allows NomBot, GrantRadar, imnet and Admin. Hunter's WayToMatter fixes (PRs #3, #6 and #7, location hardening, Hope/org-list fixes) belong under the task's project scope but have no tag of their own.
+
 ## 2026-11-07 (Saturday)
 
-*Active in Claude Code: ~1h 47m (estimate) · 0 commits · 41 messages*
+*Hours worked: 3h (4:30pm–9:23pm, 216 min inactive removed) · 0 commits · 41 messages*
 
 **Summary:** Fixed NomBot match results (restaurant-name and out-of-state mailing-address charities, weak volunteer links, city-only location) and shipped Hope/Marcus fixes and org comparison to WayToMatter PR #2.
 
