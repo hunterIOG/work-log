@@ -4,7 +4,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-08 (Sunday)
 
-*Hours worked: 4.25h (7:33am–9:59pm, 608 min inactive removed) · 70 commits · 109 messages*
+*Hours worked: 5h · 70 commits · 109 messages*
 
 **Summary:** Fixed Keith's location bug and hardened location matching across WayToMatter and NomBot, shipped two NomBot builds, merged PRs #3, #6 and #7, and fixed several Hope/org-list bugs.
 
@@ -13,7 +13,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 - [NomBot] **Stored-name matching** fixed: "SN BERNRDNO" (San Bernardino), Winston-Salem, O'Fallon and Coeur d'Alene now resolve, about 3,300 spellings in total (`552bd78`). NomBot match tests rose from 65 to 81, all passing.
 - [GrantRadar] **Not worked on today.** No GrantRadar work appears in the messages.
 - [imnet] **Not worked on today.** No imnet work appears in the messages.
-- [Admin] **Hunter's work-log hours** corrected: Nov 7 logged as 3h, Nov 8 as 4.25h. The script now reads chats from both Claude logins.
+- [Admin] **Hunter's work-log hours** corrected: Nov 7 logged as 3h, Nov 8 as 5h. The script now reads chats from both Claude logins.
 - [Admin] **Vercel access** diagnosed and partly resolved. Hunter is on the IoG team, and the Preview keys pulled, but 9 keys come down as `[SENSITIVE]`, so local testing is still blocked.
 - [Admin] **Claude Code setup:** personal login linked to the same instructions, notes, style and plugins. progress-bar plugin shipped 0.28.5 to 0.28.7: Check account button, `[x]` stop/pause, server rows, ADHD-friendly layout. 221 tests pass.
 - [Admin] **Dev recorder** improved: status header in every frame, server logs, readable React errors and less noise. Local only, not pushed.
