@@ -31,9 +31,11 @@ LOG = os.path.join(HERE, "LOGGER.md")
 HOURS = os.path.join(HERE, "hours.json")  # {"2026-10-06": 4}: hours you report; shown instead of the estimate
 CLOCK = os.path.join(HERE, "clock.json")  # {"2026-10-08": {"start": "09:12", "end": "12:40"}}: written by --end
 # Chats in any NomBot, GrantRadar or imnet folder (imnet lives under ~/Desktop/IOG)
-PROJECTS = os.path.expanduser("~/.claude/projects")
+# Both Claude logins: the IoG one (~/.claude) and the personal one (~/.claude-personal, used when
+# IoG usage runs high). A chat moved between them is in both folders, so entries are de-duplicated.
+PROJECTS_DIRS = [os.path.expanduser(p) for p in ("~/.claude/projects", "~/.claude-personal/projects")]
 MATCH = re.compile(r"nombot|grantradar|imnet|-IOG(-|$)", re.I)
-REPOS = [os.path.expanduser(p) for p in ("~/Desktop/NomBot", "~/Desktop/generosity-data", "~/Desktop/IOG/imnet")]
+REPOS = [os.path.expanduser(p) for p in ("~/Desktop/NomBot", "~/Desktop/generosity-data", "~/Desktop/IOG/imnet", "~/Desktop/waytomatter")]
 IDLE = 15 * 60          # gaps longer than this don't count as active time (--idle=N minutes overrides)
 MSG_CAP, TOTAL_CAP = 1500, 120_000
 HEADER = "# Work log\n\nDaily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.\n"
@@ -81,8 +83,9 @@ def clean(s: str) -> str:
 
 
 def collect(day: dt.date):
-    msgs, times = [], []
-    for path in (p for p in glob.glob(f"{PROJECTS}/*/*.jsonl") if MATCH.search(os.path.basename(os.path.dirname(p)))):
+    msgs, times, seen = [], [], set()
+    paths = [p for d in PROJECTS_DIRS for p in glob.glob(f"{d}/*/*.jsonl")]
+    for path in (p for p in paths if MATCH.search(os.path.basename(os.path.dirname(p)))):
         with open(path) as f:
             for line in f:
                 try:
@@ -91,6 +94,10 @@ def collect(day: dt.date):
                     continue
                 if e.get("type") not in ("user", "assistant") or not e.get("timestamp"):
                     continue
+                key = e.get("uuid") or (e["timestamp"], e.get("type"))
+                if key in seen:
+                    continue
+                seen.add(key)
                 d, t = local_day(e["timestamp"])
                 if d != day:
                     continue
