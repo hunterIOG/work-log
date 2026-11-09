@@ -4,32 +4,33 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-08 (Sunday)
 
-*Hours worked: 5h · 70 commits · 109 messages*
+*Hours worked: 5h (7:33am–9:59pm, 608 min inactive removed) · 0 commits · 110 messages*
 
-**Summary:** Fixed Keith's location bug and hardened location matching across WayToMatter and NomBot, shipped two NomBot builds, merged PRs #3, #6 and #7, and fixed several Hope/org-list bugs.
+**Summary:** Fixed Keith's WayToMatter location bug and the Hope org-list timing bugs, hardened NomBot city matching, and upgraded the progress-bar panel.
 
 **Done**
-- [NomBot] **Full city spellings** now match: "Fort Lauderdale" = "Ft Lauderdale", "Saint Louis" = "St Louis" (`9b93080`). Live and verified.
-- [NomBot] **Stored-name matching** fixed: "SN BERNRDNO" (San Bernardino), Winston-Salem, O'Fallon and Coeur d'Alene now resolve, about 3,300 spellings in total (`552bd78`). NomBot match tests rose from 65 to 81, all passing.
-- [GrantRadar] **Not worked on today.** No GrantRadar work appears in the messages.
-- [imnet] **Not worked on today.** No imnet work appears in the messages.
-- [Admin] **Hunter's work-log hours** corrected: Nov 7 logged as 3h, Nov 8 as 5h. The script now reads chats from both Claude logins.
-- [Admin] **Vercel access** diagnosed and partly resolved. Hunter is on the IoG team, and the Preview keys pulled, but 9 keys come down as `[SENSITIVE]`, so local testing is still blocked.
-- [Admin] **Claude Code setup:** personal login linked to the same instructions, notes, style and plugins. progress-bar plugin shipped 0.28.5 to 0.28.7: Check account button, `[x]` stop/pause, server rows, ADHD-friendly layout. 221 tests pass.
-- [Admin] **Dev recorder** improved: status header in every frame, server logs, readable React errors and less noise. Local only, not pushed.
+- [NomBot] **City matching** now accepts full spellings ("Fort Lauderdale", "Saint Louis", "Mount Pleasant") plus hyphens and apostrophes. Two builds were swapped live. About 3,300 spellings that failed now work, including San Bernardino and Winston-Salem.
+- [NomBot] **Match tests** rose from 65 to 81, all passing.
+- [GrantRadar] **Location regression suite** grew from 242 tests to 358, then 473, with 400+ passing after the final round. It covers about 55,000 city-spelling checks and 3,000 WayToMatter-to-NomBot checks, and Hope and Marcus passed 16 of 16 conversation tests.
+- [GrantRadar] **Keith's bug** is fixed. "High School, OR" and "That, CA" are no longer read as places. Placeholder orgs with example.org links now appear only in test mode. When no location is found, Hope and Marcus ask for a city or ZIP.
+- [GrantRadar] **Saved-city fix** is merged as PR #6. A saved city now counts only if the user names it in the current session, and LA and NYC nicknames still work.
+- [GrantRadar] **Atherton fix** is merged as PR #7. "Try Atherton" after an ambiguous "Madison" now triggers a search. A clear new city beats an ambiguous saved one.
+- [GrantRadar] **Org-list fixes** are merged in PR #6. Hope no longer contradicts the org list, Donate and Volunteer links to the same page merge into one button, and one-word org names such as Aimpower now link.
+- [GrantRadar] **Hope hold** is committed and pushed on `hunter-dev`. Hope stays silent from the moment a search starts until the list finishes playing, and half-sentences are no longer restored. It is tested only by unit tests, not a live call. No PR is open yet.
+- [GrantRadar] **Dev recorder** now has all 5 improvements: status header, recent context, server logs, readable React errors, and less noise. It is local only and not in any PR.
+- [Admin] **Progress-bar plugin** shipped 0.28.5 to 0.28.7, and all 221 tests pass. It adds the Check account button, a server row, a `[x]` Stop/Pause menu, and an ADHD-friendly List layout.
+- [Admin] **Work-log script** now reads chats from both Claude logins. Nov 7 is logged at 3h and Nov 8 at 5h.
+- [Admin] **Vercel access** is set up. The dev keys were pulled, but 9 values came down as `[SENSITIVE]`, so local testing against the database is blocked.
 
 **Decisions**
-- **Location rule:** a place counts only when clearly stated in the current session ("I live in…", ZIP, switch phrases like "try Atherton"). This stops story mentions becoming search locations.
-- **Preview keys for local testing:** used for now, despite the shared production database. A separate dev database is the safer follow-up.
-- **End Conversation:** dropped my own fix from the PR. Craig's version (greyed Resume/New until the goodbye ends) already covers it.
-- **Hope hold:** Hope stays silent from search start until the org list plays, instead of cutting her off afterwards.
+- [Admin] **Dev `.env` request:** Craig is asked for a dev database and dev keys. The shared Preview and Production keys point at the real user database.
+- [GrantRadar] **Ambiguous cities:** the partner asks "Oregon or Maine?" using the top 2 states, not three.
+- [GrantRadar] **End Conversation:** I dropped my instant-disconnect fix from PR #6 because Craig's greyed-out Resume/New buttons already solve the unresponsive-looking End button.
 
 **Next**
-- **Hope hold** (`3f106f8`) is pushed to `hunter-dev` but untested live and has no PR yet.
-- **"in Brooklyn" rule:** decide whether to fix Craig's `0817c03` regression or flag it to him.
-- **"Match me" with no place this session:** pick how it should behave. The options are re-show last session's orgs, search the saved city, or ask for the city.
-
-Correction: the two bullets for GrantRadar and imnet carry no work, so drop them. The WayToMatter work above is the main output, but the project tag list only allows NomBot, GrantRadar, imnet and Admin. Hunter's WayToMatter fixes (PRs #3, #6 and #7, location hardening, Hope/org-list fixes) belong under the task's project scope but have no tag of their own.
+- [GrantRadar] **Craig's "in Brooklyn" rule** treats story mentions as a location. Decide whether to fix it on `hunter-dev` or flag it to Craig.
+- [GrantRadar] **Hope hold PR:** test it live, then open the PR.
+- [Admin] **Vercel and keys:** get the 9 hidden keys or a dev database from Craig.
 
 ## 2026-11-07 (Saturday)
 
