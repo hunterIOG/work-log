@@ -4,32 +4,41 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-09 (Monday)
 
-*Hours worked: 15h (incl. ~9h meetings: 2 AI fellowship meetings, a user interview, a website meeting; 2h offline dev) · 0 commits · 74 messages*
+*Hours worked: 15h · 47 commits · 74 messages*
 
-**Summary:** Funder finder, org-locations search and a $0-to-AWS-RDS hosting decision (approved by Keith) were the main NomBot results, with WayToMatter fixes and two plugin fixes alongside.
+**Summary:** Shipped NomBot's funder finder and org-locations search, stress-tested the latter (9 bugs fixed), and got Keith's approval to move the database to AWS RDS.
 
 **Done**
-- [NomBot] **Funder finder** shipped live: a funder-mode question returns "194 foundations" for Latino arts groups in LA County in 0.3 s, or 3,386 nationwide in 1.5 s. A new additive funder index backs it.
-- [NomBot] **Funder results restyled** to match the org list (big count, summary line, stats row, plain rows, CSV export of top 25). Built and later shipped with deploy22.
-- [NomBot] **Org-locations search** ("cities near me that Kids Dojo operates in") shipped live: 3 places within 25 miles, 0.17 s, plus an API endpoint and `org_locations` MCP tool for WayToMatter.
-- [NomBot] **Stress test of org-locations** found and fixed 9 bugs: wrong brand grouping (e.g. "Church of God" pulled in 8,933 unrelated churches), a crash on a hidden character, and lookups up to 2.3 s. The fixed build passes 8,106 of 8,106 checks and is live (deploy23).
-- [NomBot] **Outdoor-oriented query** already works through normal match (6 relevant orgs near 94041, 2.4 s then 0.6 s). No new feature was needed.
-- [NomBot] **Speed claim corrected** from "6 s → under 3 s" to a typical match of 3.1 s at launch (Nov 6) and 0.36 s now, about 8× faster. Slow cases went from 7.0 s to 1.4 s.
-- [GrantRadar] **Demo before/after** drafted for NomBot Oct 19 vs Nov 9, including database growth from 43 GB to 77 GB and grant dollars traced to recipients rising from 82% to 88%.
-- [Admin] **WayToMatter loop fix**: Hope was cut off every ~3 s when no city was known. The fix and the "+" instant-clear, search-on-learner's-words and "Children's Corner" link fixes were stress-tested, which found bugs in all 4 commits, then fixed. PR #8 was opened and Craig merged it.
-- [Admin] **Hosting research** across AWS, Google, Supabase, Neon, DigitalOcean, Azure and Hetzner. The 32 GB size is needed to match Mac speed. AWS RDS comes to about $375 a month with no commitment, or about $225 with a 1-year commitment.
-- [Admin] **Progress-bar plugin 0.28.10 and 0.28.11** shipped: a fix for the panel row flickering after reload, and Docker ports hidden from the LOCALHOST list.
-- [Admin] **Main pulls into `hunter-dev`** (WayToMatter, four times) were checked after each pull, with type check clean.
-- [Admin] **Hours:** chat activity was about 3.5 h. With 3 meetings and 2 h of offline dev work, the day comes to about 14.5 h. It was not yet logged.
+- [NomBot] **Funder finder** is live: fundraising questions get a funder overview, `POST /api/v1/funders` and MCP `find_funders`. Example: "194 foundations" gave to Latino arts groups in LA County; answers in 0.3 s.
+- [NomBot] **Funder results restyled** to match the org list: count header, stats line, strong-matches bar with Star and Export, plain rows.
+- [NomBot] **Org locations search** is live: "cities near me that Kids Dojo operates in" gives 3 places within 25 miles of 94041 in 0.17 s. It adds `GET/POST /api/v1/org/locations` and MCP `org_locations`.
+- [NomBot] **Org-locations stress test** found and fixed 9 bugs, including FOP/Eagles merged under one brand, 8,933 unrelated churches grouped as "Church of God", and a crash on a hidden character. The fixed build passes 8,106 of 8,106 checks and is live.
+- [NomBot] **Database migrations 113–115:**
+  - Funder prospect index: 6.5M grant lines, 90,172 active funders.
+  - Org brands and IRS groups: 10,706 shared brand keys, 397,204 orgs in 3,968 groups.
+  - Trigram index on DBA names to speed up lookups.
+- [NomBot] **Speed measured** from the API log: typical match went from 3.1 s at launch (Nov 6) to 0.36 s (Nov 8). The earlier "6 s to 3 s" claim was wrong and was corrected.
+- [NomBot] **"Outdoor oriented" query** already works through the normal match, with no new feature needed. Tested near 94041: 2.4 s on the first try, then 0.6 s.
+- [NomBot] **Demo before/after bullets** for Oct 19 vs Nov 9, with a one-line technical "how" for each.
+- [GrantRadar] **WayToMatter hold and loop fixes** (PR #8, merged by Craig):
+  - Fixed Hope being cut off every ~3 s.
+  - "+" now clears the chat at once.
+  - Search uses the learner's words, not Hope's recap.
+  - "Children's Corner"-style links now work.
+  - Stress-testing found bugs in all 4 fixes, and they are fixed.
+- [GrantRadar] **Pulled Craig's `main`** four times, with 33 commits in total. Type check is clean, and the only failures are Craig's known "in Brooklyn" test plus speed tests that miss limits when the Mac is busy.
+- [Admin] **Progress-bar plugin fixes:** 0.28.10 fixes the job-row flicker after `/reload-plugins`, and 0.28.11 hides Docker ports in the LOCALHOST section.
+- [Admin] **Hours:** about 14.5 for the day, from 3.5 chat hours plus meetings and offline dev.
 
 **Decisions**
-- **AWS RDS** chosen over Supabase and Google Cloud SQL. Keith approved it. Reasons: the $1,000/year nonprofit credit, being in the same data center as Vercel, and more control over the setup.
-- **Cloud move** is needed so testers, partners and the IoG website get a reliable link. The Mac isn't always on.
+- **Hosting:** AWS RDS (32 GB memory, 4 cores, 400 GB disk, about $375/month with no commitment) over Supabase (about $436/month). Keith approved. Reasons: nonprofit credit, same region as Vercel, more control.
+- **Supabase Pro** is no longer enough: the data is about 77 GB and needs a 32 GB server to keep today's speed.
+- **Rejected options:** AlloyDB Express (20 GB cap), DigitalOcean's 16 GB plan (closes Nov 30) and Neon (costlier, slow after idle).
 
 **Next**
-- **AWS account steps:** apply for the TechSoup credit, set up the account with MFA and budget alerts, and subscribe to Vercel Pro.
-- **RDS build:** create the database, copy the data, and speed-test it against the Mac's 0.36 s.
-- **Plugin restart:** restart Claude Code to load 0.28.10 and 0.28.11.
+- **AWS setup:** apply for the TechSoup credit, create the account with MFA and budget alerts, and add Vercel Pro.
+- **Migration:** create the RDS database, copy the data, run a speed test against the Mac's 0.36 s, then switch the public link.
+- **Plugin:** quit and reopen Claude Code to load 0.28.10 and 0.28.11.
 
 ## 2026-11-08 (Sunday)
 
