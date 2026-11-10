@@ -4,7 +4,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-09 (Monday)
 
-*Active in Claude Code: ~3h 48m (estimate) · 0 commits · 74 messages*
+*Hours worked: 15h (incl. ~9h meetings: 2 AI fellowship meetings, a user interview, a website meeting; 2h offline dev) · 0 commits · 74 messages*
 
 **Summary:** Funder finder, org-locations search and a $0-to-AWS-RDS hosting decision (approved by Keith) were the main NomBot results, with WayToMatter fixes and two plugin fixes alongside.
 
