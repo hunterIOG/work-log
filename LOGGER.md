@@ -20,15 +20,15 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 - [NomBot] **Speed measured** from the API log: typical match went from 3.1 s at launch (Nov 6) to 0.36 s (Nov 8). The earlier "6 s to 3 s" claim was wrong and was corrected.
 - [NomBot] **"Outdoor oriented" query** already works through the normal match, with no new feature needed. Tested near 94041: 2.4 s on the first try, then 0.6 s.
 - [NomBot] **Demo before/after bullets** for Oct 19 vs Nov 9, with a one-line technical "how" for each.
-- [GrantRadar] **WayToMatter hold and loop fixes** (PR #8, merged by Craig):
+- [WayToMatter] **WayToMatter hold and loop fixes** (PR #8, merged by Craig):
   - Fixed Hope being cut off every ~3 s.
   - "+" now clears the chat at once.
   - Search uses the learner's words, not Hope's recap.
   - "Children's Corner"-style links now work.
   - Stress-testing found bugs in all 4 fixes, and they are fixed.
-- [GrantRadar] **Pulled Craig's `main`** four times, with 33 commits in total. Type check is clean, and the only failures are Craig's known "in Brooklyn" test plus speed tests that miss limits when the Mac is busy.
+- [WayToMatter] **Pulled Craig's `main`** four times, with 33 commits in total. Type check is clean, and the only failures are Craig's known "in Brooklyn" test plus speed tests that miss limits when the Mac is busy.
 - [Admin] **Progress-bar plugin fixes:** 0.28.10 fixes the job-row flicker after `/reload-plugins`, and 0.28.11 hides Docker ports in the LOCALHOST section.
-- [Admin] **Hours:** about 14.5 for the day, from 3.5 chat hours plus meetings and offline dev.
+- [Admin] **Hours:** 15 for the day: about 4 chat hours, about 9 hours of meetings (2 AI fellowship meetings, a user interview, a website meeting) and 2 hours of offline dev.
 
 **Decisions**
 - **Hosting:** AWS RDS (32 GB memory, 4 cores, 400 GB disk, about $375/month with no commitment) over Supabase (about $436/month). Keith approved. Reasons: nonprofit credit, same region as Vercel, more control.
