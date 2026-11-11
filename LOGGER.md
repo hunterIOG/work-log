@@ -4,7 +4,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-10 (Tuesday)
 
-*Hours worked: 5.5h (10:08am–8:29pm, 347 min inactive removed) · 45 commits · 124 messages*
+*Hours worked: 9h (10:08am–8:29pm, 347 min inactive removed) · 45 commits · 124 messages*
 
 **Summary:** Shipped Tyler's grant-totals and search-trends features in NomBot, fixed WayToMatter's resumed-chat org links (PR #9), and set up the AWS account and budgets for the database move.
 
