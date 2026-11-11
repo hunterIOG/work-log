@@ -160,9 +160,9 @@
   },
   "2026-11-10": {
     "start": "10:08am",
-    "end": "8:18pm",
+    "end": "8:29pm",
     "inactive_min": 347,
     "break_min": 0,
-    "offline_min": 225
+    "offline_min": 0
   }
 }
