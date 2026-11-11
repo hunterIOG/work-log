@@ -4,33 +4,34 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-10 (Tuesday)
 
-*Hours worked: 4.5h (10:08am–8:18pm, 347 min inactive removed) · 45 commits · 122 messages*
+*Hours worked: 4.5h (10:08am–8:18pm, 347 min inactive removed) · 45 commits · 123 messages*
 
-**Summary:** Shipped Tyler's grant-totals endpoint and Google search-interest trends in NomBot, fixed WayToMatter's resumed-chat org links (PR #9), and set up the AWS account and scripts for the database move.
+**Summary:** Shipped Tyler's grant totals endpoint and Google search trends live in NomBot, and set up the AWS account for the database move, with the build waiting on Keith's card.
 
 **Done**
-- [NomBot] **Grant totals endpoint** `/api/v1/grants/totals` is live: about 3,200 counties in one call, 5–95 ms, 56 of 56 tests pass with state totals matching existing grant data. Covers foundation and charity grants, plus MCP `grant_totals`.
-- [NomBot] **Search trends** are live: 15 Google terms, 262 weeks of US data and every state, a Search trends tab and `/api/v1/trends/interest` and `/states`. 55 of 55 tests pass, and a weekly refresh is scheduled (first run Nov 16).
-- [NomBot] **PhilanthroMap agent guide** committed (`e652d23`) for Tyler's agent harness. It covers totals, trends, presentation rules and known gaps.
-- [NomBot] **Deck restyle** was built and swapped in, then **reverted** the same day (`ea09691`) because it wasn't liked. The code is kept on branch `restyle-deck`.
-- [NomBot] **READMEs refreshed** for NomBot and generosity-data, with current numbers (2,044,150 orgs, 83.9% of grant dollars linked, 74 GB).
-- [NomBot] **Cloud infra diagram** committed, showing today on this Mac and the AWS target.
-- [GrantRadar] **Search interest data** loaded in generosity-data (migration 117): 3,930 weekly rows and 5,355 state rows. Migration 116 adds the county giving cube (3.5M rows) and place totals (142K rows).
-- [Admin] **AWS account** set up: root MFA confirmed, an IAM login for Keith, and a $450 monthly budget with 4 alerts.
-- [Admin] **Practice database export** took 18 minutes and came to 10.3 GB, a sixth of the 74 GB database. AWS setup scripts are written in preview mode, with no AWS changes made.
-- [Admin] **Claude folders merged and cleaned:** 3.2 GB of old session history archived, `CLAUDE.md` header removed so the rules load once, and the default GitHub login switched.
-- [NomBot] **WayToMatter resumed-chat links** fixed in PR #9: reopened chats now keep each org's real website instead of Google searches. A stress test of 59 cases found 5 small bugs, all fixed, and 361 of 366 tests pass (the same 5 fail without the PR).
+- [NomBot] **Grant totals endpoint** is live at `/api/v1/grants/totals`, with MCP tool `grant_totals`. A national county map is one call answering in 5 to 95 ms. It passed 56 of 56 tests, including exact state-by-state matches to the existing grant data.
+- [NomBot] **County totals tables** were added in generosity-data: `grant_county_cube` (3.5M rows) and `grant_place_totals` (142K rows), committed as migration 116.
+- [NomBot] **Search trends** are live: 15 giving terms over 262 weeks of US data, plus every state. They come with `/api/v1/trends/interest` and `/states`, two MCP tools and a Search trends tab. Tests passed 55 of 55, and calls take 3 to 36 ms.
+- [NomBot] **Weekly trends refresh** is scheduled for Mondays at 4:40 AM, first run Nov 16. Migration 117 loaded 3,930 weekly rows and 5,355 state rows.
+- [NomBot] **PhilanthroMap agent guide** was committed and pushed (`docs/philanthromap-agent-guide.md`). It teaches Tyler's agent the totals and trends calls. `with_interest` on grant totals adds search interest to each state row.
+- [NomBot] **READMEs refreshed** for NomBot and generosity-data: headline numbers, all evals, the hosting plan and recent changes. The generosity-data numbers include 2,044,150 orgs and 83.9% of grant dollars linked.
+- [NomBot] **Deck restyle** was built, went live, and was reverted at the user's request. It is kept on branch `restyle-deck`.
+- [NomBot] **WayToMatter resumed-chat link bug** was fixed in PR #9. Reopened chats had only org names, so every link became a Google search. Websites and cities are now saved with each name. A 59-case stress test fixed 5 small bugs, and 361 of 366 tests pass (the same 5 failed before).
+- [Admin] **AWS account** is ready: root MFA confirmed, an IAM login for Keith, and a $450 monthly budget with 4 email alerts.
+- [Admin] **Practice database export** came to 10.3 GB in 18 minutes and reads back cleanly, against the 74 GB database. NomBot kept running throughout.
+- [Admin] **AWS setup scripts** are written and tested as previews in both modes. They use Tailscale Funnel by default and accept no incoming connections.
+- [Admin] **Claude session cleanup:** `NomBot-grantradar` was merged into the `NomBot` folder, and about 3.2 GB of old sessions were archived. Hours were corrected to 8 h worked (the auto-log said 4.5 h).
 
 **Decisions**
-- **App server on AWS (option b):** a small server runs NomBot beside a private RDS, because Vercel has no fixed IP and RDS must not be public. About $405 a month.
-- **Tailscale Funnel for now:** the AWS server keeps today's public link, so Craig and API users change nothing. An IoG subdomain can come later.
-- **Totals endpoint instead of a monthly export** for Tyler's map, since a map needs about 3,000 county totals, not 15M rows.
-- **Postgres 17 recommended** to match this Mac and the scripts.
+- **App server on AWS (option b):** a small server runs NomBot next to a private RDS, about $405 a month. Vercel can't give a fixed IP, so a direct connection would expose the database.
+- **Tailscale Funnel now, IoG DNS later:** the AWS server accepts no incoming connections. The switch to a subdomain is a small later change.
+- **Keep today's public link:** the `thes-macbook-air` name moves to the AWS server, so Craig and other API users change nothing.
+- **Totals endpoint over a monthly export for Tyler:** it is less to build, always current, and reuses API keys and rate limits.
 
 **Next**
-- **Keith** adds the IoG card to AWS, which unlocks the RDS build.
-- **Postgres version:** pick 17 or 18.
-- **PR #9:** Craig merges it, and the Vercel access check needs fixing.
+- **Keith:** add the IoG card, which unlocks building RDS.
+- **Postgres version:** pick 17 or 18 for the AWS database (17 recommended).
+- **Craig:** merge PR #9 and send the link-bug message.
 
 ## 2026-11-09 (Monday)
 
