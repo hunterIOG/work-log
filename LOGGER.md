@@ -4,33 +4,34 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-12 (Thursday)
 
-*Active in Claude Code: ~7h 56m (estimate) · 66 commits · 239 messages*
+*Hours worked: 8h (6:25am–7:00pm, 277 min inactive removed) · 66 commits · 239 messages*
 
-**Summary:** NomBot's remaining data jobs moved to AWS, Clerk sign-in and the `nombot.vercel.app` link went live, and a mobile-first light redesign shipped with faster example searches.
+**Summary:** Moved NomBot's data jobs and sign-in to AWS and Clerk, then shipped a light-mode, mobile-ready redesign with pared-back org, person and research pages.
 
 **Done**
-- [NomBot] **Data jobs on AWS**: policy refresh (passed in 81 min) and Google Trends (7 min) now run on AWS on their usual schedules. Their Mac copies are off.
-- [NomBot] **IRS load and vectors**: hunty reaches the AWS database over a private Tailscale route using two limited logins. The vector job wrote its 941-row backlog to AWS in 7 seconds. The IRS load now runs daily at 7:30 AM.
-- [NomBot] **Newsletter**: it now reads AWS data through a read-only login and makes no draft if AWS is unreachable. WayToMatter's 191 calls today all went to AWS.
-- [NomBot] **Public link and sign-in**: `nombot.vercel.app` is live under the IoG Vercel team, and its median response time (0.60 s) matches the old link. Clerk sign-in (67/67 checks) replaced the password popup.
-- [NomBot] **Clerk rollout fixes**: the first deploy was rolled back after a 500 error on the sign-in page. Two later fixes made the sign-in form render and sent signed-in users home (`43d3873`).
-- [NomBot] **Redesign deployed** (`ada3ead`, about 9 s downtime): floating sidebar, Ask and Research modes, results laid out like a search engine, and square-ish controls. It stays light on every device.
-- [NomBot] **Visual audits**: the org page is now about half as tall (4,236 px vs 8,223 px). The person page is 20% shorter and the Research answer page is simplified, with a Back link added. Governance on the org page shows only failed checks.
-- [NomBot] **Mobile pass**: 14 pages tested at iPhone and small-Android sizes with no sideways scroll. Tap targets are 44px, text is at least 14px, and search suggestions fit one phone screen. "Near me" questions now turn on location without a button.
-- [NomBot] **Speed**: home example searches went from 8.6 s to 0.1 s and repeat searches stay at 0.07 s. New searches are still about 9 s.
-- [NomBot] **Cloud diagram**: redrawn for the AWS cutover (`106facc`), with README notes on the new hunty and newsletter database roles.
-- [Admin] **Progress panel**: the false stuck-alarm fix shipped as v0.31.0 and the leftover stuck rows cleared. I deleted the 9.6 GB practice dump (Mac free space 23 GB to 33 GB) and set a reminder for Nov 19 to delete the cutover dump.
+- [NomBot] **IRS load and vector job** now write to the AWS database over a private Tailscale route. hunty's 9:00 run sent 941 waiting rows (469 news, 142 bills, 330 Federal Register) in 7 seconds. The IRS load now runs daily at 7:30 AM.
+- [NomBot] **Policy refresh and Google Trends** both passed AWS tests (81 min and 7 min). Their AWS schedules are on and the Mac copies are off.
+- [NomBot] **Newsletter** now reads AWS data through a read-only login. All 10 numbers were tested. It stops without a draft if AWS is unreachable.
+- [NomBot] **`nombot.vercel.app`** is live under the IoG Vercel team as a front door to the AWS app. Median latency matches the old link (0.60 s).
+- [NomBot] **Clerk sign-in** replaces the site password popup (67 of 67 checks). The first deploy was rolled back after a 500 on the sign-in page, then fixed for the `localhost` mismatch, the redirect loop and the post-sign-in redirect.
+- [NomBot] **Redesign** (floating sidebar, top bar, phone drawer, home composer) merged and deployed as `ada3ead`, with about 9 s of downtime. Always-light mode, 14px text, 44px taps and keyboard-aware composers are included.
+- [NomBot] **Clutter audits** cut the org page from 8,223px to 4,236px tall and the person page from 3,285px to 2,647px. Research answers were simplified. Governance now shows only failed checks. Board lists collapse to 8 names.
+- [NomBot] **Search speed:** home examples dropped from 8.6 s to 0.1 s through pre-loading and longer-lived caches. New searches are still about 9 s.
+- [NomBot] **"Near me"** button removed. Phrases like "near me" now switch location on automatically, and "animal shelters near me" returned 51 Chicago results.
+- [NomBot] **Cloud diagram** redrawn for the AWS cutover, and the READMEs were updated for the hunty and RDS routes.
+- [NomBot] **Org icons:** the `org_icons` migration and favicon crawler were committed. The endpoint `GET /api/org-icon/{ein}` is built, with icons still off while hunty's download finishes.
+- [Admin] **Progress-bar plugin v0.31.0** fixes false stuck alarms and was pushed. The Mac's 9.6 GB practice dump was deleted (33 GB free), and a Nov 19 reminder was set to delete the cutover dump.
 
 **Decisions**
-- **Vercel front door**: chose `nombot.vercel.app` over an IoG subdomain so the link doesn't wait on Aram.
-- **Clerk dev mode**: kept it for now. Production mode needs a domain IoG owns.
-- **Keep ranking**: with ranking off, quality fell from 95% to 71%.
-- **Hunty database access**: used separate limited logins for the Mac loads and for vectors. A shared login would have rebuilt vectors for 1.49M filing rows.
+- **Kept ranking:** with ranking off, quality fell from 95% to 71%. The earlier 97% bar was likely luck on a small test.
+- **Option 1 for hunty:** it reaches the AWS database through the app server, with separate limited logins (`etl_writer` and `hunty_embed`).
+- **Clerk dev mode** on `nombot.vercel.app` chosen over buying `nombot.org`, to avoid waiting on IoG DNS.
+- **Governance rule:** show nothing unless a check fails.
 
 **Next**
-- **Open question**: decide on "batches of 10" for ranking calls and whether Laura Arrillaga-Andreessen's main role should be Institute on Generosity.
-- **Verify**: check the first scheduled policy refresh (Friday 6 AM) and the newsletter run (Friday 8:30 AM).
-- **Pending**: finish the org icon download on hunty, then switch on `ORG_ICON_ROUTE`.
+- **Decide:** whether Laura Arrillaga-Andreessen's main role should be Institute on Generosity, and whether to adopt "batches of 10" ranking.
+- **Verify:** sign in on the live site, run one search, and check the first scheduled policy refresh Friday at 6 AM.
+- **Production Clerk:** needs a custom domain.
 
 ## 2026-11-11 (Wednesday)
 
