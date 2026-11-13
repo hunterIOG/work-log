@@ -34,35 +34,39 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-11 (Wednesday)
 
-*Active in Claude Code: ~4h 24m (estimate) · 0 commits · 82 messages*
+*Hours worked: 5h (9:38am–10:40pm, 518 min inactive removed) · 14 commits · 82 messages*
 
-**Summary:** Moved NomBot's production database and app to AWS (cutover with about 51 seconds of downtime), and generalized the progress-bar plugin for other users.
+**Summary:** NomBot moved from the Mac to AWS (RDS Postgres 17.11) with about 51 seconds of downtime, and the progress-bar plugin was generalized and shipped as 0.30.0.
 
 **Done**
-- [NomBot] **Cutover** to AWS finished at 9:48 PM. The public link now serves the AWS build, with about 51 s of downtime, 30 of 30 pre-switch checks passed, and 7 WayToMatter calls with 0 errors.
-- [NomBot] **AWS stack** built: private network, firewall (database reachable only from the app server), RDS Postgres 17.11 (db.r6g.xlarge, 400 GB, encrypted, 7-day backups, deletion protection), and an app server on Tailscale with SSH disabled. Cost is about $406/month.
-- [NomBot] **Data restore** verified on AWS: 109 tables, 34 views, 28 functions and 211 indexes match the Mac, and big-table row counts match (grants at 14.86M).
-- [NomBot] **Restore speed** improved from 6+ hours to 17 min upload plus 62 min restore. The tunnel copy failed at 5:06 PM after a keep-alive helper froze, so the work moved to S3.
-- [NomBot] **Live database** stayed up throughout. The Mac answered 200 at every check, with 72 of 72 API calls succeeding and 0 server errors earlier in the day.
-- [NomBot] **Deploy key** added read-only to the NomBot repo, after allowing deploy keys for the org. The app deployed on AWS with the same code as the Mac, with Home at 32 ms vs 13 ms on the Mac.
-- [NomBot] **Tailscale setup** done in the browser: `tag:nombot` owner and a Funnel entry added. The auth key and app settings are stored in AWS Secrets Manager.
-- [NomBot] **Scheduled jobs** not yet moved. The AWS server can't read the private `generosity-data` repo, and the IRS load needs a 99 GB mirror against a 30 GB disk. Policy refresh and Google Trends are set up but off.
-- [NomBot] **Silicon Valley Youth Climate Action** Google-search link traced to a missing website in NomBot data, not a bug.
-- [GrantRadar/imnet] No work today.
-- [Admin] **progress-bar 0.28.12 to 0.30.0** shipped: servers merged under LOCALHOST, `⎿` sub-line connector, Chrome line moved, calmer DONE TODAY. Tests grew from 240 to 257.
-- [Admin] **`/attach` file picker** (shortcut `ctrl+x ctrl+f`) added, then sped up from 2.07 s to about 0.13 s.
-- [Admin] **Generalization audit** of progress-bar fixed: neutral defaults, personal emails and IPs removed, README cut from 983 to 183 lines, and new Hide emails setting.
-- [Admin] **AWS card** confirmed added after the typo in Keith's account link was fixed.
+- [NomBot] **Cutover** to AWS finished at 21:48. Downtime was about 51 s, and 30 of 30 pre-switch checks passed (firewall, private database, encryption, backups). The public link now serves the AWS build, and WayToMatter made 7 calls with 0 errors.
+- [NomBot] **AWS stack** built: private network, firewall (database reachable only from the app server), `db.r6g.xlarge` RDS with 400 GB encrypted storage and 7-day backups. The app server joined the tailnet and has SSH disabled. Cost is about $406/month.
+- [NomBot] **Data restore** verified: 109 tables, 34 views and 211 indexes match the Mac, and big-table row counts match (grants 14.86M). The restore through S3 took 17 min upload plus 62 min, versus 6+ hours by tunnel.
+- [NomBot] **Tunnel restore** failed at 17:06 at about 20% done, because AWS closed idle Session Manager tunnels after 20 min. The partial copy was wiped, and the retry went through S3.
+- [NomBot] **App deployed** on AWS using a read-only deploy key on the NomBot repo. Cached pages respond in 32–55 ms, versus 13–21 ms on the Mac. Database CPU hit 80–96% during cache warmup, then settled to 2%.
+- [NomBot] **Missing objects** (6 newer grant-total and search-trend objects for Tyler's map) were loaded at cutover with matching row counts.
+- [NomBot] **Scheduled jobs** (IRS load, policy refresh, Trends, newsletter) are still on the Mac, writing to the old database. Moving them is blocked because the AWS server can't read the private `generosity-data` repo.
+- [NomBot] **Website link** for Silicon Valley Youth Climate Action opens a Google search because no website is on file. Its filings have blank website fields, and no site could be confirmed.
+- [Admin] **progress-bar** shipped 0.28.12 through 0.30.0:
+  - servers merged under LOCALHOST (`localhost:3000` now detected)
+  - `⎿` connector on sub-lines
+  - Chrome status moved beside the counts
+  - DONE TODAY simplified
+  - `/attach` file picker with shortcut, cut from 2.07 s to about 0.13 s
+- [Admin] **Generalization audit** found personal machines, IPs, emails and NomBot defaults shipped to every user. 0.30.0 fixed them, cut the README from 983 to 183 lines and added a hide-emails setting. 257 plugin tests and 79 Python tests passed in an empty home folder.
+- [Admin] **AWS billing**: fixed a typo in the sign-in link Keith received, then confirmed the company card is on file as default.
+- [Admin] **WayToMatter** was pulled from Craig's main twice (14 new commits, including Start Over, Clerk sign-in fixes and the brand-kit restyle). Outreach copy for Laura was tightened.
 
 **Decisions**
-- **Restore route:** S3 plus restore inside AWS, over a sturdier tunnel, for speed and a lighter Mac load.
-- **Cutover timing:** run it the same evening, in a quiet hour, with the Mac kept as a rollback backup.
-- **Deploy key repo:** NomBot only, since the server doesn't need `generosity-data`.
+- **Restore route:** chose S3 plus restore inside AWS over sturdier tunnels. It is faster and takes load off the Mac.
+- **Deploy key:** added to NomBot only, since the server doesn't need `generosity-data` and GitHub allows one repo per key.
+- **Cutover timing:** went tonight in a quiet evening hour instead of waiting. The Mac stays up as the rollback target.
+- **Plugin split:** `/attach` stays in progress-bar for now; splitting it into its own plugin was recommended but not yet approved.
 
 **Next**
-- **Nightly jobs:** decide on the 11 PM IRS update, and approve a read-only deploy key for `generosity-data` so jobs can move to AWS.
-- **Newsletter and vectors:** the newsletter stays on the Mac, and vector-building needs a home since hunty has been offline for about 4 days.
-- **Cleanup:** delete the 10 GB practice dump once approved.
+- **IRS update:** decide whether tonight's 11 PM load runs on the Mac only or is paused until it moves to AWS.
+- **Jobs to AWS:** add a read-only deploy key on `generosity-data`, and pick a fix for the 99 GB IRS file mirror (bigger disk, or load on the Mac and push to AWS).
+- **Follow-ups:** log the 30-minute Keith meeting at clock-out, and send Tyler the guide link.
 
 ## 2026-11-10 (Tuesday)
 
