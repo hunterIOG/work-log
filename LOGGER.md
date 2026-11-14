@@ -2,6 +2,38 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-13 (Friday)
+
+*Active in Claude Code: ~4h 38m (estimate) · 0 commits · 112 messages*
+
+**Summary:** Shipped PostHog analytics, page transitions, a filter-aware summary sentence and touch and location fixes to NomBot. Lifted question routing from 77% to 97% on a 30-question pilot and 90% to 93% on a 505-question run, and opened a WayToMatter fix PR.
+
+**Done**
+- [NomBot] **PostHog** is live (`293f115`) with product analytics, session replay, error tracking, heatmaps, a "Did you find what you needed?" survey and a 10-tile engagement dashboard. Site downtime was about 6 seconds.
+- [NomBot] **Dead websites** are hidden for 23,206 orgs whose domain no longer exists. The data stays in the API as `website_live: false`.
+- [NomBot] **Icons** cover 244,280 of 396,354 orgs tried (62%) after dropping 28,500 generic website-builder icons.
+- [NomBot] **Page transitions** and a shared motion style shipped (`023fe5e`), along with a summary sentence that types out and follows the active filter. A stuck iPhone transition prompted a hotfix.
+- [NomBot] **UI fixes** deployed: the "Across causes" cards and cause-grid coverage marks are hidden, and Explore by cause auto-scrolls. Touch-only hover is fixed, "×" clears all trend terms, and the desktop resize error is fixed.
+- [NomBot] **Examples** now name real places (Chicago, Ohio, Kentucky, Texas, Los Angeles). "Near me" asks for location first (`a723692`), and the examples are pre-loaded (10, up from 9).
+- [NomBot] **Question bank** of 581 questions was built and run end to end. On a 505-question run, routing went from 90% to 93%, relevance from 1.59 to 1.70 and median time from 4.0 s to 2.8 s. The run cost $8.63.
+- [NomBot] **Routing fixes** raised the 30-question pilot from 77% to 97% correct routing, with median time falling from 6.7 s to 2.7 s. A second pilot re-check of the remaining misses reached 100%.
+- [NomBot] **Casual phrasing** support was added, so questions like "tell me about Darren Walker" open the person page. 76 new casual questions score 87% routing and 99% answered.
+- [NomBot] **Server-side fixes** pushed to `question-bank`: private foundations now compare using 990-PF figures, and counts like "Food banks in Chicago" dropped from 8,833 to 167. Merged, but the deploy was blocked at 23:48 by an expired AWS login.
+- [Admin] **Progress panel** plugin 0.33.2 pushed (`55f4de0`), so reused agent rows keep their label and restart their timer.
+- [Admin] **Mac freed up** by stopping the nightly Mac database backup (it had run 6+ hours), the preview server and the WayToMatter dev server. Load fell from 22 to 14.
+- [Admin] **WayToMatter PR #10** opened. The motivation step never succeeded in 3 days of logs, and a second check blocked requests, so NomBot was never asked.
+
+**Decisions**
+- **Trailing-slash redirect:** removed from Vercel config so PostHog events skip an extra hop.
+- **Routing before full run:** fixed routing first so the roughly $9 full run measured the improved version.
+- **Dead-site rule:** hide only domains that no longer exist, so a temporary outage doesn't hide a working site.
+- **Mobbin:** recommended one month of use for mobile and org-page references, then cancel.
+
+**Next**
+- **Deploy:** re-run `aws login`, then redeploy the question-bank merge.
+- **Open fixes:** namesake merging on person pages, no answer for executive pay, and regional research.
+- **PostHog:** mark internal users and decide on server logs.
+
 ## 2026-11-12 (Thursday)
 
 *Hours worked: 8h (6:25am–7:00pm, 277 min inactive removed) · 66 commits · 239 messages*
