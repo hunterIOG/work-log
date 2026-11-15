@@ -4,31 +4,30 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-14 (Saturday)
 
-*Hours worked: 4h (4:30pm–11:22pm, 278 min inactive removed) · 15 commits · 93 messages*
+*Hours worked: 4h (4:30pm–11:22pm, 278 min inactive removed) · 0 commits · 100 messages*
 
-**Summary:** NomBot got one assistant on every screen, cited conversational replies, and 4 rounds of simulated-user fixes. The progress-bar plugin also shipped 0.34.0 to 0.35.0.
+**Summary:** Shipped the conversational NomBot assistant, four simulated-user fix rounds and two plugin releases, and logged 4 hours for the day.
 
 **Done**
-- [NomBot] **Namesake split and executive pay** shipped. Pay questions scored 1.90 relevance and 1.90 correctness. "Ford CEO" returns Darren Walker, $1.92M, tax year 2024.
-- [NomBot] **People and board research** correctness rose from 1.27 to 1.57 to 1.63 over two rounds, with answered up from 80% to 93%. National board rankings now answer in 2–3 s from a day cache.
-- [NomBot] **Stale deploys fixed.** The server had been running an old build since Nov 13 because the build script never restarted the app. The script now restarts the app and rolls back if the site doesn't answer within 90 s. Live checks now read the answer text, not just the 200.
-- [NomBot] **Single assistant** replaced three copies of routing rules, so every screen and follow-up uses the same logic. Full run of 671 questions: route right 96% (was 93%), correctness 1.66 (was 1.59), median 2.5 s. Rules answer 86% of questions, and Haiku handles the other 14%. It routed 98% of 108 conversation turns correctly.
-- [NomBot] **Conversational layer** shipped: 1–2 sentence replies with numbered citations to the filing, form, year and line, and unsupported sentences dropped in code. The median reply is 31.5 words, with 0 banned jargon words shown and 95% of citations matching their source.
-- [NomBot] **Audit fixes** shipped for false "no data" claims, the payout rate (Ford 6.9%), explaining the last answer, 3-part questions and citation spacing. Pay now carries over from the person in the previous answer, for example Cain Kirk's $0 on 33 filings.
-- [NomBot] **Simulated users** (Atlanta advisor, Chicago program officer, Gates reporter) drove the live site through 4 fix rounds. Chicago went from 2/7 to 7/7 and Gates from 1/7 to 7/7. Gates giving now answers $6.31B in 2024, up 34% from 2019. The final live commit is `d0b0475`, and 278 intent tests pass.
-- [Admin] **Progress-bar plugin 0.34.0 and 0.34.1** shipped. Progress rows now work with no setup (with an `autoReport` switch), and the step spinner animates.
-- [Admin] **Plugin hardened to 0.35.0** after PRs #3–#6 were merged. The security review found no malicious code, only unsafe defaults. Group chat and the agent link are now off by default, and chat lines are shown as quoted data.
-- [Admin] **Hours logged** as 8 h for Nov 13 and 4 h for Nov 14. The script had counted 6.75 h across the two days against 12 h.
+- [NomBot] **Namesake split** and executive pay answers shipped. Executive pay scored 1.90 relevance and correctness, and Ford CEO pay reads $1.92M for tax year 2024.
+- [NomBot] **People fixes** raised people-and-boards correctness from 1.27 to 1.63 over two rounds. They cover middle initials, board counts, funder-overlap shares and national ranking answers in 2–3 s.
+- [NomBot] **Stale deploy** fixed. The app had kept running an old build since Nov 13 because the build script never restarted it. The script now restarts the app and rolls back if the site doesn't answer within 90 s.
+- [NomBot] **Assistant** built as one tool-calling layer for every screen. On the full run, route right rose from 93% to 96%, correctness from 1.59 to 1.66, and median time fell from 2.8 s to 2.5 s. Conversations routed right on 98% of turns.
+- [NomBot] **Cited replies** shipped, written as 1–2 sentences with checked citations. Citation validity was 96%, matching sources 98%, and median length fell from 37 to 31.5 words.
+- [NomBot] **Simulated-user audits** ran as three personas: an Atlanta advisor, a Chicago program officer and a Gates reporter. Fixed and deployed in four rounds, Chicago went from 2 of 7 to 7 of 7 and Gates from 1 of 7 to 7 of 7. The Gates answer now reads $6.31B in 2024.
+- [NomBot] **Answer-first layout** and "which of these" follow-ups are fixed on branch `answer-first`. Org lists and charts now wait for the first sentence, and "these" ranks the orgs on screen. It was merged and pushed as `9a93feb`.
+- [NomBot] **Brainstorm sweep** of 24 new test conversations (77 questions) found 7 reference-resolution bugs. The agent is fixing them on `sweep-fixes`.
+- [Admin] **Progress bar plugin** 0.34.0 works out of the box and 0.34.1 spins the active step. The 0.35.0 hardening makes group chat and the agent link opt-in. The security review of 4 merged PRs found no malicious code, only unsafe defaults.
+- [Admin] **Work log** recorded 8 hours for Nov 13 and 4 hours for Nov 14, since the script's own count was too low.
 
 **Decisions**
-- [NomBot] **Kept the 40-board cap.** The answer states that 40 is the most the board links can show. The alternative was a database rebuild that would mostly surface affiliate chains.
-- [NomBot] **Citations enforced in code.** Every number must trace to a filing, so NomBot can't invent figures.
-- [Admin] **Group chat and agent link off by default.** Messages from a collaborator's channel could otherwise steer your Claude sessions.
+- [NomBot] **Atlanta "these"** should rank only the orgs on screen. This was recommended, but the user hasn't confirmed it.
+- [Admin] **Plugin defaults** are off for group chat and the agent link. A merged PR had turned group chat on by default, which let another person's messages reach the user's Claude sessions.
 
 **Next**
-- [NomBot] **Board tables and charts** vanish on the next question in a thread. Decide whether to keep them.
-- [NomBot] **Bad grant link:** Georgia Tech Research Corporation grants are linked to Hillside's EIN in the data.
-- [Admin] **Plugin follow-ups:** your own typed chat lines can still start tasks, and full-access mode passes API keys to agents.
+- [NomBot] **Deploy** the `sweep-fixes` branch once AWS login is renewed.
+- [NomBot] **40-board limit:** decide whether to keep it or rebuild the board links without it.
+- [NomBot] **Grant link:** check the Georgia Tech Research Corporation grants linked to Hillside's EIN.
 
 ## 2026-11-13 (Friday)
 
