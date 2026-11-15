@@ -6,30 +6,29 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 *Hours worked: 4h (4:30pm–11:22pm, 278 min inactive removed) · 15 commits · 93 messages*
 
-**Summary:** NomBot became one assistant with cited, short replies, and four rounds of simulated-user audits were fixed and shipped live. The progress-bar plugin was released as 0.34.0, 0.34.1 and 0.35.0.
+**Summary:** NomBot got one assistant on every screen, cited conversational replies, and 4 rounds of simulated-user fixes. The progress-bar plugin also shipped 0.34.0 to 0.35.0.
 
 **Done**
-- [NomBot] **People fixes** shipped: namesakes are split, with a pick list when no one person stands out. People and boards correctness rose from 0.97 to 1.63, and answered rose from 77% to 93%.
-- [NomBot] **Executive pay answers** went live: route right 100%, relevance and correctness 1.90 on 20 new questions. "What does the CEO of the Ford Foundation make?" gives $1.92M, tax year 2024.
-- [NomBot] **National board rankings** now answer in 2–3 s from a one-day cache. The old "more than 8 boards" note was replaced with an accurate one.
-- [NomBot] **Stale deploys found and fixed.** The server had run an old build since Nov 13 because the build script never restarted the app. The fixed script now restarts the app and rolls back if the site doesn't answer within 90 s.
-- [NomBot] **Single assistant** replaced the three rule-based routers. The full run of 671 questions scored route right 96% (was 93%), correctness 1.66 (was 1.59) and median time 2.5 s. 98% of conversation turns were routed right, with Haiku handling about 14% of questions at roughly $0.09 per 1,000.
-- [NomBot] **Conversational layer** shipped: 1–2 sentence cited replies, with a median of 31.5 words per reply. Citations match their source 95% of the time. Unsupported sentences are dropped, and the layer costs about $0.0027 per reply.
-- [NomBot] **Audit fixes after browser tests** removed the false "no finances" claim, stated Ford's 6.9% payout rate, and made the answer to "how is that calculated?" explain the last answer.
-- [NomBot] **Simulated-user rounds** were all deployed to the live site, ending at `d0b0475`. Chicago program officer went from 2 of 7 to 7 of 7. Gates reporter went from 1 of 7 to 7 of 7, including "$6.31B given in 2024". The Atlanta advisor fixes (Hillside wrong-org, Georgia counties) were checked on the server only. 278 intent tests pass.
-- [Admin] **Progress-bar plugin 0.34.0 and 0.34.1** were pushed. It works with no setup, with a backup row for turns over 30 s with 3+ tool calls. The checklist spinner now animates.
-- [Admin] **Plugin 0.35.0 hardening** was pushed after a review of 4 merged pull requests found only unsafe defaults. Group chat and the agent link are now off by default. 304 plugin tests pass.
-- [Admin] **Work hours** were compared: the script logged 6.75 h across Nov 13–14 against the user's 8 h and 4 h, so the missing time is being added.
+- [NomBot] **Namesake split and executive pay** shipped. Pay questions scored 1.90 relevance and 1.90 correctness. "Ford CEO" returns Darren Walker, $1.92M, tax year 2024.
+- [NomBot] **People and board research** correctness rose from 1.27 to 1.57 to 1.63 over two rounds, with answered up from 80% to 93%. National board rankings now answer in 2–3 s from a day cache.
+- [NomBot] **Stale deploys fixed.** The server had been running an old build since Nov 13 because the build script never restarted the app. The script now restarts the app and rolls back if the site doesn't answer within 90 s. Live checks now read the answer text, not just the 200.
+- [NomBot] **Single assistant** replaced three copies of routing rules, so every screen and follow-up uses the same logic. Full run of 671 questions: route right 96% (was 93%), correctness 1.66 (was 1.59), median 2.5 s. Rules answer 86% of questions, and Haiku handles the other 14%. It routed 98% of 108 conversation turns correctly.
+- [NomBot] **Conversational layer** shipped: 1–2 sentence replies with numbered citations to the filing, form, year and line, and unsupported sentences dropped in code. The median reply is 31.5 words, with 0 banned jargon words shown and 95% of citations matching their source.
+- [NomBot] **Audit fixes** shipped for false "no data" claims, the payout rate (Ford 6.9%), explaining the last answer, 3-part questions and citation spacing. Pay now carries over from the person in the previous answer, for example Cain Kirk's $0 on 33 filings.
+- [NomBot] **Simulated users** (Atlanta advisor, Chicago program officer, Gates reporter) drove the live site through 4 fix rounds. Chicago went from 2/7 to 7/7 and Gates from 1/7 to 7/7. Gates giving now answers $6.31B in 2024, up 34% from 2019. The final live commit is `d0b0475`, and 278 intent tests pass.
+- [Admin] **Progress-bar plugin 0.34.0 and 0.34.1** shipped. Progress rows now work with no setup (with an `autoReport` switch), and the step spinner animates.
+- [Admin] **Plugin hardened to 0.35.0** after PRs #3–#6 were merged. The security review found no malicious code, only unsafe defaults. Group chat and the agent link are now off by default, and chat lines are shown as quoted data.
+- [Admin] **Hours logged** as 8 h for Nov 13 and 4 h for Nov 14. The script had counted 6.75 h across the two days against 12 h.
 
 **Decisions**
-- **Haiku for routing:** it beat Sonnet on follow-ups, 93% vs 91%, at a much lower cost.
-- **Keep the 40-board limit (recommended):** removing it would likely surface affiliate chains rather than truly busy people. The user has not yet confirmed.
-- **Plugin defaults off:** group chat and the agent link are opt-in, to block prompt injection from channel messages.
+- [NomBot] **Kept the 40-board cap.** The answer states that 40 is the most the board links can show. The alternative was a database rebuild that would mostly surface affiliate chains.
+- [NomBot] **Citations enforced in code.** Every number must trace to a filing, so NomBot can't invent figures.
+- [Admin] **Group chat and agent link off by default.** Messages from a collaborator's channel could otherwise steer your Claude sessions.
 
 **Next**
-- **Open:** decide whether to keep board tables and charts on older answers in a thread.
-- **Open:** fix the bad grant link from Georgia Tech Research Corporation to Hillside's EIN.
-- **Open:** pre-warm common cause and state board questions, since the first ask took 24 s.
+- [NomBot] **Board tables and charts** vanish on the next question in a thread. Decide whether to keep them.
+- [NomBot] **Bad grant link:** Georgia Tech Research Corporation grants are linked to Hillside's EIN in the data.
+- [Admin] **Plugin follow-ups:** your own typed chat lines can still start tasks, and full-access mode passes API keys to agents.
 
 ## 2026-11-13 (Friday)
 
