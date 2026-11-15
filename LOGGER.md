@@ -2,9 +2,38 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-14 (Saturday)
+
+*Hours worked: 4h (4:30pm–11:22pm, 278 min inactive removed) · 15 commits · 93 messages*
+
+**Summary:** NomBot became one assistant with cited, short replies, and four rounds of simulated-user audits were fixed and shipped live. The progress-bar plugin was released as 0.34.0, 0.34.1 and 0.35.0.
+
+**Done**
+- [NomBot] **People fixes** shipped: namesakes are split, with a pick list when no one person stands out. People and boards correctness rose from 0.97 to 1.63, and answered rose from 77% to 93%.
+- [NomBot] **Executive pay answers** went live: route right 100%, relevance and correctness 1.90 on 20 new questions. "What does the CEO of the Ford Foundation make?" gives $1.92M, tax year 2024.
+- [NomBot] **National board rankings** now answer in 2–3 s from a one-day cache. The old "more than 8 boards" note was replaced with an accurate one.
+- [NomBot] **Stale deploys found and fixed.** The server had run an old build since Nov 13 because the build script never restarted the app. The fixed script now restarts the app and rolls back if the site doesn't answer within 90 s.
+- [NomBot] **Single assistant** replaced the three rule-based routers. The full run of 671 questions scored route right 96% (was 93%), correctness 1.66 (was 1.59) and median time 2.5 s. 98% of conversation turns were routed right, with Haiku handling about 14% of questions at roughly $0.09 per 1,000.
+- [NomBot] **Conversational layer** shipped: 1–2 sentence cited replies, with a median of 31.5 words per reply. Citations match their source 95% of the time. Unsupported sentences are dropped, and the layer costs about $0.0027 per reply.
+- [NomBot] **Audit fixes after browser tests** removed the false "no finances" claim, stated Ford's 6.9% payout rate, and made the answer to "how is that calculated?" explain the last answer.
+- [NomBot] **Simulated-user rounds** were all deployed to the live site, ending at `d0b0475`. Chicago program officer went from 2 of 7 to 7 of 7. Gates reporter went from 1 of 7 to 7 of 7, including "$6.31B given in 2024". The Atlanta advisor fixes (Hillside wrong-org, Georgia counties) were checked on the server only. 278 intent tests pass.
+- [Admin] **Progress-bar plugin 0.34.0 and 0.34.1** were pushed. It works with no setup, with a backup row for turns over 30 s with 3+ tool calls. The checklist spinner now animates.
+- [Admin] **Plugin 0.35.0 hardening** was pushed after a review of 4 merged pull requests found only unsafe defaults. Group chat and the agent link are now off by default. 304 plugin tests pass.
+- [Admin] **Work hours** were compared: the script logged 6.75 h across Nov 13–14 against the user's 8 h and 4 h, so the missing time is being added.
+
+**Decisions**
+- **Haiku for routing:** it beat Sonnet on follow-ups, 93% vs 91%, at a much lower cost.
+- **Keep the 40-board limit (recommended):** removing it would likely surface affiliate chains rather than truly busy people. The user has not yet confirmed.
+- **Plugin defaults off:** group chat and the agent link are opt-in, to block prompt injection from channel messages.
+
+**Next**
+- **Open:** decide whether to keep board tables and charts on older answers in a thread.
+- **Open:** fix the bad grant link from Georgia Tech Research Corporation to Hillside's EIN.
+- **Open:** pre-warm common cause and state board questions, since the first ask took 24 s.
+
 ## 2026-11-13 (Friday)
 
-*Active in Claude Code: ~4h 38m (estimate) · 0 commits · 112 messages*
+*Hours worked: 8h (12:16am–11:48pm, 1134 min inactive removed) · 0 commits · 112 messages*
 
 **Summary:** Shipped PostHog analytics, page transitions, a filter-aware summary sentence and touch and location fixes to NomBot. Lifted question routing from 77% to 97% on a 30-question pilot and 90% to 93% on a 505-question run, and opened a WayToMatter fix PR.
 
