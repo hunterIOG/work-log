@@ -2,6 +2,42 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-15 (Sunday)
+
+*Active in Claude Code: ~2h 31m (estimate) · 0 commits · 29 messages*
+
+**Summary:** Shipped four rounds of NomBot fixes (compare removal, data and routing bugs, live-sim bugs) to production; the last round (`680d98f`) is pushed but not built.
+
+**Done**
+- [NomBot] **Compare feature** removed (page, PDF/Word export, tray). Old `/compare` links open the chat, and "which is more efficient" now answers in chat, e.g. Feeding America 98% program spend vs City Harvest 93%.
+- [NomBot] **Browser sim** found 8 bugs the eval missed, and all 8 were fixed. These included the Habitat header, NYC pay mismatch, Covenant House pay, Massachusetts universities, the Denver count (4,559 → 15 related) and Denver grants.
+- [NomBot] **Boston University** now ranks 4th among Massachusetts universities, via a name-based fallback when an org has no cause code.
+- [NomBot] **Thread routing** fixed: an unrelated question mid-thread starts fresh. Board overlap now compares all boards in the thread, with no empty table when none are shared.
+- [NomBot] **Habitat LA** search now opens `/org/330416470`. Cause: a 700 ms lookup limit whose search-list fallback was cached for 24 h. Fixed by running lookups in parallel (~720 → ~360 ms) and not caching late fallbacks. The first try after a restart can still show the list once.
+- [NomBot] **Live-sim fixes** shipped in `13ca942`:
+  - Red Cross CEO pay now answers in ~2 s (was ~25 s), at $989K.
+  - Salvation Army answers as a church that files no 990.
+  - City-based grant lists count only recipients located in the city. Crown Memorial's Chicago education total went from $51.6M to $43.8M.
+  - Literacy-in-Chicago answers and the "fund there" follow-up both scored 2/2 relevance and correctness.
+- [NomBot] **Polish** shipped in `6cb7a74` and verified live: the "Corrected:" repeat is gone, trust names clean up ("Donley Foundation"), and chart titles name the funder and city.
+- [NomBot] **Final round** (`680d98f`) is merged and pushed but not built:
+  - Red Cross pay no longer implies a raise: Holtz's $888K was as COO in 2023.
+  - Seattle "most efficient" ranks by program share, led by Compass Center at 99%.
+  - "Who drove most of that" now ranks by growth: Brin foundation $146.9M, top 3 funders 47% of the $638.5M rise.
+  - The climate-trend contradiction is fixed.
+- [NomBot] **Eval** on the 24 conversations went from 18 to 23 fully right questions. Follow-up relevance rose from 1.15 to 1.53 and correctness from 1.09 to 1.45. Answer correctness measured 1.64/2 before the year-mixing fix, which hasn't been re-run.
+- [NomBot] **Data fix**: Fidelity Charitable grants (MA org with an Ohio office address) are now excluded from Ohio lists.
+
+**Decisions**
+- [NomBot] **Batched deploys:** held `51fcafd` and shipped it with the later rounds, so there was one deploy rather than several.
+- [NomBot] **Tightened before deploy:** fixed the two partly right literacy and Crown answers first.
+- [NomBot] **Habitat funders** are not mislinked: funders reported Habitat LA's EIN themselves. The real issue is funders listing a chapter's EIN for a chapter in another state.
+
+**Next**
+- [NomBot] **Retry the build** for `680d98f`. The server step exited with code 1 after an interrupt, and the live site is still on `6cb7a74`.
+- [NomBot] **Replay live threads** after deploy: Red Cross pay, Seattle efficiency and climate "who drove".
+- [NomBot] **Check "habitat for humanity NYC"**, which opens a fund of the same name rather than the chapter.
+
 ## 2026-11-14 (Saturday)
 
 *Hours worked: 4h (4:30pm–11:22pm, 278 min inactive removed) · 0 commits · 100 messages*
