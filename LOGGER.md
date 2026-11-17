@@ -4,32 +4,34 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-16 (Monday)
 
-*Active in Claude Code: ~5h 05m (estimate) · 29 commits · 137 messages*
+*Hours worked: 6h (8:46am–8:25pm, 334 min inactive removed) · 37 commits · 158 messages*
 
-**Summary:** Shipped state registries, grant linking, college-total fixes, household giving and gift news to NomBot, fixed WayToMatter's AWS outage, and moved the IRS load to hunty.
+**Summary:** Shipped grant linking, gift news, citation cards, Next.js 16.4.5 and PFD trust and design fixes to NomBot, and fixed the WayToMatter-to-NomBot outage.
 
 **Done**
-- [NomBot] **Demo questions** picked for Wednesday: Ohio food banks with the least foundation money, Indianapolis arts deficit streaks, and top Indianapolis board members. Google could not answer any of them. Fixes shipped in `c601b42`, including shared funders (52 foundations funded both Gleaners and Second Helpings) and a board query that no longer hangs.
-- [NomBot] **State charity registries** (CO, CA, CT) are live on RDS: 76,215 registrations, 254,063 Colorado finance rows and 16,020 fundraiser campaigns. Likely-closed orgs went from 8,661 to 10,597. Foundations gave $373.3M to 613 orgs on California's "may not operate" list.
-- [NomBot] **Grant linking** added 94,926 foundation-grant lines ($1.55B) and moved 25,433 Schedule I lines ($2.57B) off wrong EINs, including the Georgia Tech fix. Hand checks were 47/50 and 48/50. Migration 125 removed 84 duplicate lines and added a unique key.
-- [NomBot] **Rankings** now count community foundations, say "None found" versus "None linked", and drop account numbers from names. Chicago literacy is now led by the Chicago Community Trust at $1.9M. The RDS refresh took 55 minutes and the deploy `42e3b91` is live.
-- [NomBot] **College totals** now count the same orgs as the rankings. Massachusetts universities rose from $2.47B to $2.7B (BU in, Year Up out). The US total rose from $21.1B to $25.3B.
-- [NomBot] **Same-name board people**: 129 names were split by middle initial or suffix (24/24 hand-checked). The top 60 board names are each one person, including Jeffrey Harrison's 17 boards.
-- [NomBot] **Household giving** shows 38 published Philanthropy Panel Study figures, such as 46.9% of US households giving in 2020, down from 66.2% in 2000. The live answer includes a chart.
-- [NomBot] **Gift news** found 458 announced gifts (June 21–Nov 16) from GDELT headlines. Hand-checked accuracy was 98% on amounts, 94% on donors and 92% on recipients. It is merged and shipping, waiting on the AWS backfill.
-- [WayToMatter] **NomBot outage** came from a hardcoded fallback to the old Mac address. Commit `8bca028c` fixes it and 4 conversation bugs. `NOMBOT_BASE_URL` was updated in Vercel and production was redeployed. The code fixes are not pushed.
-- [NomBot] **IRS load** had silently failed since Nov 13 because Tailscale was off on the Mac. It is working again, and no IRS batch was missed. The load now also runs on hunty, with timers at 9:10 and 9:40 and its other jobs moved after them.
-- [Admin] **Progress-bar plugin** 0.35.2 stops auto-starting decision items. 0.35.3 fixes the running, background, blocked and done labels, and passed all tests (86/86 Python, 327/327 TypeScript).
+- [NomBot] **Grant linking** is live: 94,926 foundation-grant lines ($1.55B) newly linked, and 25,433 Schedule I lines ($2.57B) moved off wrong EINs, including the Georgia Tech fix. Hand checks were 47/50 and 48/50 correct.
+- [NomBot] **Migration 125** on RDS removed 84 duplicate grant lines, numbered all 14,858,927 grants and added a unique key so a batch can't be double-loaded.
+- [NomBot] **Research tables** were refreshed on RDS in 55 minutes, then deployed. Chicago literacy is now led by the Chicago Community Trust, and Nueva Esperanza shows "None found".
+- [NomBot] **Gift news** is live: 457 gifts from Jun 22 to Nov 17 on RDS, 64 linked to orgs. The daily AWS news job now loads gifts. A guard fix lets gift questions through, and dates now use Los Angeles time. One duplicate (Buffett's $5.5B counted twice) was found live, and the fix is in progress.
+- [NomBot] **Demo prep** for Wednesday: found 3 questions Google can't answer (Ohio food bank underfunding, Indianapolis arts deficit streaks, Indianapolis board seats). Fixed the Indianapolis boards hang and the climate figure label. Added a shared-funder answer (52 shared Gleaners/Second Helpings funders).
+- [NomBot] **Citation cards** now wrap, stay on screen and read as short lines instead of raw evidence text.
+- [NomBot] **PFD evaluation** scored the site 69/100. The visual consistency and trust fixes are live: replies no longer say "$0", one † footnote replaces per-row notes, the table fits (732 px in 732 px), and corner radii went from 19 to 8.
+- [NomBot] **Next.js** upgraded from 16.4.3 to 16.4.5 for GHSA-mfr8-8qww-v76h and 6 other moderate issues. Build and 389/389 intent tests pass.
+- [NomBot] **Data checks:** RDS has 7-day backups and matches the Mac copy. State charity registries (CO, CA, CT) and the same-name board-person split are loaded. The IRS load failed because Tailscale was off on the Mac. Nothing was missed, since no new 990 batch has been published since 2026_09A.
+- [NomBot] **Hunty timers** moved after 9 AM: IRS check 9:10, IRS load 9:40, and its other jobs spread later. All six generosity-data branches are merged to main.
+- [Admin] **Progress-bar plugin** 0.35.3 to 0.35.5: fixed the waiting/running/done labels and the 8-second timeout, and removed the "likely improves" feature. 0.35.5 is not pushed yet.
+- [Admin] **WayToMatter** was calling an old Mac address. The `NOMBOT_BASE_URL` fix is redeployed, and the conversation-fix branch is not pushed.
 
 **Decisions**
-- [NomBot] **Keep the 40-board cap.** Raising it would put affiliate staff with up to 240 boards at the top of rankings.
-- [NomBot] **Keep the gifts topic.** It gives 458 gifts instead of 85 and adds about 3,500 headlines to `/news`.
-- [NomBot] **Use GDELT headlines for gift news.** It stores only metadata and a link back, so there are no copyright or paywall issues. Subscription sources wait on Julia and Helen's review of the license terms.
+- **Gifts topic** kept (458 gifts, plus about 3,500 headlines in `/news`) over the 85-gift option, for broader coverage.
+- **Philanthropy Panel Study:** its terms appear to ban AI use. The options are written permission or loading only published figures.
+- **AWS cleanup** held, since it permanently deletes dumps and a bucket.
+- **Hunty overnight jobs** spread out so they don't all run at 9 AM.
 
 **Next**
-- [NomBot] Check hunty's first IRS run on Nov 17 (about 10:13 AM). Then turn off the Mac job and deploy the daily check.
-- [NomBot] Finish the gift-news backfill, deploy it and test it live.
-- [Admin] Ask Una Osili and PSID for permission to use PSID data with an LLM, since the terms appear to ban it. The AWS cleanup stays on hold.
+- **Gift duplicate fix:** rebuild gifts on RDS, then deploy.
+- **Hunty IRS run check** on Tuesday Nov 17 at 10:13 AM.
+- **Progress-bar 0.35.5:** push, then run `/plugin update progress-bar`.
 
 ## 2026-11-15 (Sunday)
 
