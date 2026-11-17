@@ -4,34 +4,32 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-16 (Monday)
 
-*Hours worked: 6h (8:46am–8:25pm, 334 min inactive removed) · 37 commits · 158 messages*
+*Hours worked: 6h (8:46am–8:25pm, 334 min inactive removed) · 0 commits · 172 messages*
 
-**Summary:** Shipped grant linking, gift news, citation cards, Next.js 16.4.5 and PFD trust and design fixes to NomBot, and fixed the WayToMatter-to-NomBot outage.
+**Summary:** Shipped NomBot's gift news, citation cards and Next.js patch, then raised the NomBot design score from 69 to 83 in a four-round loop that is still running.
 
 **Done**
-- [NomBot] **Grant linking** is live: 94,926 foundation-grant lines ($1.55B) newly linked, and 25,433 Schedule I lines ($2.57B) moved off wrong EINs, including the Georgia Tech fix. Hand checks were 47/50 and 48/50 correct.
-- [NomBot] **Migration 125** on RDS removed 84 duplicate grant lines, numbered all 14,858,927 grants and added a unique key so a batch can't be double-loaded.
-- [NomBot] **Research tables** were refreshed on RDS in 55 minutes, then deployed. Chicago literacy is now led by the Chicago Community Trust, and Nueva Esperanza shows "None found".
-- [NomBot] **Gift news** is live: 451 gifts from Jun 22 to Nov 16 on RDS (after removing 6 duplicates), 64 linked to orgs. The daily AWS news job now loads gifts. A guard fix lets gift questions through, and dates now use Los Angeles time. One duplicate (Buffett's $5.5B counted twice) was found live, and the fix is in progress.
-- [NomBot] **Demo prep** for Wednesday: found 3 questions Google can't answer (Ohio food bank underfunding, Indianapolis arts deficit streaks, Indianapolis board seats). Fixed the Indianapolis boards hang and the climate figure label. Added a shared-funder answer (52 shared Gleaners/Second Helpings funders).
-- [NomBot] **Citation cards** now wrap, stay on screen and read as short lines instead of raw evidence text.
-- [NomBot] **PFD evaluation** scored the site 69/100. The visual consistency and trust fixes are live: replies no longer say "$0", one † footnote replaces per-row notes, the table fits (732 px in 732 px), and corner radii went from 19 to 8.
-- [NomBot] **Next.js** upgraded from 16.4.3 to 16.4.5 for GHSA-mfr8-8qww-v76h and 6 other moderate issues. Build and 389/389 intent tests pass.
-- [NomBot] **Data checks:** RDS has 7-day backups and matches the Mac copy. State charity registries (CO, CA, CT) and the same-name board-person split are loaded. The IRS load failed because Tailscale was off on the Mac. Nothing was missed, since no new 990 batch has been published since 2026_09A.
-- [NomBot] **Hunty timers** moved after 9 AM: IRS check 9:10, IRS load 9:40, and its other jobs spread later. All six generosity-data branches are merged to main.
-- [Admin] **Progress-bar plugin** 0.35.3 to 0.35.5: fixed the waiting/running/done labels and the 8-second timeout, and removed the "likely improves" feature. 0.35.5 is not pushed yet.
-- [Admin] **WayToMatter** was calling an old Mac address. The `NOMBOT_BASE_URL` fix is redeployed, and the conversation-fix branch is not pushed.
+- [NomBot] **Demo questions** were stress-tested live. Three were picked that Google can't answer: Ohio food banks, Indianapolis arts deficits and Indianapolis board seats.
+- [NomBot] **Demo fixes** were deployed (`c601b42`). The Indianapolis boards question now answers in about 1 s instead of hanging. The Gleaners/Second Helpings question finds 52 shared funders.
+- [NomBot] **Gift news** is live. It has 451 gifts from Jun 22 to Nov 16 on RDS, after a duplicate fix removed 6 rows. The Buffett $5.5B gift now appears once, and the monthly total fell from $14.08B to $8.58B.
+- [NomBot] **Citation cards** now wrap and stay on screen. **Next.js** went from 16.4.3 to 16.4.5 for the security advisory (146 pages built, 389/389 intent tests passed).
+- [NomBot] **Design fixes** are live (`dc1b393`). Replies no longer say "$0" for missing grants, and the Ohio table now fits its column.
+- [NomBot] **Design loop** scored 69 → 73 → 79 → 82 → 83 across rounds 0–4 on branch `pfd-loop`. This work is local only and not deployed.
+- [NomBot] **Data health** checks found RDS backed up for 7 days and matching the Mac copy (14.86M grants). The IRS load had failed since Nov 13 because Tailscale was off. It is fixed, and no new IRS batch had been missed.
+- [NomBot] **Data work** is running: grant linking, public-charity funders, cause totals by org, same-name board people, and planning for the Philanthropy Panel Study and state registries.
+- [Admin] **Progress-bar plugin** 0.35.4 and 0.35.5 fixed the timeout, row titles and stale steps, and removed the "likely improves" line.
+- [Admin] **Invoice** for Nov 3–16 was built: 91.25 h at $60 is $5,475, with each day capped at 8 hours. It was pushed and saved as a Gmail draft with the PDF attached, not sent.
 
 **Decisions**
-- **Gifts topic** kept (458 gifts, plus about 3,500 headlines in `/news`) over the 85-gift option, for broader coverage.
-- **Philanthropy Panel Study:** its terms appear to ban AI use. The options are written permission or loading only published figures.
-- **AWS cleanup** held, since it permanently deletes dumps and a bucket.
-- **Hunty overnight jobs** spread out so they don't all run at 9 AM.
+- [Admin] **8-hour daily cap** was adopted, because logged days ran over 8 h. Earlier invoiced days were left unchanged.
+- [NomBot] **Misfiled orgs** are now dropped from cause rankings, because Nueva Esperanza turned out to be a Honduras ministry. The Ohio demo answer changed as a result.
+- [NomBot] **"Foundation" wording** will count community foundations too, so the plain word is accurate. Donor-advised funds stay out.
+- [NomBot] **Philanthropy Panel Study** is paused, because its terms appear to ban AI use. Options are written permission or loading only published figures.
 
 **Next**
-- **Gift duplicate fix:** rebuild gifts on RDS, then deploy.
-- **Hunty IRS run check** on Tuesday Nov 17 at 10:13 AM.
-- **Progress-bar 0.35.5:** push, then run `/plugin update progress-bar`.
+- [NomBot] **Design loop** needs 2 more points to reach 85. After that, one deploy, which also changes the Ohio demo answer.
+- [NomBot] **Hunty/Mac IRS load** dependency is under research. Alerts and a possible move to AWS are being compared.
+- [Admin] **AWS cleanup** (S3 bucket, old dumps, admin IAM user) is on hold until the user approves.
 
 ## 2026-11-15 (Sunday)
 
