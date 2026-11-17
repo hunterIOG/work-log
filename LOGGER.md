@@ -228,7 +228,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-09 (Monday)
 
-*Hours worked: 15h · 47 commits · 74 messages*
+*Hours worked: 8h (8:48am–9:18pm, 521 min inactive removed) · 47 commits · 74 messages*
 
 **Summary:** Shipped NomBot's funder finder and org-locations search, stress-tested the latter (9 bugs fixed), and got Keith's approval to move the database to AWS RDS.
 
