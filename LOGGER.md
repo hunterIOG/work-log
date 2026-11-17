@@ -33,7 +33,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-15 (Sunday)
 
-*Active in Claude Code: ~2h 31m (estimate) · 0 commits · 29 messages*
+*Hours worked: 3h (12:17am–10:53pm, 1205 min inactive removed) · 0 commits · 29 messages*
 
 **Summary:** Shipped four rounds of NomBot fixes (compare removal, data and routing bugs, live-sim bugs) to production; the last round (`680d98f`) is pushed but not built.
 
