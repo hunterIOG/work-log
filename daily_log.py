@@ -29,6 +29,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = os.path.join(HERE, "LOGGER.md")
 HOURS = os.path.join(HERE, "hours.json")  # {"2026-10-06": 4}: hours you report; shown instead of the estimate
+MAX_HOURS = 8  # cap per day (Hunter, Nov 16)
 CLOCK = os.path.join(HERE, "clock.json")  # {"2026-10-08": {"start": "09:12", "end": "12:40"}}: written by --end
 # Chats in any NomBot, GrantRadar or imnet folder (imnet lives under ~/Desktop/IOG)
 # Both Claude logins: the IoG one (~/.claude) and the personal one (~/.claude-personal, used when
@@ -182,6 +183,7 @@ def hours_for(day: dt.date, msgs, times, end, brk=0, extra=0, idle=IDLE):
     gaps = idle_gaps(times, start, end, idle)
     away = sum((b - a).total_seconds() for a, b in gaps)
     hours = round(max(0, (end - start).total_seconds() - away - brk * 60 + extra * 60) / 900) / 4
+    hours = min(hours, MAX_HOURS)  # Hunter, Nov 16: a day never counts more than 8 hours
     return start, end, gaps, away, hours
 
 

@@ -198,7 +198,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-10 (Tuesday)
 
-*Hours worked: 9h (10:08am–8:29pm, 347 min inactive removed) · 0 commits · 126 messages*
+*Hours worked: 8h (capped) (10:08am–8:29pm, 347 min inactive removed) · 0 commits · 126 messages*
 
 **Summary:** Shipped Tyler's grant-totals and search-trends features live, fixed WayToMatter's resumed-chat org links in PR #9, and set up AWS ahead of the RDS move.
 
@@ -355,7 +355,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-05 (Thursday)
 
-*Hours worked: 10h (12:17am–11:02pm, 765 min inactive removed) · 0 commits · 200 messages*
+*Hours worked: 8h (capped) (12:17am–11:02pm, 765 min inactive removed) · 0 commits · 200 messages*
 
 **Summary:** Labeling got about 2x faster with Jev as first pass, NomBot passed all evals on the bigger 2021-23 database, and board-link and board-answer fixes went live.
 
@@ -386,7 +386,7 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-04 (Wednesday)
 
-*Hours worked: 8.25h (8:25am–4:31pm, 28 min inactive removed) · 0 commits · 220 messages*
+*Hours worked: 8h (capped) (8:25am–4:31pm, 28 min inactive removed) · 0 commits · 220 messages*
 
 **Summary:** Loaded and pushed the 2019–23 IRS filings, health care labels and many NomBot upgrades, and shipped progress-bar plugin v0.13.1 through v0.22.8.
 
