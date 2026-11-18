@@ -2,6 +2,37 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-17 (Tuesday)
+
+*Active in Claude Code: ~7h 07m (estimate) · 0 commits · 84 messages*
+
+**Summary:** NomBot went through stress-test rounds 1 to 5b, and the round 1 to 4 fixes were deployed. A router test set and Census location data were added, and PFD design scores recovered to 91/90.
+
+**Done**
+- [NomBot] **Round 1 fixes** shipped (`51ae53f`). Funders, board overlap, "which of those" follow-ups, largest food banks and the New button all pass in the browser. Server dropped-connection errors fell from 13 to 0.
+- [NomBot] **Round 2 fixes** reworked answer routing to extract org names first. Scores on round 2's own questions went from relevance 50% to 97% and recall 33% to 94%. Fresh wordings reached relevance 78% and recall 89%.
+- [NomBot] **Fixed-set gates** all passed from round 3c on: relevance 100%, accuracy 100%, recall 96%. Round 3c and round 4 fixes went live (`de8a4c4`, `40d6771`).
+- [NomBot] **Round 4 live fixes** (`40d6771`) included the "pledges" hang fix with a 40 s timeout on every answer path, and the fix for same-named orgs. Health verdicts and staff-versus-board labels were also corrected.
+- [NomBot] **Location search** now handles radius, typed ZIPs, metros, neighborhoods, rural areas, typos and Puerto Rico. 174 of 174 location checks pass. Census and USDA tables were loaded on the Mac and on RDS (393 metros, county borders, rural codes).
+- [NomBot] **Router test set** built with 300 labeled questions, scoring 93% on live code. The `r5` branch reached 100% on the base set and 97% on 60 held-out questions.
+- [NomBot] **Round 5 found a cached timeout fallback bug:** the D3 demo answered nationally and then cached that answer. Round 5b fixes it, and all 3 demo questions were confirmed correct live. Round 5b passes its offline tests but is not yet deployed or browser-checked.
+- [NomBot] **Data fix:** the $82M St. Thomas gift is now linked to the University of St. Thomas on live RDS. The news matcher no longer links bare saint names.
+- [NomBot] **Beta access:** a new beta user was added to the sign-up allowlist and the server redeployed. A sign-up and feedback message was drafted.
+- [NomBot] **Round 5 scores:** unseen Pittsburgh questions reached relevance 88% and accuracy 92%. Location search was slow, with a 40 s p90 on the Pittsburgh set.
+- [NomBot] **PFD scores** went from 83/81 to 91/90 in round 3c, dipped to 86/85 in round 4, and returned to 91/90 in round 5.
+- [Admin] **Next.js** security fix `pfd-loop` merged and deployed, covering the 84/100 PFD result. The AWS login was renewed.
+- [Admin] **Resume bullets** for NomBot were drafted, naming the RAG design and the tech stack.
+
+**Decisions**
+- **DAF rule:** kept as is, so "leave out donor-advised funds" still drops community foundations and the Chicago Community Trust stays in rankings.
+- **Stress loop stop rule:** the loop runs until every score reaches the target, not for 3 rounds. Scores are split into a fixed set and a fresh set.
+- **Publisher content:** the publishers' individual plans do not allow sharing logins, so none of their content goes into NomBot without written permission.
+
+**Next**
+- [NomBot] **Round 5b deploy (decision 33):** ship after the browser re-check, which stopped at F4 when the Chrome extension disconnected.
+- [NomBot] **generosity-data push (decision 32):** merge and push so the daily data job uses the matcher fix.
+- [NomBot] **Clerk production keys (decision 20):** the sign-in card still shows "Development mode".
+
 ## 2026-11-16 (Monday)
 
 *Hours worked: 6h (8:46am–8:25pm, 334 min inactive removed) · 0 commits · 172 messages*
