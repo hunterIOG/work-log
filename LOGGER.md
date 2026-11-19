@@ -4,38 +4,39 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-18 (Wednesday)
 
-*Active in Claude Code: ~8h 50m (estimate) · 16 commits · 189 messages*
+*Active in Claude Code: ~9h 08m (estimate) · 0 commits · 192 messages*
 
-**Summary:** Shipped round 5b live, then built round 6b/6c, a rebrand to the IoG look, a news-gifts API and cause labels, and moved heavy tests to hunty.
+**Summary:** Round 6b/6c and the IoG rebrand were built and merged into `nombot`, and recall tests moved to hunty. The final deploy was blocked by an expired AWS session.
 
 **Done**
-- [NomBot] **Round 5b** deployed as `3073e23`. The fixed set scored 100% relevance and accuracy and 97% recall, with p90 speed 6.1 s (was 13.7 s) and 0 errors.
-- [NomBot] **Live check** passed 4 of 5 questions. The "foundations funding … on Chicago's South Side" wording missed.
-- [NomBot] **Round 6** fixed the South Side miss, kept city names the router dropped, and made code caches reset on deploy. Router held-out score is 63 of 65.
-- [NomBot] **Round 6b** (`9cd9cab`) fixed "last quarter" read as a donor name, which now shows 99 gifts ($13.39B). Place chips now match their rows, and NC news gifts were recovered.
-- [NomBot] **Round 6c** (`55204d9`) added a paid rescore (about $3.65). L6 Brooklyn went from 2/8 to 5/8 and overall recall stayed at 74%. Associations are now removed from the table too, and false "same gift" pairings are gone.
-- [NomBot] **Rebrand** to the IoG system is committed (`3156c4a`, `bee2828`, `73ca3b2`). It has a dark-blue accent, Outfit and Source Serif 4, an IoG logo in the sidebar, and a dark-blue active-tab underline. Chrome rechecks passed.
-- [NomBot] **News gifts API** added as `/api/v1/news/gifts`, plus an MCP tool, for Muneeb's donor briefs. The search interest API now covers 47 terms.
-- [NomBot] **Back button fix** shipped in `272fa40`: threads keep every turn and Back returns to the previous screen. A flow test was added, with metrics set at 95% and 0 dead ends or glitches.
-- [NomBot] **Beta user review:** her question was rerun on live and scored about 45/100. The "based in San Francisco" summary line was traced to a low bar of 2 matching cards, and a fix was queued.
-- [NomBot] **Heavy tests on hunty** matched the Mac: `test:answer` had 3 known mismatches, `test:recall` 74%, and `test:flows` 55/56.
-- [generosity-data] **Cause labels:** 139 rows loaded to RDS after a 49/50 pilot. RDS now has 599,700 rows on 534,876 orgs, with 5,997 large orgs left uncoded.
-- [Admin] **IRS watchdog** is live on AWS, and the IRS job moved to hunty. Cleanup of 22 worktrees freed disk space from 12 GB to 26 GB.
+- [NomBot] **Round 5b** deployed live as `3073e23`. On the fixed set, relevance and accuracy were 100%, recall 97%, speed p90 6.1 s (was 13.7 s), and errors 0 (was 3 timeouts).
+- [NomBot] **Round 6** (`a0bd393`) fixed the South Side wording miss. Router held-out is 63 of 65.
+- [NomBot] **Back-navigation bugs** (two-turn thread, org page) were reported and sent for fixing. A user-flow test now runs each round, with 95% targets and 0 dead ends or glitches.
+- [NomBot] **Round 6b/6c** was committed (`9cd9cab`, `55204d9`). "Last quarter" gifts went from 0 to 99 ($13.39B). The paid rescore lifted L6 Brooklyn from 2/8 to 5/8 for about $3.65. Overall recall stayed at 74%.
+- [NomBot] **Chrome rechecks** of round 6c passed 3 of 4 rows. Queen City cold speed still fails at about 18–22 s against the 15 s target.
+- [NomBot] **IoG rebrand** is on `rebrand` (`73ca3b2`): dark-blue `#324ECD` accent, Outfit and Source Serif fonts, IoG logo in the sidebar, near-black text. All three visual rechecks pass.
+- [NomBot] **Merge and push** of `r6b` and the rebrand reached origin as `a68e7e9`. Gates match round 6c: `test:answer` 177 checks, recall 74%, flows 55/56.
+- [NomBot] **Heavy test suites** now run on hunty. Its baseline matches the Mac, at about $3.35 in model calls.
+- [NomBot] **News gifts endpoint** `/api/v1/news/gifts` is being built for Muneeb's donor briefs.
+- [NomBot] **"Based in San Francisco" summary bug** was traced to `fallbackLead` in `web/lib/searchSummary.ts`. A fix was added to the PFD work.
+- [GrantRadar] **Cause labels:** 139 rows were added after a 98% pilot (49 of 50). They are now loaded on RDS, which has 599,700 label rows on 534,876 orgs.
+- [GrantRadar] **generosity-data `main`** was pushed as `765e681` with the Census/USDA tables and the St. Thomas matcher fix. The labels README commit `9c34f8c` is not pushed.
+- [Admin] **IRS watchdog** is live on AWS, and the IRS load now runs on hunty. Disk space went from 12 GB to 26 GB free after worktree cleanup.
+- [Admin] **Tooling:** the status-line error was fixed by archiving 2,701 old files. RTK was installed with read delegation removed.
 
 **Decisions**
-- **Near-black text** `#2b2b2e` kept instead of the IoG `#000`, by Hunter's choice.
-- **10 rows** kept on place lists instead of 15. Recall will improve through ranking.
-- **Rescore** approved for the scorer rubric change, to lift recall inside a place.
-- **RTK read delegation** removed, so no file reads go to an outside model.
+- **Place lists** stay at 10 rows, so recall must improve through ranking rather than more rows.
+- **Text color** stays near-black `#2b2b2e`, not pure black.
+- **GEO/SEO** was parked in the backlog, and it was not started.
 
 **Next**
-- **Decision 47:** Outfit 400 or 500 for UI text.
-- **Queen City speed:** cold answers still take 18–22 s against the 15 s target.
-- **Deploy** round 6 and the rebrand together, after rebasing `rebrand` onto `r6b`.
+- **Deploy:** run `aws login`, then rerun the deploy and verify the live site.
+- **Font weight:** decide on Outfit 400 or 500 (decision 47).
+- **Queen City:** get the cold run under 15 s.
 
 ## 2026-11-17 (Tuesday)
 
-*Active in Claude Code: ~7h 07m (estimate) · 0 commits · 84 messages*
+*Hours worked: 7h (12:17am–9:05pm, 820 min inactive removed) · 0 commits · 84 messages*
 
 **Summary:** NomBot went through stress-test rounds 1 to 5b, and the round 1 to 4 fixes were deployed. A router test set and Census location data were added, and PFD design scores recovered to 91/90.
 
