@@ -2,6 +2,37 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-18 (Wednesday)
+
+*Active in Claude Code: ~8h 50m (estimate) · 16 commits · 189 messages*
+
+**Summary:** Shipped round 5b live, then built round 6b/6c, a rebrand to the IoG look, a news-gifts API and cause labels, and moved heavy tests to hunty.
+
+**Done**
+- [NomBot] **Round 5b** deployed as `3073e23`. The fixed set scored 100% relevance and accuracy and 97% recall, with p90 speed 6.1 s (was 13.7 s) and 0 errors.
+- [NomBot] **Live check** passed 4 of 5 questions. The "foundations funding … on Chicago's South Side" wording missed.
+- [NomBot] **Round 6** fixed the South Side miss, kept city names the router dropped, and made code caches reset on deploy. Router held-out score is 63 of 65.
+- [NomBot] **Round 6b** (`9cd9cab`) fixed "last quarter" read as a donor name, which now shows 99 gifts ($13.39B). Place chips now match their rows, and NC news gifts were recovered.
+- [NomBot] **Round 6c** (`55204d9`) added a paid rescore (about $3.65). L6 Brooklyn went from 2/8 to 5/8 and overall recall stayed at 74%. Associations are now removed from the table too, and false "same gift" pairings are gone.
+- [NomBot] **Rebrand** to the IoG system is committed (`3156c4a`, `bee2828`, `73ca3b2`). It has a dark-blue accent, Outfit and Source Serif 4, an IoG logo in the sidebar, and a dark-blue active-tab underline. Chrome rechecks passed.
+- [NomBot] **News gifts API** added as `/api/v1/news/gifts`, plus an MCP tool, for Muneeb's donor briefs. The search interest API now covers 47 terms.
+- [NomBot] **Back button fix** shipped in `272fa40`: threads keep every turn and Back returns to the previous screen. A flow test was added, with metrics set at 95% and 0 dead ends or glitches.
+- [NomBot] **Beta user review:** her question was rerun on live and scored about 45/100. The "based in San Francisco" summary line was traced to a low bar of 2 matching cards, and a fix was queued.
+- [NomBot] **Heavy tests on hunty** matched the Mac: `test:answer` had 3 known mismatches, `test:recall` 74%, and `test:flows` 55/56.
+- [generosity-data] **Cause labels:** 139 rows loaded to RDS after a 49/50 pilot. RDS now has 599,700 rows on 534,876 orgs, with 5,997 large orgs left uncoded.
+- [Admin] **IRS watchdog** is live on AWS, and the IRS job moved to hunty. Cleanup of 22 worktrees freed disk space from 12 GB to 26 GB.
+
+**Decisions**
+- **Near-black text** `#2b2b2e` kept instead of the IoG `#000`, by Hunter's choice.
+- **10 rows** kept on place lists instead of 15. Recall will improve through ranking.
+- **Rescore** approved for the scorer rubric change, to lift recall inside a place.
+- **RTK read delegation** removed, so no file reads go to an outside model.
+
+**Next**
+- **Decision 47:** Outfit 400 or 500 for UI text.
+- **Queen City speed:** cold answers still take 18–22 s against the 15 s target.
+- **Deploy** round 6 and the rebrand together, after rebasing `rebrand` onto `r6b`.
+
 ## 2026-11-17 (Tuesday)
 
 *Active in Claude Code: ~7h 07m (estimate) · 0 commits · 84 messages*
