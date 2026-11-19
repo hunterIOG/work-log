@@ -220,5 +220,12 @@
     "inactive_min": 820,
     "break_min": 0,
     "offline_min": 0
+  },
+  "2026-11-18": {
+    "start": "8:00am",
+    "end": "9:42pm",
+    "inactive_min": 274,
+    "break_min": 0,
+    "offline_min": 0
   }
 }
