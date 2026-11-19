@@ -2,6 +2,31 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-19 (Thursday)
+
+*Active in Claude Code: ~0h 04m (estimate) · 0 commits · 3 messages*
+
+**Summary:** Round 6b/c passed all gates, the deploy was rerun after an AWS re-login, and Nov 17 and Nov 18 hours were logged, though Nov 18 was flagged as not yet ended.
+
+**Done**
+- [NomBot] **Round 6b/c** passed all gates, with location recall at 74% (held-out 79%).
+- [NomBot] **Brooklyn** rose to 5 of 8 after a $3.65 rescore.
+- [NomBot] **Cause labels** are live on RDS, 599,700 rows.
+- [NomBot] **Rebrand** with IoG colors, fonts and logo is in, and the rechecks passed.
+- [NomBot] **Deploy** was rerun after the AWS login, and the SSM build started. The "restarted:" line and live answer text still need checking.
+- [Admin] **Hours** were logged and pushed to `work-log`: Nov 17 at 7 h and Nov 18 at 8 h.
+- [Admin] **Hunty** test database matches this Mac's results, so heavy test runs can move there.
+- [Admin] **Outfit 400** was saved for UI text where the Personal pane reads it, and decision 47 is marked done.
+
+**Decisions**
+- **Outfit 400** stays as the UI text weight.
+- **One deploy** will cover round 6 plus the rebrand, after Queen City speed is fixed and the rebrand is rebased.
+
+**Next**
+- [NomBot] **Queen City** cold search is still 18–22 s against a 15 s target.
+- [NomBot] **Rebase** the rebrand onto round 6b.
+- [Admin] **Nov 18** was not ended yesterday, so its close-out and hours need redoing.
+
 ## 2026-11-18 (Wednesday)
 
 *Hours worked: 8h (8:00am–9:42pm, 274 min inactive removed) · 17 commits · 192 messages*
