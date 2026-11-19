@@ -4,35 +4,34 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-18 (Wednesday)
 
-*Hours worked: 8h (8:00am–9:42pm, 274 min inactive removed) · 0 commits · 192 messages*
+*Hours worked: 8h (8:00am–9:42pm, 274 min inactive removed) · 17 commits · 192 messages*
 
-**Summary:** Round 6b/6c and the IoG rebrand were built and merged into `nombot`, and recall tests moved to hunty. The final deploy was blocked by an expired AWS session.
+**Summary:** Round 6b/6c and the IoG rebrand were merged and pushed to NomBot, and the deploy is blocked on an expired AWS login.
 
 **Done**
-- [NomBot] **Round 5b** deployed live as `3073e23`. On the fixed set, relevance and accuracy were 100%, recall 97%, speed p90 6.1 s (was 13.7 s), and errors 0 (was 3 timeouts).
-- [NomBot] **Round 6** (`a0bd393`) fixed the South Side wording miss. Router held-out is 63 of 65.
-- [NomBot] **Back-navigation bugs** (two-turn thread, org page) were reported and sent for fixing. A user-flow test now runs each round, with 95% targets and 0 dead ends or glitches.
-- [NomBot] **Round 6b/6c** was committed (`9cd9cab`, `55204d9`). "Last quarter" gifts went from 0 to 99 ($13.39B). The paid rescore lifted L6 Brooklyn from 2/8 to 5/8 for about $3.65. Overall recall stayed at 74%.
-- [NomBot] **Chrome rechecks** of round 6c passed 3 of 4 rows. Queen City cold speed still fails at about 18–22 s against the 15 s target.
-- [NomBot] **IoG rebrand** is on `rebrand` (`73ca3b2`): dark-blue `#324ECD` accent, Outfit and Source Serif fonts, IoG logo in the sidebar, near-black text. All three visual rechecks pass.
-- [NomBot] **Merge and push** of `r6b` and the rebrand reached origin as `a68e7e9`. Gates match round 6c: `test:answer` 177 checks, recall 74%, flows 55/56.
-- [NomBot] **Heavy test suites** now run on hunty. Its baseline matches the Mac, at about $3.35 in model calls.
-- [NomBot] **News gifts endpoint** `/api/v1/news/gifts` is being built for Muneeb's donor briefs.
-- [NomBot] **"Based in San Francisco" summary bug** was traced to `fallbackLead` in `web/lib/searchSummary.ts`. A fix was added to the PFD work.
-- [GrantRadar] **Cause labels:** 139 rows were added after a 98% pilot (49 of 50). They are now loaded on RDS, which has 599,700 label rows on 534,876 orgs.
-- [GrantRadar] **generosity-data `main`** was pushed as `765e681` with the Census/USDA tables and the St. Thomas matcher fix. The labels README commit `9c34f8c` is not pushed.
-- [Admin] **IRS watchdog** is live on AWS, and the IRS load now runs on hunty. Disk space went from 12 GB to 26 GB free after worktree cleanup.
-- [Admin] **Tooling:** the status-line error was fixed by archiving 2,701 old files. RTK was installed with read delegation removed.
+- [NomBot] **Round 5b** deployed live as `3073e23`. The fixed set passed at 100% relevance and accuracy, 97% recall, and p90 speed fell from 13.7 s to 6.1 s. There were 0 errors, and all 3 demos passed on both asks.
+- [NomBot] **Round 6 fixes** (`a0bd393`) now give "foundations funding X in PLACE" a funder answer. The router's held-out score is 63 of 65, demos warm up first, and caches clear on deploy.
+- [NomBot] **Back navigation bug** (two-turn thread, org page) was reported by Hunter. Fixes and a user-flow test went in, and the suite scored 55/56 on flows. The one failure, `mobile search-filter-reload`, also fails on the Mac.
+- [NomBot] **Round 6b** (`9cd9cab`) fixed the 0-gifts bug, which now shows 99 gifts ($13.39B). It also fixed place chips matching their rows, NC news gifts and Queen City nickname handling.
+- [NomBot] **Round 6c** (`55204d9`) added a scorer rule plus a paid rescore (~$3.65) that lifted L6 Brooklyn from 2/8 to 5/8. Overall recall stayed at 74%, held-out 79%.
+- [NomBot] **Chrome rechecks** of round 6c passed 3 of 4 rows. Only cold speed on Queen City still fails, at 21.8 s and 17.8 s against the 15 s target.
+- [NomBot] **IoG rebrand** is committed with a dark-blue `#324ECD` accent, Outfit and Source Serif 4, IoG chart colors and the IoG logo in the sidebar. The tab underline recheck passed.
+- [NomBot] **Gifts API** added `GET /api/v1/news/gifts` and an MCP `search_news_gifts` tool, a cross-org list of gifts announced in the news for Muneeb's donor briefs.
+- [NomBot] **Beta user review** scored her session about 45/100, and her question's results were national. The "based in San Francisco" summary line was traced to a low city-repeat threshold, and a fix was queued.
+- [NomBot] **Heavy tests on hunty** work with a 64 GB database copy. `test:answer` matched the Mac, `test:recall` scored 74%, and flows scored 55/56.
+- [NomBot] **Final merge** gates matched round 6c and went to origin as `a68e7e9`.
+- [Admin] **Cause labels** (139 rows) were loaded to RDS: 599,700 label rows on 534,876 orgs, with 5,997 large uncoded orgs left. The generosity-data push fix and IRS watchdog went live on AWS, and worktree cleanup freed disk space.
 
 **Decisions**
-- **Place lists** stay at 10 rows, so recall must improve through ranking rather than more rows.
-- **Text color** stays near-black `#2b2b2e`, not pure black.
-- **GEO/SEO** was parked in the backlog, and it was not started.
+- [NomBot] **Near-black text** `#2b2b2e` stays instead of pure black, by Hunter's choice.
+- [NomBot] **Place lists** stay at 10 rows, and recall will be improved through ranking.
+- [Admin] **IRS job** moved from the Mac to hunty, with an AWS watchdog on a daily timer.
+- [Admin] **RTK read delegation** was removed so no file contents go to an outside model.
 
 **Next**
-- **Deploy:** run `aws login`, then rerun the deploy and verify the live site.
-- **Font weight:** decide on Outfit 400 or 500 (decision 47).
-- **Queen City:** get the cold run under 15 s.
+- [NomBot] **Deploy** after `aws login`, then verify the live site shows 99 gifts, the `#324ECD` accent and the logo.
+- [NomBot] **Outfit weight** needs a decision (400 or 500), and Queen City cold speed still needs to get under 15 s.
+- [Admin] **Clock-out** will be logged once the deploy is verified.
 
 ## 2026-11-17 (Tuesday)
 
