@@ -4,28 +4,31 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-19 (Thursday)
 
-*Active in Claude Code: ~0h 04m (estimate) · 0 commits · 3 messages*
+*Active in Claude Code: ~10h 03m (estimate) · 0 commits · 372 messages*
 
-**Summary:** Round 6b/c passed all gates, the deploy was rerun after an AWS re-login, and Nov 17 and Nov 18 hours were logged, though Nov 18 was flagged as not yet ended.
+**Summary:** Shipped the answer cache and a mobile Insights sheet design, and ran baselines for the animation and multi-requirement loops, with Round 6b/c and the rebrand live on production.
 
 **Done**
-- [NomBot] **Round 6b/c** passed all gates, with location recall at 74% (held-out 79%).
-- [NomBot] **Brooklyn** rose to 5 of 8 after a $3.65 rescore.
-- [NomBot] **Cause labels** are live on RDS, 599,700 rows.
-- [NomBot] **Rebrand** with IoG colors, fonts and logo is in, and the rechecks passed.
-- [NomBot] **Deploy** was rerun after the AWS login, and the SSM build started. The "restarted:" line and live answer text still need checking.
-- [Admin] **Hours** were logged and pushed to `work-log`: Nov 17 at 7 h and Nov 18 at 8 h.
-- [Admin] **Hunty** test database matches this Mac's results, so heavy test runs can move there.
-- [Admin] **Outfit 400** was saved for UI text where the Personal pane reads it, and decision 47 is marked done.
+- [NomBot] **Round 6b/c and IoG rebrand** deployed to production (`a68e7e9`). Checked by live answer text: the gifts question now reads 98 gifts, $13.39B total.
+- [NomBot] **Answer cache** built for sidebar clicks: a Postgres `answer_cache` table plus a browser router cache. Cached answers return in 0.1 s. It still needs RDS migration 129 and a deploy.
+- [NomBot] **Mobile Insights sheet** designed. Mockups of three layouts were made, and the chosen C1→B2→C3→C4 flow is being built on `mobile-insights`.
+- [NomBot] **Console errors and Search trends on mobile** are being fixed on branch `console-errors`. The cause is 404s from `/api/org-icon/<EIN>` for orgs without logos.
+- [NomBot] **Animation loop baseline** measured. Mobile fails 4 of 5 metrics, with 10.3% dropped frames and a 0.55 layout shift. Satisfaction is 72 on desktop and 60 on mobile, against a 90 target. Round 2 is running on `anim-r2`.
+- [NomBot] **Multi-requirement loop** set up with 60 questions. Round 4 early numbers: extraction 87, and/or reading 90, all-needs precision 68. Google head-to-head is 53, below round 2's 70, so round 4 is not deployable yet.
+- [NomBot] **Foundation evals** run: `test:answer` shows only the 3 known mismatches. Recall is 72% (245 of 342), about 2 points under the usual 74%.
+- [NomBot] **Hunty load** traced to test-server warm-ups. The `NOMBOT_WARM=0` switch is on branch `warm-switch` (`2e4bc14`), and production behavior is unchanged.
+- [Admin] **Hours logged** for Nov 17 (7 h) and Nov 18 (8 h). A stray `--help` run also pushed a placeholder Nov 19 entry.
+- [Admin] **Cutover dump check:** no 9.6 GB cutover dump found on the Mac, hunty or AWS. It was already gone.
 
 **Decisions**
-- **Outfit 400** stays as the UI text weight.
-- **One deploy** will cover round 6 plus the rebrand, after Queen City speed is fixed and the rebrand is rebased.
+- **Judging route:** multi-requirement judging runs through `claude -p` on the subscription, not the API key. Auto mode had blocked the $25 API-key plan.
+- **Color fades exempted:** hover color fades are exempt from the transform/opacity-only animation rule. They account for 61 of the 87 offending transitions and are cheap.
+- **Cache layers:** server and browser caches both. The server cache does most of the work, and the browser cache is one config line.
 
 **Next**
-- [NomBot] **Queen City** cold search is still 18–22 s against a 15 s target.
-- [NomBot] **Rebase** the rebrand onto round 6b.
-- [Admin] **Nov 18** was not ended yesterday, so its close-out and hours need redoing.
+- **Deploy:** the foundation descriptions (`5d4e532`) wait on `aws login`.
+- **Hunty link:** Tailscale stopped on the Mac at 22:53, so all three loops are paused until it is restarted.
+- **Round 4 recall:** the `test:recall` check against 252 of 342 hasn't run yet.
 
 ## 2026-11-18 (Wednesday)
 
