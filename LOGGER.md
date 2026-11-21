@@ -2,6 +2,35 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-20 (Friday)
+
+*Active in Claude Code: ~11h 15m (estimate) · 0 commits · 455 messages*
+
+**Summary:** Overview-first and sheet/search round 3 were tested, and the Claude-Code-Setup open-source package was built, stress-tested over 12 rounds and pushed to GitHub.
+
+**Done**
+- [NomBot] **Sheet and search round 3** passed every target in a locked run except one. Tap feedback (slowest 10%) improved 100 → 85 ms, and dropped frames 3.4% → 2.8%. Judged success was 100% and clarity 3.67. The slowest-tap INP worsened 104 → 160 ms, still under the 200 ms target.
+- [NomBot] **Round 3 tests** ran 120/120 passing runs, back 28/28, flows 57/58 (one known failure) and motion all pass.
+- [NomBot] **Overview-first card** (`5728341`) was checked by the Main pane. The hierarchy looks right at 1440 and 390 px. A background agent started on the ~55 px phone gap fix and the deploy.
+- [NomBot] **Stale answer bug** found: "food banks in Ohio" kept serving a fallback answer ("609 results") after credits came back. Whether production serves it is not yet confirmed.
+- [NomBot] **Labeling and grading batches** ran: ground-truth labels for F-series questions, rubric grading of multi-requirement answers, and blind A/B comparisons of answer pairs.
+- [Admin] **Reply-format setup** (Option B) was applied. The full format moved into the `adhd-friendly` output style and the global CLAUDE.md was cut to 20 lines. Ordered steps now use numbered lists.
+- [Admin] **Hours script fix:** `workday-hours.py` now reads all Desktop projects including NomBot. Nov 19 went 0.41 → 12.93 h and Nov 20 went 0.13 → 11.48 h.
+- [Admin] **Instruction audit fixes:** two broken commands were removed from `RTK.md`, and three memory notes were corrected.
+- [Admin] **Claude-Code-Setup** is public on GitHub at `96706e9`. It has 10 commits, 340/340 tests on Bash 3.2 and 5.3, and a clean privacy scan. It includes a migrate mode for existing agent harnesses.
+- [Admin] **Migrate-mode stress rounds** (12) found bugs mainly in the AI rewrite step, such as invented lines and smuggled facts. They were fixed with a strict integrity check.
+- [Admin] **Progress-bar 0.36.1** is pushed (`5b0baef`). It no longer shows an empty bar for a running row with no progress data.
+
+**Decisions**
+- **Pushed the setup repo** after round 12 and dropped the 2-clean-rounds gate, because each adversarial round kept finding smaller edge cases.
+- **No A/B experiment or README image** for now, because Hunter chose not to run real Claude calls; the benchmark stays optional and is tested with fake replies only.
+- **Output style carries the full format spec,** and CLAUDE.md keeps 4 core rules plus a subagent section, because only CLAUDE.md reaches subagents.
+
+**Next**
+- [NomBot] Decide whether to ship sheet round 3, then finish `aws login` for the foundation deploy.
+- [NomBot] Fix the stale "food banks in Ohio" answer.
+- [Admin] Try `./setup.sh --dry-run` on a second Mac or a fresh user account.
+
 ## 2026-11-19 (Thursday)
 
 *Active in Claude Code: ~10h 03m (estimate) · 0 commits · 372 messages*
