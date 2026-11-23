@@ -31,32 +31,38 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-20 (Friday)
 
-*Active in Claude Code: ~11h 15m (estimate) · 0 commits · 455 messages*
+*Hours worked: 8h · 16 commits · 455 messages*
 
-**Summary:** Overview-first and sheet/search round 3 were tested, and the Claude-Code-Setup open-source package was built, stress-tested over 12 rounds and pushed to GitHub.
+**Summary:** Pushed NomBot's multi-requirement and speed rounds and added sector news feeds, while the Claude-Code-Setup package was published and the progress-bar plugin got a fix.
 
 **Done**
-- [NomBot] **Sheet and search round 3** passed every target in a locked run except one. Tap feedback (slowest 10%) improved 100 → 85 ms, and dropped frames 3.4% → 2.8%. Judged success was 100% and clarity 3.67. The slowest-tap INP worsened 104 → 160 ms, still under the 200 ms target.
-- [NomBot] **Round 3 tests** ran 120/120 passing runs, back 28/28, flows 57/58 (one known failure) and motion all pass.
-- [NomBot] **Overview-first card** (`5728341`) was checked by the Main pane. The hierarchy looks right at 1440 and 390 px. A background agent started on the ~55 px phone gap fix and the deploy.
-- [NomBot] **Stale answer bug** found: "food banks in Ohio" kept serving a fallback answer ("609 results") after credits came back. Whether production serves it is not yet confirmed.
-- [NomBot] **Labeling and grading batches** ran: ground-truth labels for F-series questions, rubric grading of multi-requirement answers, and blind A/B comparisons of answer pairs.
-- [Admin] **Reply-format setup** (Option B) was applied. The full format moved into the `adhd-friendly` output style and the global CLAUDE.md was cut to 20 lines. Ordered steps now use numbered lists.
-- [Admin] **Hours script fix:** `workday-hours.py` now reads all Desktop projects including NomBot. Nov 19 went 0.41 → 12.93 h and Nov 20 went 0.13 → 11.48 h.
-- [Admin] **Instruction audit fixes:** two broken commands were removed from `RTK.md`, and three memory notes were corrected.
-- [Admin] **Claude-Code-Setup** is public on GitHub at `96706e9`. It has 10 commits, 340/340 tests on Bash 3.2 and 5.3, and a clean privacy scan. It includes a migrate mode for existing agent harnesses.
-- [Admin] **Migrate-mode stress rounds** (12) found bugs mainly in the AI rewrite step, such as invented lines and smuggled facts. They were fixed with a strict integrity check.
-- [Admin] **Progress-bar 0.36.1** is pushed (`5b0baef`). It no longer shows an empty bar for a running row with no progress data.
+- [NomBot] **Multi-requirement rounds 4 and 5** shipped: needs and kind are read only outside a place, topic phrases order and fill the pool, and a short list with named needs is filled with labeled partial matches instead of 1 row.
+- [NomBot] **Speed stress loop** ran 4 rounds: plain cause and place questions skip the Opus parse, parse and search start while the question is routed, and the research reply starts on the server.
+- [NomBot] **Bubble map** added: a map step after a region, zoom to town or ZIP, and whole-map selections, with a backend.
+- [NomBot] **Sheet and search round 3** locked timing: slowest 10% of tap feedback 100 → 85 ms, dropped frames 3.4% → 2.8%, 120/120 runs passing, judged success 100%. The slowest single-tap INP rose 104 → 160 ms, still under the 200 ms target.
+- [NomBot] **Back button fix:** loading more results now replaces the list's history entry, so one Back leaves the results page (the flows `home-search-back-forward` test).
+- [NomBot] **Funders of a kind of org** now return the cause's funders instead of a "Did you mean" prompt.
+- [NomBot] **Gift in context** shows each news gift beside the donor's and recipient's filings.
+- [NomBot] **Sector outlet news feeds** added to `/api/v1/news` and the MCP `search_policy`, with a `news_source` filter and publisher, summary, `published_at` and sources on each row.
+- [NomBot] **Phone layout:** the overview slot hugs the filter sentence, with no blank gap between the sentence and the filter pill. An outage's fallback answer is never kept.
+- [NomBot] **Overview-first** was built and checked at 1440 and 390 px. The 55px phone gap fix was handed to a background agent to fix and deploy.
+- [NomBot] **Search grading:** labeling and grading batches ran for multi-requirement questions, with A/B comparisons of answer sets.
+- [NomBot] **Migrations 131–133** (generosity-data): `etl_writer` got its refresh rights back and owns `org_finance_flags`, so `db/refresh.sql` runs through on RDS. Migration 133 adds the outlet RSS feeds to `news_articles`.
+- [Admin] **Claude-Code-Setup** published to a public GitHub repo after 12 stress rounds, with 340/340 tests passing on Bash 3.2 and 5.3 and a clean privacy scan.
+- [Admin] **Reply-format setup:** the full format moved into the `adhd-friendly` output style, `CLAUDE.md` was cut to 20 lines, and numbered lists were added for ordered steps.
+- [Admin] **Progress-bar 0.36.1** pushed: a running row with no progress data shows text instead of an empty bar.
+- [Admin] **Hours script** now reads all Desktop projects, so NomBot sessions count. Nov 19 went 0.41 → 12.93 h.
 
 **Decisions**
-- **Pushed the setup repo** after round 12 and dropped the 2-clean-rounds gate, because each adversarial round kept finding smaller edge cases.
-- **No A/B experiment or README image** for now, because Hunter chose not to run real Claude calls; the benchmark stays optional and is tested with fake replies only.
-- **Output style carries the full format spec,** and CLAUDE.md keeps 4 core rules plus a subagent section, because only CLAUDE.md reaches subagents.
+- [NomBot] **Ship sheet r3:** the recommendation was to ship despite the INP single-tap rise, since every other metric was equal or better.
+- [Admin] **Migrate's AI rewrite** guarded by a strict integrity check, with a recommendation to make it opt-in and experimental.
+- [Admin] **Push the setup repo** after round 12, dropping the "2 clean rounds" gate, because each round kept inventing rarer edge cases.
+- [Admin] **No benchmark run and no marketing image** for the setup package for now.
 
 **Next**
-- [NomBot] Decide whether to ship sheet round 3, then finish `aws login` for the foundation deploy.
-- [NomBot] Fix the stale "food banks in Ohio" answer.
-- [Admin] Try `./setup.sh --dry-run` on a second Mac or a fresh user account.
+- [NomBot] **AWS login** still has to be completed, then the sheet r3 and overview-first deploys can go out.
+- [NomBot] **Stale "food banks in Ohio" fallback answer** on hunty needs clearing.
+- [Admin] **Fresh-machine test:** try `./setup.sh --dry-run` on a second Mac or user account.
 
 ## 2026-11-19 (Thursday)
 
