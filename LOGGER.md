@@ -60,31 +60,33 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-19 (Thursday)
 
-*Active in Claude Code: ~10h 03m (estimate) · 0 commits · 372 messages*
+*Hours worked: 8h · 30 commits · 372 messages*
 
-**Summary:** Shipped the answer cache and a mobile Insights sheet design, and ran baselines for the animation and multi-requirement loops, with Round 6b/c and the rebrand live on production.
+**Summary:** Nov 19 got the answer cache, motion rounds and a mobile Insights sheet built, multi-requirement search improved over three rounds, and foundation descriptions finished.
 
 **Done**
-- [NomBot] **Round 6b/c and IoG rebrand** deployed to production (`a68e7e9`). Checked by live answer text: the gifts question now reads 98 gifts, $13.39B total.
-- [NomBot] **Answer cache** built for sidebar clicks: a Postgres `answer_cache` table plus a browser router cache. Cached answers return in 0.1 s. It still needs RDS migration 129 and a deploy.
-- [NomBot] **Mobile Insights sheet** designed. Mockups of three layouts were made, and the chosen C1→B2→C3→C4 flow is being built on `mobile-insights`.
-- [NomBot] **Console errors and Search trends on mobile** are being fixed on branch `console-errors`. The cause is 404s from `/api/org-icon/<EIN>` for orgs without logos.
-- [NomBot] **Animation loop baseline** measured. Mobile fails 4 of 5 metrics, with 10.3% dropped frames and a 0.55 layout shift. Satisfaction is 72 on desktop and 60 on mobile, against a 90 target. Round 2 is running on `anim-r2`.
-- [NomBot] **Multi-requirement loop** set up with 60 questions. Round 4 early numbers: extraction 87, and/or reading 90, all-needs precision 68. Google head-to-head is 53, below round 2's 70, so round 4 is not deployable yet.
-- [NomBot] **Foundation evals** run: `test:answer` shows only the 3 known mismatches. Recall is 72% (245 of 342), about 2 points under the usual 74%.
-- [NomBot] **Hunty load** traced to test-server warm-ups. The `NOMBOT_WARM=0` switch is on branch `warm-switch` (`2e4bc14`), and production behavior is unchanged.
-- [Admin] **Hours logged** for Nov 17 (7 h) and Nov 18 (8 h). A stray `--help` run also pushed a placeholder Nov 19 entry.
-- [Admin] **Cutover dump check:** no 9.6 GB cutover dump found on the Mac, hunty or AWS. It was already gone.
+- [NomBot] **Answer cache** built: a saved question reopened from the sidebar now returns from Postgres in about a second instead of 5–20 s, backed by migration 129.
+- [NomBot] **Foundation descriptions** added: private foundations show 990-PF Part IX-A text and a "From its grants" summary (migration 130). Final evals: `test:answer` has 3 known mismatches, and recall is 72% (245 of 342).
+- [NomBot] **Mobile Insights sheet** replaces the panel stacked under the list on phones, as a bottom sheet with an Insights button. The picked filter shows on the button and lands at the top of results.
+- [NomBot] **Sheet and search stress test** baseline of 30 phone journeys with a simulated keyboard. Fixes: focus closes the sheet, Back peels one layer, and sideways phones get the phone layout. Round 3 added a close button, a scroll hint, and query selection on focus.
+- [NomBot] **Back during streaming** fixed on phones: new turns stop below the sticky top bar, and flow taps re-aim when the page moves.
+- [NomBot] **Animation baseline** measured, with satisfaction at 72 on desktop and 60 on mobile against a 90 target. Mobile layout shift was 0.55 and dropped frames 10.3%. Round 2 fixed instant feedback, pressed states and no replays.
+- [NomBot] **Motion rounds 2 and 3** shipped on branch: motion tokens everywhere, a pending bar on page changes, a lighter county map and an org loading placeholder. The `test:motion` harness was added.
+- [NomBot] **Multi-requirement loop** run through round 4 on the fixed set. Extraction went 76 → 89 → 87, and and/or reading 75 → 88 → 90. Precision went 61 → 68 → 68 and the blind Google comparison 50 → 53. The latest candidate-search fix is untested.
+- [NomBot] **AI overview** is now the summary card headline, at 22px serif (20px on phones).
+- [NomBot] **Console errors** fixed for missing org icons, and the Search trends fix on mobile was shipped.
+- [NomBot] **Round 6b/c and the IoG rebrand** deployed to production (`a68e7e9`), checked by live answer text.
+- [NomBot] **Warm-up switch**: `NOMBOT_WARM=0` skips server warm-ups on test servers. This cut the idle load that kept hunty's 12 cores busy.
+- [Admin] **Hours logged** for Nov 17 (7 h) and Nov 18 (8 h).
 
 **Decisions**
-- **Judging route:** multi-requirement judging runs through `claude -p` on the subscription, not the API key. Auto mode had blocked the $25 API-key plan.
-- **Color fades exempted:** hover color fades are exempt from the transform/opacity-only animation rule. They account for 61 of the 87 offending transitions and are cheap.
-- **Cache layers:** server and browser caches both. The server cache does most of the work, and the browser cache is one config line.
+- [NomBot] **Hover color fades** are exempt from the transform/opacity-only animation rule, because they are cheap and don't stutter.
+- [NomBot] **Multi-requirement judging** runs through `claude -p` on the subscription, with only NomBot's answers on hunty, to avoid copying the API key and a $25 spend.
+- [NomBot] **Insights design** is a mix of C and B: a floating button opening a half-height sheet that drags to full height.
 
 **Next**
-- **Deploy:** the foundation descriptions (`5d4e532`) wait on `aws login`.
-- **Hunty link:** Tailscale stopped on the Mac at 22:53, so all three loops are paused until it is restarted.
-- **Round 4 recall:** the `test:recall` check against 252 of 342 hasn't run yet.
+- [NomBot] **Deploy** the foundation descriptions, which needs an AWS login and Tailscale restored on this Mac.
+- [NomBot] **Multi-requirement round 4** isn't deployable yet: Google score is below round 2's 70%, and the Michigan lead-poisoning recall fix is pending.
 
 ## 2026-11-18 (Wednesday)
 
