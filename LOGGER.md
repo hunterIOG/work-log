@@ -29,6 +29,33 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 - Fix r8's known gaps: a peer's revenue attached to the wrong org (2 of 50 questions), and one total drifting between turns ($20K vs $21K).
 - Remove the Heart Food Pantry sentence from the writeup until a corrected example is confirmed.
 
+## 2026-11-21 (Saturday)
+
+*Hours worked: 0.5h · 0 commits · 8 messages*
+
+**Summary:** Built claude.ai and Claude Code plugin support for the answer-first format package, set the claude.ai instructions, pushed it to GitHub and prepped the directory submission.
+
+**Done**
+- [Admin] **claude.ai support** added: `./setup.sh --web` writes 3 paste-ready texts (profile preferences, Custom Style, Project instructions).
+- [Admin] **Claude Code plugin** `answer-first` built, with the marketplace `answer-first-plugins`. It ships the output style, `/setup-format`, `/setup-web` and `/worked-hours`.
+- [Admin] **claude.ai instructions** set for the IoG account via Chrome. All 988 characters saved and read back after a reload.
+- [Admin] **Menu path fixed** in the README and setup to Settings → Your Claude → Instructions.
+- [Admin] **Wrong paste caught:** a stale clipboard line went in first and was replaced before saving.
+- [Admin] **Pushed** `96706e9..c283e7e` to `main` on the public repo, after tests passed 365 of 365 on Bash 3.2 and 5.3.
+- [Admin] **Submission prep** committed locally as `0f4ad4d`: icon (1024×1024 PNG), strict validation passing at version `1.0.0`, `SUBMISSION.md` with form answers and privacy statement.
+- [Admin] **New skill** brings the format to claude.ai chat and Cowork, where output styles don't load.
+- [Admin] **Tests** after prep: 368 of 368 on both Bash versions, privacy scan clean.
+- [Admin] **GitHub topics** not added: `gh` is logged in as an account without admin rights on the repo (404).
+
+**Decisions**
+- [Admin] **Manual paste** for claude.ai preferences, because claude.ai has no API or file for them. Plugin users get only the skill there.
+- [Admin] **Version pinned at `1.0.0`**, so each release must raise it or users keep the old copy.
+
+**Next**
+- [Admin] **Push** the `0f4ad4d` commit and submit in Anthropic's developer portal.
+- [Admin] **Add GitHub topics** from the repo owner's account.
+- [Admin] **Install the plugin** from GitHub once to confirm the commands work.
+
 ## 2026-11-20 (Friday)
 
 *Hours worked: 8h · 16 commits · 455 messages*
