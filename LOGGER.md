@@ -4,30 +4,30 @@ Daily summary of NomBot, GrantRadar and imnet work, written each night from Clau
 
 ## 2026-11-22 (Sunday)
 
-*Active in Claude Code: ~6h 02m (estimate) · 0 commits · 1032 messages*
+*Hours worked: 7.25h · 7 commits · 1032 messages*
 
-**Summary:** Built and stress-tested a fix for NomBot's under-funded-peers answers, finding the live version failed 6 of 12 metrics, and held the best round (r8) for deploy approval.
+**Summary:** Found that NomBot's Heart Food Pantry headline figure was wrong, built and ran a stress loop on it over 10 rounds, and reverted to round 8 as the best balance.
 
 **Done**
-- [NomBot] **Heart Food Pantry error found:** the headline said about $4K a year from foundations, but its own follow-up listed five funders giving $284K. The cause is that only private-foundation grants were counted; community foundation grants (Columbus Foundation $177K) were left out.
-- [NomBot] **Other failures found:** revenue differed between $5.5M (2025) and $6.6M (2024) without explanation, follow-ups lost the peer method, and the peer list was not size-based.
-- [NomBot] **12-metric stress loop defined:** 4 groups (numbers right, labels match math, peers are real, cross-turn consistency), checked against independent SQL recomputation.
-- [NomBot] **Fixed question set locked:** 50 questions (5 causes × 10 states), 5 follow-ups each (250 total), and 20 new phrasings per round, saved to `web/eval/underfunded-questions.json`.
-- [NomBot] **Fix shipped on branch `underfunded-fix`:** an honest funding measure that names funder types, stated peer rules, method recall on follow-ups, and funder-type labels. The live version scored 0–20% on 6 of 12 metrics.
-- [NomBot] **Round 8 chosen as best:** 10 of 12 fixed-set targets met and 95% / 95% on held-out cross-turn. Round 9 (70 / 75) and round 10 (60 / 65) did worse on held-out, so code was reverted to r8 in commit `6ad19dd`, with round 10 saved as a patch.
-- [NomBot] **Grader runs showed the fix working:** the earlier grading runs failed m5 on nearly every conversation. Late-day youth-program runs passed both m5 and m12 on all 10 states.
-- [NomBot] **Follow-up-turn grading found a remaining gap:** several list answers said "All 10" while the answer had counted hundreds of funders.
-- [Admin] **Research-database writeup edited:** rewrote the paragraph on NomBot's research database and changed "more than twenty sources" to "more than twenty public data sources" (about 24 datasets, about 17 publishers). The Heart Food Pantry sentence was flagged for removal.
+- [NomBot] **Heart Food Pantry error found:** the answer said about $4K a year from foundations, but its own follow-up listed five funders totalling $284K. Cause: only private-foundation grants were counted, so community foundations such as the Columbus Foundation ($177K) were left out.
+- [NomBot] **Other faults traced:** follow-ups were re-routed as new questions, so they lost the peer method. They also listed a different peer set (10 orgs against the "26" in the first answer) and gave revenue for different filing years ($5.5M for 2025, $6.6M for 2024).
+- [NomBot] **Stress loop designed:** 12 metrics in 4 groups, each checked against an independent SQL recomputation. Guard metrics (relevance, recall, speed p90 under 15 s) may not drop more than 1 point.
+- [NomBot] **Fixed question set:** 50 questions (5 causes × 10 states) with 5 follow-ups each (250 total), plus 20 new phrasings per round. Saved to `web/eval/underfunded-questions.json`.
+- [NomBot] **Round 8 held-out score:** 10 of 12 fixed-set targets met, and cross-turn consistency 95% / 95% on the held-out set. The live version scored 0–20% on 6 of 12 metrics.
+- [NomBot] **Rounds 9 and 10 regressed:** round 9 met 11 of 12 targets but held-out consistency fell to 70% / 75%. Round 10 fell to 60% / 65%, with revenue + year down to 80%. Cause: the new list lead said "All 10" when hundreds had been counted.
+- [NomBot] **Fix content in the shipped code:** funder kinds named in the first answer, peer rule and revenue year stated, community-foundation grants counted, and a method lead on follow-ups. Round 8 added the list behind a by-year count and a single money formatter.
+- [NomBot] **Round 10 reverted:** `lib/` went back to round 8 in a new commit (`6ad19dd`), with the round 10 changes saved as a patch.
+- [NomBot] **Data source count checked:** about 24 distinct datasets (7 from the IRS) and about 17 publishers. This fixed the wording of the research-database write-up to "more than twenty public data sources".
+- [NomBot] **Search eval report saved:** 90% relevant per question, 88% pooled, from the round 8 subscription guard run.
 
 **Decisions**
-- **Deploy r8, not r9 or r10:** later rounds fixed more on the fixed set but broke more on the held-out set.
-- **Revert by new commit:** keeps history intact and saves the round 10 patch.
-- **Ground truth from SQL:** the checks use independent SQL recomputation, not NomBot's own numbers.
+- [NomBot] **Round 8 is the deploy candidate,** because it had the best balance of fixed-set and held-out results.
+- [NomBot] **Heart Food Pantry sentence removed** from the research-database write-up until a corrected example is confirmed.
+- [NomBot] **Fixed question set locked** so every round reruns the same questions and results are comparable.
 
 **Next**
-- Decide whether to deploy r8 or run round 11 on wrong-org revenue only.
-- Fix r8's known gaps: a peer's revenue attached to the wrong org (2 of 50 questions), and one total drifting between turns ($20K vs $21K).
-- Remove the Heart Food Pantry sentence from the writeup until a corrected example is confirmed.
+- [NomBot] **Deploy round 8,** or run one more round on the wrong-org revenue only.
+- [NomBot] **Known round 8 gaps:** a peer's revenue attached to the wrong org in 2 of 50 questions, and one total that drifts between turns ($20K, then $21K).
 
 ## 2026-11-21 (Saturday)
 
