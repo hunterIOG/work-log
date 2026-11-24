@@ -2,6 +2,35 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-23 (Monday)
+
+*Hours worked: 6.25h · 6 commits · 51 messages*
+
+**Summary:** Round 8 and the research-loading fix were merged and pushed, the follow-up thread fix and stop-and-edit were built and tested, and the final deploy is blocked by an expired AWS sign-in.
+
+**Done**
+- [NomBot] **Research loading** fixed: every research question now shows a loading state, and a timed-out turn shows a message with Retry instead of a blank page. Longest blank on the second question fell from 619 ms to 47 ms on desktop and from 886 ms to 17 ms on mobile.
+- [NomBot] **100-largest-foundations question** now runs in 23 s instead of 47 s, because two nationwide database queries run at the same time. This is no longer a special rule for that question.
+- [NomBot] **Round 8** was merged with the research-loading fix and deployed live as `a5a8b60`. The Ohio food bank question now leads with Toledo Seagate ($28K a year vs a $303K peer median), where it used to lead with Heart Food Pantry at $4K.
+- [NomBot] **Live checks** passed on desktop and 390 px. "How did you measure the peers?" answered in 0.4 s, and the 100-largest question showed a loading state in 14 ms and an answer at 19.7 s.
+- [NomBot] **Follow-up thread** fix (`badda4c`): earlier turns, the new question and the input box now show at once. A follow-up link went from 3.2–3.4 s to 0.31–0.33 s. An unrelated follow-up no longer carries over the old place and size filters. `test:flows` passed 64/64.
+- [NomBot] **Arts trend question:** "Is arts funding growing?" now reads as a sector trend instead of opening the Kennedy Center's finances.
+- [NomBot] **Stop, edit and the AI line** (`8024e9f`): the Stop button and Esc cancel the answer, including the server-side work. Stopping returns your words to the input box. The "NomBot is AI and can make mistakes" line sits under both chat boxes. Stop-and-edit journeys went from 6/10 to 10/10, and the full flow test from 70/74 to 74/74.
+- [NomBot] **Stop-edit bugs** fixed: a stopped follow-up returned an empty box, resending the same words showed nothing, an early Stop didn't cancel, and a double click on Send stopped the answer. The phone-reload blank went from 6.5 s to 0 ms.
+- [NomBot] **Final merge** to `nombot` is `fb8bfe8`. The build passed, and `test:answer` showed only the 3 known mismatches. The accessibility check found no serious or critical issues.
+- [Admin] **Work log hours:** logged 8 h each for Nov 19 and Nov 20. The Project Planner rows could not be added because the Google Docs connection was disconnected.
+- [Admin] **AWS sign-in** was recovered after several failed `aws login` attempts, and the deploy then resumed.
+
+**Decisions**
+- [NomBot] **Round 8 and the loading fix ship together**, because the fix branch was built on the round 8 merge and one deploy covers both.
+- [NomBot] **Follow-up fix and stop-and-edit ship together**, because `stop-edit` already contains the follow-up fix.
+- [NomBot] **"Exit" read as the Esc key**, and "pause" as stop. Claude has no resume.
+
+**Next**
+- [NomBot] **Deploy** `fb8bfe8`, which is merged but not pushed, once AWS is signed in again. Then run the live check.
+- [NomBot] **First question in a new tab** never left the home page during the live test. Check whether real users hit this.
+- [Admin] **Hours for Nov 21 and Nov 22** are still unlogged, and the Project Planner rows are still missing.
+
 ## 2026-11-22 (Sunday)
 
 *Hours worked: 7.25h · 7 commits · 1032 messages*
