@@ -2,6 +2,35 @@
 
 Daily summary of NomBot, GrantRadar and imnet work, written each night from Claude Code chats and git commits.
 
+## 2026-11-24 (Tuesday)
+
+*Active in Claude Code: ~7h 15m (estimate) · 0 commits · 163 messages*
+
+**Summary:** Shipped Julia's two bug fixes, follow-up chips, and a 5× faster top-funder SQL path to live NomBot, and set up the 3-arm semantic-layer A/B test.
+
+**Done**
+- [NomBot] **Follow-up fix and stop-and-edit** deployed as `fb8bfe8`. All 4 live checks passed at desktop and 390 px, and the Ohio question still leads with Toledo Seagate.
+- [NomBot] **Julia's session and feedback** reviewed (PostHog replay plus form). Found new questions being treated as follow-ups, a 42 s answer, and requests for suggested follow-ups and an always-visible input.
+- [NomBot] **Suggested follow-up chips and pinned ask box** deployed as `e34b4a0`. Chips appear on every turn, the CSV has org rows (1,549 lines), and the Slide menu sits above the chips. `test:answer` 123 + 3 known misses, `test:flows` 87/88 (one miss was DB load and passed on rerun), axe 0 serious.
+- [NomBot] **Both of Julia's bugs fixed** and deployed as `b8efc21`. Palo Alto veterans now returns 7 foundations giving $119K. The Institute on Generosity question now gives an honest "none found" instead of a revenue figure. An "IoG" alias was added. `test:givers` 35/35.
+- [NomBot] **SQL speed fix** deployed as `62a0f05`, with migration 134 applied on RDS in 82 s. Top-funder answers fell from 24.5 s to 3.5 s at p50 (p90 32.3 s → 5.7 s). The Tennessee Schedule I query went from 24.7 s to 0.03 s. Find-funders and top-funder parity checks matched old answers (52/52 and 105/105).
+- [NomBot] **D1 A/B test** found the semantic layer never fired on new-shape questions. Its lower score (33% vs 43%) was judge noise on 2 questions, so B was effectively A1.
+- [NomBot] **Research on intent routing** (Snowflake, ThoughtSpot, dbt, BIRD) confirmed the root cause: a "who is…" pattern in `orgIntent.ts` claimed the donor question as an org profile.
+- [NomBot] **Data-layer review** confirmed the system is hybrid RAG on Postgres and pgvector. Jev decides under 0.5% of cause labels and is never called live.
+- [NomBot] **Muneeb's API key** checked: 32 calls in total, none since Nov 18, all through Barid. ProPublica is links only.
+- [Admin] **Work hours** logged for Nov 21–23 (0.5, 7.25 and 6.25 h) and added to the Project Planner for Nov 20–23.
+- [Admin] **Desktop cleanup** moved 18 old worktree folders (~30 GB) to the Trash. The Vercel invite for Alex was sent as Member and is pending.
+
+**Decisions**
+- [NomBot] **Test 3 arms** (A0 live, A1 cheap fixes, B semantic layer) so each change's gain shows on its own, with generalization submetrics added.
+- [NomBot] **Keep the semantic layer off** and ship A1, because B added nothing measurable.
+- [NomBot] **Live check only** for the SQL fix, skipping concurrency and refresh stress tests.
+
+**Next**
+- [NomBot] **Router regression:** 7 funder questions misroute after the relevance deploy (router misses 2 → 13 on the base set). Fix it and add the router eval as a deploy gate.
+- [NomBot] **Full live pass** on `62a0f05` is blocked on AWS login. Spot-check ~10% of the D1 judge grades.
+- [Admin] **Mailchimp seat:** all 5 seats are taken, and the agency-access decision is pending.
+
 ## 2026-11-23 (Monday)
 
 *Hours worked: 6.25h · 6 commits · 51 messages*
